@@ -2,7 +2,7 @@ Index: b/Lib/sysconfig.py
 ===================================================================
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
-@@ -590,6 +590,12 @@ def get_config_vars(*args):
+@@ -551,6 +551,12 @@ def get_config_vars(*args):
          # the init-function.
          _CONFIG_VARS['userbase'] = _getuserbase()
  
@@ -33,7 +33,7 @@ Index: b/Makefile.pre.in
 ===================================================================
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -777,6 +777,7 @@ Modules/signalmodule.o: $(srcdir)/Module
+@@ -791,6 +791,7 @@ Modules/signalmodule.o: $(srcdir)/Module
  
  Python/dynload_shlib.o: $(srcdir)/Python/dynload_shlib.c Makefile
  	$(CC) -c $(PY_CORE_CFLAGS) \
@@ -41,7 +41,7 @@ Index: b/Makefile.pre.in
  		-DSOABI='"$(SOABI)"' \
  		-o $@ $(srcdir)/Python/dynload_shlib.c
  
-@@ -1428,7 +1429,7 @@ inclinstall:
+@@ -1464,7 +1465,7 @@ inclinstall:
  LIBPL=		@LIBPL@
  
  # pkgconfig directory

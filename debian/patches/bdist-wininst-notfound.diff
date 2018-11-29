@@ -5,15 +5,14 @@ Index: b/Lib/distutils/command/bdist_wininst.py
 ===================================================================
 --- a/Lib/distutils/command/bdist_wininst.py
 +++ b/Lib/distutils/command/bdist_wininst.py
-@@ -357,7 +357,10 @@ class bdist_wininst(Command):
-             sfix = ''
- 
+@@ -359,6 +359,10 @@ class bdist_wininst(Command):
          filename = os.path.join(directory, "wininst-%s%s.exe" % (bv, sfix))
--        f = open(filename, "rb")
-+        try:
+         f = open(filename, "rb")
+         try:
 +            f = open(filename, "rb")
 +        except IOError as e:
 +            raise DistutilsFileError(str(e) + ', %s not included in the Debian packages.' % filename)
-         try:
++        try:
              return f.read()
          finally:
+             f.close()

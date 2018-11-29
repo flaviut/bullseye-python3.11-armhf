@@ -50,16 +50,3 @@ Index: b/Lib/platform.py
      try:
          etc = os.listdir(_UNIXCONFDIR)
      except OSError:
-Index: b/Lib/test/test_platform.py
-===================================================================
---- a/Lib/test/test_platform.py
-+++ b/Lib/test/test_platform.py
-@@ -349,6 +349,8 @@ class PlatformTest(unittest.TestCase):
-             self.assertEqual(version, '19')
-             self.assertEqual(distid, 'Schr\xf6dinger\u2019s Cat')
- 
-+    # we know we are Debian/Ubuntu
-+    test_linux_distribution_encoding.skip = True
- 
- class DeprecationTest(unittest.TestCase):
- 

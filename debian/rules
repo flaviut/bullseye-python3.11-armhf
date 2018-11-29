@@ -62,13 +62,11 @@ ifeq ($(on_buildd),yes)
   endif
   ifneq (,$(filter $(DEB_HOST_ARCH), armel hppa mips mipsel mips64 mips64el s390 hurd-i386 kfreebsd-amd64 kfreebsd-i386))
     WITHOUT_BENCH := yes
-    WITHOUT_STONE := yes
   endif
 endif
 ifneq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
   WITHOUT_BENCH := yes
   WITHOUT_CHECK := yes
-  WITHOUT_STONE := yes
 endif
 
 COMMA = ,
@@ -77,16 +75,15 @@ ifneq (,$(filter parallel=%,$(subst $(COMMA), ,$(DEB_BUILD_OPTIONS))))
 endif
 
 distribution := $(shell lsb_release -is)
-distribution := Debian
 distrelease  := $(shell lsb_release -cs)
-distrelease  := sid
-derivative := $(shell if dpkg-vendor --derives-from Ubuntu; then echo Ubuntu; \
-		elif dpkg-vendor --derives-from Debian; then echo Debian; \
-		else echo Unknown; fi)
+derivative      := $(shell \
+	if dpkg-vendor --derives-from Ubuntu; then echo Ubuntu; \
+	elif dpkg-vendor --derives-from Debian; then echo Debian; \
+	else echo Unknown; fi)
 
-VER=3.6
-SVER=3.6.5
-NVER=3.7
+VER=3.7
+SVER=3.7.0
+NVER=3.8
 PVER=python$(VER)
 EXT_VER=$(subst .,,$(VER))
 PRIORITY=$(shell echo $(VER) | tr -d '.')0
@@ -141,9 +138,6 @@ ifeq (,$(filter $(distrelease),lenny etch squeeze wheezy lucid maverick natty on
 else
   ma_filter = grep -v '^Multi-Arch:'
 endif
-ifneq (,$(filter $(distrelease),sid experimental))
-  bd_gcc =
-endif
 ifeq (,$(filter $(distrelease),lenny etch squeeze wheezy lucid maverick natty oneiric precise quantal raring saucy trusty))
   bd_dpkgdev = dpkg-dev (>= 1.17.11),
 endif
@@ -166,14 +160,9 @@ DPKG_LDFLAGS = $(shell $(dpkg_buildflags) --get LDFLAGS)
 OPT_CFLAGS   := $(filter-out -O%,$(DPKG_CFLAGS)) # default is -O3
 DEBUG_CFLAGS := $(patsubst -O%,-Og,$(DPKG_CFLAGS))
 
-# on alpha, use -O2 only, use -mieee
-ifeq ($(DEB_HOST_ARCH),alpha)
-    OPT_CFLAGS += -mieee
-    DEBUG_CFLAGS += -mieee
-    EXTRA_OPT_FLAGS += -O2
-endif
-ifeq ($(DEB_HOST_ARCH),m68k)
-    EXTRA_OPT_FLAGS += -O2
+# on ia64, disable -O3 until gcc bug #85412 is fixed
+ifeq ($(DEB_HOST_ARCH),ia64)
+    EXTRA_OPT_CFLAGS += -O2
 endif
 ifneq (,$(filter $(DEB_HOST_ARCH), ppc64 ppc64el))
     OPT_CFLAGS += -fexceptions
@@ -190,11 +179,6 @@ endif
 
 ifneq (,$(findstring $(DEB_HOST_ARCH), amd64 armel armhf i386 powerpc ppc64 ppc64el s390x))
   with_lto := yes
-endif
-
-ifeq ($(distribution),Debian)
-  # FIXME: https://buildd.debian.org/status/logs.php?pkg=python3.5&ver=3.5.1-1&arch=s390x&suite=sid
-  with_lto := $(if $(filter $(DEB_HOST_ARCH), s390x),,$(with_lto))
 endif
 
 ifneq (,$(findstring noopt, $(DEB_BUILD_OPTIONS)))
@@ -227,12 +211,10 @@ sysconfig_substflags = \
 	-e 's,^RUNSHARED *=.*,RUNSHARED=,' \
 	-e '/BLDLIBRARY/s/-L\. //'
 
-ifneq ($(with_fpectl),yes)
-  ifeq ($(derivative),Ubuntu)
-    arch_substvars =  '-Vpyfpe:Breaks=$(shell tr '\n' ' ' < debian/pyfpe-breaks.$(derivative))'
-  else ifeq ($(derivative),Debian)
-    arch_substvars =  '-Vpyfpe:Breaks=$(shell tr '\n' ' ' < debian/pyfpe-breaks.$(derivative))'
-  endif
+ifeq ($(derivative),Ubuntu)
+  arch_substvars =
+else ifeq ($(derivative),Debian)
+  arch_substvars =  '-Vpython37:Breaks=$(shell tr '\n' ' ' < debian/py37-breaks.$(derivative))'
 endif
 
 make_build_target = $(if $(with_pgo),profile-opt)
@@ -290,7 +272,7 @@ build: build-arch
 stamps/stamp-build: stamps/stamp-build-static stamps/stamp-mincheck \
     stamps/stamp-build-shared stamps/stamp-build-debug \
     stamps/stamp-build-shared-debug \
-    stamps/stamp-check stamps/stamp-pystone stamps/stamp-pybench
+    stamps/stamp-check stamps/stamp-pybench
 	touch $@
 
 PROFILE_EXCLUDES = test_compiler test_distutils test_subprocess \
@@ -301,11 +283,15 @@ PROFILE_EXCLUDES = test_compiler test_distutils test_subprocess \
 	test_dbm_dumb test_dbm_ndbm test_pydoc test_sundry \
 	test_signal test_ioctl test_gdb test_ensurepip test_venv
 
-# FIXME: these fail in the profile build
+# TODO: these hang/fail with new OpenSSL
+PROFILE_EXCLUDES += \
+	test_asyncio test_ftplib test_httplib test_imaplib test_nntplib test_poplib test_ssl
+
+# TODO: these fail in the profile build
 PROFILE_EXCLUDES += \
 	test_cmd_line_script test_zipimport_support
 
-# FIXME: update profiled-build.diff to support --next
+# TODO: update profiled-build.diff to support --next
 #       --next=20
 PROFILE_TASK = ../Lib/test/regrtest.py \
 	-s \
@@ -407,10 +393,6 @@ stamps/stamp-configure-shared: stamps/stamp-patch
 	touch $@
 
 stamps/stamp-configure-static: stamps/stamp-patch
-	env | grep DEB_
-	@echo XXXXX CFLAGS: $(DPKG_CFLAGS)
-	@echo XXXXX LDFLAGS: $(DPKG_LDFLAGS)
-
 	rm -rf $(buildd_static)
 	mkdir -p $(buildd_static)
 	cd $(buildd_static) && \
@@ -462,14 +444,14 @@ define __post_configure
 	: # unconditionally run makesetup
 	cd $(1) && \
 	  ../Modules/makesetup -c ../Modules/config.c.in -s Modules \
-	    Modules/Setup.config Modules/Setup.local Modules/Setup
+	    Modules/Setup.local Modules/Setup
 	mv $(1)/config.c $(1)/Modules/
 
 	: # and fix the timestamps
 	$(MAKE) -C $(1) Makefile Modules/config.c
 
 	: # this second rule doesn't build with -fPIC, remove it.
-	sed '/^Modules\/_math.o: .*PY_CORE_CFLAGS/d' $(1)/Makefile > $(1)/Makefile.fixed
+	sed '/^Modules\/_math.o: .*PY_STDMODULE_CFLAGS/d' $(1)/Makefile > $(1)/Makefile.fixed
 	touch -r $(1)/Makefile $(1)/Makefile.fixed
 	mv -f $(1)/Makefile.fixed $(1)/Makefile
 endef
@@ -532,7 +514,10 @@ ifneq (,$(filter $(DEB_HOST_ARCH), sparc sparc64))
   TEST_EXCLUDES += test_gdb
 endif
 
-# FIXME: re-enable once fixed, see #708652
+# fail/hang with new OpenSSL
+TEST_EXCLUDES += test_asyncio test_ftplib test_httplib test_imaplib test_nntplib test_poplib test_ssl
+
+# TODO: re-enable once fixed, see #708652
 ifneq (,$(filter $(DEB_HOST_ARCH_OS), hurd))
   TEST_EXCLUDES += test_asyncore test_curses test_exceptions \
 	test_faulthandler test_imaplib test_io test_logging test_mmap \
@@ -540,7 +525,7 @@ ifneq (,$(filter $(DEB_HOST_ARCH_OS), hurd))
 	test_threading test_pydoc test_runpy test_telnetlib test_tk
 endif
 
-# FIXME: re-enable once fixed, see #708653
+# TODO: re-enable once fixed, see #708653
 ifneq (,$(filter $(DEB_HOST_ARCH_OS), kfreebsd))
   TEST_EXCLUDES += test_io test_signal test_socket test_socketserver \
 	test_threading test_threadsignals test_threaded_import \
@@ -622,27 +607,6 @@ else
 endif
 	cp -p $(buildd_static)/test_results debian/
 	touch stamps/stamp-check
-
-stamps/stamp-pystone:
-ifeq ($(WITHOUT_STONE),yes)
-	@echo "pystone run disabled for this build"
-else
-	@echo "BEGIN pystone static"
-	cd $(buildd_static) && ./python ../Lib/test/pystone.py
-	cd $(buildd_static) && ./python ../Lib/test/pystone.py
-	@echo "END pystone static"
-	@echo "BEGIN pystone shared"
-	cd $(buildd_shared) \
-		&& LD_LIBRARY_PATH=. ./python ../Lib/test/pystone.py
-	cd $(buildd_shared) \
-		&& LD_LIBRARY_PATH=. ./python ../Lib/test/pystone.py
-	@echo "END pystone shared"
-	@echo "BEGIN pystone debug"
-	cd $(buildd_debug) && ./python ../Lib/test/pystone.py
-	cd $(buildd_debug) && ./python ../Lib/test/pystone.py
-	@echo "END pystone debug"
-endif
-	touch stamps/stamp-pystone
 
 stamps/stamp-pybench:
 	echo "pybench run disabled for this build" > $(buildd_static)/pybench.log
@@ -780,9 +744,6 @@ clean: control-file
 	rm -f configure
 	rm -rf $(TEST_DIR) debian/testdir
 
-	rm -f Lib/test/185test.db
-	rm -f Tools/hg/hgtouch.py
-
 	for f in debian/*.in; do \
 	  f2=`echo $$f | sed "s,PVER,$(PVER),g;s/@VER@/$(VER)/g;s,\.in$$,,"`; \
 	  if [ $$f2 != debian/control ] && [ $$f2 != debian/source.lintian-overrides ]; then \
@@ -832,7 +793,6 @@ ifeq ($(with_interp),static)
 	$(MAKE) -C $(buildd_static) install DESTDIR=$(CURDIR)/$(d)
 	ls -l $(d)/$(scriptdir)/_sysconfigdata*
 	sed $(sysconfig_substflags) \
-	    -e '/BLDLIBRARY/s/-L\. //' \
 		$(buildd_shared)/$(shell cat $(buildd_shared)/pybuilddir.txt)/_sysconfigdata_m_$(PLAT)_$(DEB_HOST_MULTIARCH).py \
 		> $(d)/$(scriptdir)/_sysconfigdata_m_$(PLAT)_$(DEB_HOST_MULTIARCH).py
 else
@@ -861,7 +821,7 @@ endif
 	mkdir -p $(d)/usr/lib/python3
 	mv $(d)/usr/lib/python$(VER)/site-packages \
 		$(d)/usr/lib/python3/dist-packages
-	rm -f $(d)/usr/lib/python3/dist-packages/README
+	rm -f $(d)/usr/lib/python3/dist-packages/README*
 
 	: # remove files, which are not packaged
 	rm -rf $(d)/usr/lib/python$(VER)/ctypes/macholib
@@ -930,13 +890,7 @@ endif
 	cp -p debian/pygettext.1 $(d)/usr/share/man/man1/pygettext$(VER).1
 
 	: # install the Makefile of the shared python build
-	sed -e '/^OPT/s,-O3,-O2,' \
-	    -e 's/$(LTO_CFLAGS)//g' \
-	    -e 's/-fstack-protector /-fstack-protector-strong /g' \
-	    -e 's/-specs=[^ ]*//g' \
-	    -e 's/-fdebug-prefix-map=[^ ]*//g' \
-	    -e 's,^RUNSHARED *=.*,RUNSHARED=,' \
-	    -e '/BLDLIBRARY/s/-L\. //' \
+	sed $(sysconfig_substflags) \
 		$(buildd_shared)/Makefile \
 		> $(d)/$(scriptdir)/config-$(VER)m-$(DEB_HOST_MULTIARCH)/Makefile
 
@@ -1072,7 +1026,7 @@ endif
 	: # The test framework into $(p_lbase)
 	$(dh_compat2) dh_movefiles -p$(p_lbase) --sourcedir=$(d) \
 		$(scriptdir)/test/{libregrtest,support} \
-		$(scriptdir)/test/{regrtest,test_support,__init__,__main__,pystone}.py
+		$(scriptdir)/test/{regrtest,test_support,__init__,__main__}.py
 
 	: # The complete testsuite into $(p_lbase)
 	$(dh_compat2) dh_movefiles -p$(p_ltst) --sourcedir=$(d) \
@@ -1131,12 +1085,15 @@ endif
 
 	: # Replace all '#!' calls to python with $(PY_INTERPRETER)
 	: # and make them executable
-	for i in `find debian -mindepth 3 -type f ! -name '*.dpatch'`; do \
+	for i in `find debian -mindepth 3 -type f`; do \
 	  sed '1s,#!.*python[^ ]*\(.*\),#! $(PY_INTERPRETER)\1,' \
 		$$i > $$i.temp; \
 	  if cmp --quiet $$i $$i.temp; then \
 	    rm -f $$i.temp; \
 	  else \
+	    if [ ! -x $$i ]; then \
+	      echo "fixed x file permissions: $$i"; \
+	    fi; \
 	    mv -f $$i.temp $$i; \
 	    chmod 755 $$i; \
 	    echo "fixed interpreter: $$i"; \

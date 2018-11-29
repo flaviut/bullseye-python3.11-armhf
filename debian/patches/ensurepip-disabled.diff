@@ -39,7 +39,7 @@ Index: b/Lib/ensurepip/__init__.py
  
  _PROJECTS = [
      "setuptools",
-@@ -71,6 +99,11 @@ def _bootstrap(*, root=None, upgrade=Fal
+@@ -75,6 +103,11 @@ def _bootstrap(*, root=None, upgrade=Fal
  
      Note that calling this function will alter both sys.path and os.environ.
      """

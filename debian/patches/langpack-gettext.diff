@@ -7,7 +7,7 @@ Index: b/Lib/gettext.py
 ===================================================================
 --- a/Lib/gettext.py
 +++ b/Lib/gettext.py
-@@ -491,11 +491,26 @@ def find(domain, localedir=None, languag
+@@ -499,11 +499,26 @@ def find(domain, localedir=None, languag
          if lang == 'C':
              break
          mofile = os.path.join(localedir, lang, 'LC_MESSAGES', '%s.mo' % domain)

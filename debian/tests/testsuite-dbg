@@ -17,23 +17,18 @@ if [ "$(whoami)" = root ]; then
 fi
 
 tmphome=$ADTTMP/home
-mkdir -p $tmphome/.local/lib/python3.6/site-packages
+mkdir -p $tmphome/.local/lib/python3.7/site-packages
 if [ -n "$su_user" ]; then
   chmod -R go+rx $ADTTMP
   chown -R $su_user:nogroup $tmphome
 fi
 ls -la $ADTTMP
 
-# no root access needed after this point
-
 debian_dir=$(dirname $(dirname $0))
 
-export LOCPATH=$(pwd)/locales
-sh $debian_dir/locale-gen
+# no root access needed after this point
 
-export LANG=C
-
-TESTPYTHON="python3.6dm -W default -bb -E -R -m test"
+TESTPYTHON="python3.7dm -W default -bb -E -R -m test"
 TESTEXCLUSIONS="-x"
 
 . $debian_dir/tests/test-common.sh
@@ -50,7 +45,7 @@ EXTRAENV="env -u https_proxy -u http_proxy -u no_proxy HOME=$tmphome"
 
 script=$debian_dir/script.py
 if [ -f "$script" ]; then
-  cmd="$EXTRAENV python3.6 $script \"$log\" \"$TESTPYTHON $TESTOPTS $TESTEXCLUSIONS\""
+  cmd="$EXTRAENV python3.7 $script \"$log\" \"$TESTPYTHON $TESTOPTS $TESTEXCLUSIONS\""
 else
   cmd="$EXTRAENV $TESTPYTHON $TESTOPTS $TESTEXCLUSIONS"
 fi

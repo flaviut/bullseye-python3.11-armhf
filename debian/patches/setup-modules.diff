@@ -4,7 +4,7 @@ Index: b/Modules/Setup.dist
 ===================================================================
 --- a/Modules/Setup.dist
 +++ b/Modules/Setup.dist
-@@ -176,7 +176,7 @@ _symtable symtablemodule.c
+@@ -178,7 +178,7 @@ _symtable symtablemodule.c
  #_weakref _weakref.c	# basic weak reference support
  #_testcapi _testcapimodule.c    # Python C API test module
  #_random _randommodule.c	# Random number generator
@@ -13,7 +13,7 @@ Index: b/Modules/Setup.dist
  #_pickle _pickle.c	# pickle accelerator
  #_datetime _datetimemodule.c	# datetime accelerator
  #_bisect _bisectmodule.c	# Bisection algorithms
-@@ -206,10 +206,7 @@ _symtable symtablemodule.c
+@@ -208,10 +208,7 @@ _symtable symtablemodule.c
  
  # Socket module helper for SSL support; you must comment out the other
  # socket line above, and possibly edit the SSL variable:
@@ -33,15 +33,15 @@ Index: b/Modules/Setup.dist
  
  # The _sha module implements the SHA checksum algorithms.
  # (NIST's Secure Hash Algorithms.)
-@@ -342,6 +340,7 @@ _symtable symtablemodule.c
+@@ -331,6 +329,7 @@ _symtable symtablemodule.c
  # Fred Drake's interface to the Python parser
  #parser parsermodule.c
  
 +#_ctypes _ctypes/_ctypes.c _ctypes/callbacks.c _ctypes/callproc.c _ctypes/stgdict.c _ctypes/cfield.c _ctypes/malloc_closure.c -lffi
  
- # Lee Busby's SIGFPE modules.
- # The library to link fpectl with is platform specific.
-@@ -368,7 +367,7 @@ _symtable symtablemodule.c
+ # Andrew Kuchling's zlib module.
+ # This require zlib 1.1.3 (or later).
+@@ -340,7 +339,7 @@ _symtable symtablemodule.c
  # Interface to the Expat XML parser
  # More information on Expat can be found at www.libexpat.org.
  #

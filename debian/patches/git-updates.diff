@@ -1,4 +1,4 @@
-# DP: updates from the 3.6 branch (until 2018-09-26).
+# DP: updates from the 3.7 branch (until 2018-09-26).
 
-# git diff --no-renames 4cf1f54eb764f856fda5a394d8598c0c90d69d77 d45a9613402b686f8afd3dd5b6acf8141f14d711 | filterdiff -x ?/.hgignore -x ?/.hgeol -x ?/.hgtags -x ?/.hgtouch -x ?/.gitignore -x ?/.gitattributes -x '?/.github/*' -x '?/.git*' -x ?/.codecov.yml -x ?/.travis.yml -x ?/configure -x '?/.vsts*' -x '?/Misc/NEWS.d/next/*/*' --remove-timestamps
+# git diff --no-renames 1bf9cc509326bc42cd8cb1650eb9bf64550d817e 69d63bbbd6ea8fab7792a7e4de21a4662665cb5f | filterdiff -x ?/.hgignore -x ?/.hgeol -x ?/.hgtags -x ?/.hgtouch -x ?/.gitignore -x ?/.gitattributes -x '?/.github/*' -x '?/.git*' -x ?/.codecov.yml -x ?/.travis.yml -x ?/configure --remove-timestamps
 

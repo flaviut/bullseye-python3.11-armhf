@@ -7,7 +7,7 @@ Index: b/Doc/tools/templates/layout.html
  {% block extrahead %}
      <link rel="shortcut icon" type="image/png" href="{{ pathto('_static/py.png', 1) }}" />
 -    <link rel="canonical" href="https://docs.python.org/3/{{pagename}}.html" />
-+    <link rel="canonical" href="file:///usr/share/doc/python3.6/html/{{pagename}}.html" />
++    <link rel="canonical" href="file:///usr/share/doc/python3.7/html/{{pagename}}.html" />
      {% if builder != "htmlhelp" %}
      {% if not embedded %}<script type="text/javascript" src="{{ pathto('_static/copybutton.js', 1) }}"></script>{% endif %}
      {% if switchers is defined and not embedded %}<script type="text/javascript" src="{{ pathto('_static/switchers.js', 1) }}"></script>{% endif %}
@@ -20,7 +20,7 @@ Index: b/Lib/idlelib/help.html
      <link rel="next" title="26.6. Other Graphical User Interface Packages" href="othergui.html" />
      <link rel="prev" title="26.4. tkinter.scrolledtext — Scrolled Text Widget" href="tkinter.scrolledtext.html" />
 -    <link rel="canonical" href="https://docs.python.org/3/library/idle.html" />
-+    <link rel="canonical" href="file:///usr/share/doc/python3.6/html/library/idle.html" />
++    <link rel="canonical" href="file:///usr/share/doc/python3.7/html/library/idle.html" />
  
  
  

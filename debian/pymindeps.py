@@ -128,6 +128,8 @@ excluded_imports = {
     'subprocess': set(('dummy_threading',)),
     'sysconfig': set(('pprint','_osx_support')),
     'tempfile': set(('_dummy_thread', 'shutil')),
+    'functools': set(('typing',)),
+    'platform': set(('distutils','plistlib')),
     }
 
 def main(argv):

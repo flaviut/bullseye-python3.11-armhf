@@ -4,7 +4,7 @@ Index: b/configure.ac
 ===================================================================
 --- a/configure.ac
 +++ b/configure.ac
-@@ -2554,8 +2554,8 @@ then
+@@ -2574,8 +2574,8 @@ then
  		fi
  		;;
  	Linux*|GNU*|QNX*)
@@ -12,12 +12,12 @@ Index: b/configure.ac
 -		LDCXXSHARED='$(CXX) -shared';;
 +		LDSHARED='$(CC) -shared -Wl,-O1 -Wl,-Bsymbolic-functions'
 +		LDCXXSHARED='$(CXX) -shared -Wl,-O1 -Wl,-Bsymbolic-functions';;
- 	BSD/OS*/4*)
- 		LDSHARED="gcc -shared"
- 		LDCXXSHARED="g++ -shared";;
-@@ -2655,7 +2655,7 @@ then
+ 	FreeBSD*)
+ 		if [[ "`$CC -dM -E - </dev/null | grep __ELF__`" != "" ]]
+ 		then
+@@ -2666,7 +2666,7 @@ then
+ 	    LINKFORSHARED="-Wl,-E -Wl,+s";;
  #	    LINKFORSHARED="-Wl,-E -Wl,+s -Wl,+b\$(BINLIBDEST)/lib-dynload";;
- 	BSD/OS/4*) LINKFORSHARED="-Xlinker -export-dynamic";;
  	Linux-android*) LINKFORSHARED="-pie -Xlinker -export-dynamic";;
 -	Linux*|GNU*) LINKFORSHARED="-Xlinker -export-dynamic";;
 +	Linux*|GNU*) LINKFORSHARED="-Xlinker -export-dynamic -Wl,-O1 -Wl,-Bsymbolic-functions";;

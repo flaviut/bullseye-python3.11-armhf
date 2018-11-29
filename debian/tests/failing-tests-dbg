@@ -17,23 +17,18 @@ if [ "$(whoami)" = root ]; then
 fi
 
 tmphome=$ADTTMP/home
-mkdir -p $tmphome/.local/lib/python3.6/site-packages
+mkdir -p $tmphome/.local/lib/python3.7/site-packages
 if [ -n "$su_user" ]; then
   chmod go+rx $ADTTMP
   chown $su_user:nogroup $tmphome
 fi
 ls -la $ADTTMP
 
-# no root access needed after this point
-
 debian_dir=$(dirname $(dirname $0))
 
-export LOCPATH=$(pwd)/locales
-sh $debian_dir/locale-gen
+# no root access needed after this point
 
-export LANG=C
-
-TESTPYTHON="python3.6dm -W default -bb -E -R -m test"
+TESTPYTHON="python3.7dm -W default -bb -E -R -m test"
 TESTEXCLUSIONS=""
 
 . $debian_dir/tests/test-common.sh
@@ -49,7 +44,7 @@ echo "Running the failing tests with the debug enabled interpreter:"
 progressions=
 for tst in $TESTEXCLUSIONS; do
   if [ -f "$script" ]; then
-    cmd="HOME=$tmphome python3.6 $script \"$log\" \"$TESTPYTHON $TESTOPTS $tst\""
+    cmd="HOME=$tmphome python3.7 $script \"$log\" \"$TESTPYTHON $TESTOPTS $tst\""
   else
     cmd="HOME=$tmphome $TESTPYTHON $TESTOPTS $tst"
   fi

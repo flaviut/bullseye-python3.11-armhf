@@ -188,7 +188,7 @@ Index: b/Lib/site.py
  If a file named "pyvenv.cfg" exists one directory above sys.executable,
  sys.prefix and sys.exec_prefix are set to that directory and
  it is also checked for site-packages (sys.base_prefix and
-@@ -304,9 +310,20 @@ def getsitepackages(prefixes=None):
+@@ -334,9 +340,20 @@ def getsitepackages(prefixes=None):
          seen.add(prefix)
  
          if os.sep == '/':
@@ -215,10 +215,10 @@ Index: b/Lib/test/test_site.py
 ===================================================================
 --- a/Lib/test/test_site.py
 +++ b/Lib/test/test_site.py
-@@ -260,10 +260,10 @@ class HelperFunctionsTests(unittest.Test
-             self.assertEqual(dirs[1], wanted)
-         elif os.sep == '/':
-             # OS X non-framework builds, Linux, FreeBSD, etc
+@@ -263,10 +263,10 @@ class HelperFunctionsTests(unittest.Test
+         dirs = site.getsitepackages()
+         if os.sep == '/':
+             # OS X, Linux, FreeBSD, etc
 -            self.assertEqual(len(dirs), 1)
 -            wanted = os.path.join('xoxo', 'lib',
 +            self.assertEqual(len(dirs), 3)
@@ -268,7 +268,7 @@ Index: b/Lib/pydoc.py
 ===================================================================
 --- a/Lib/pydoc.py
 +++ b/Lib/pydoc.py
-@@ -417,6 +417,7 @@ class Doc:
+@@ -420,6 +420,7 @@ class Doc:
                                   'marshal', 'posix', 'signal', 'sys',
                                   '_thread', 'zipimport') or
               (file.startswith(basedir) and
