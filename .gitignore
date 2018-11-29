@@ -38,6 +38,7 @@ debian/.debhelper
 debian/*.debhelper.log
 debian/*.substvars
 debian/files
+debian/testdir
 
 debian/idle-python3.5
 debian/libpython3.5-dbg
