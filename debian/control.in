@@ -16,18 +16,24 @@ Build-Depends: debhelper (>= 9), @bd_dpkgdev@
   libgpm2 [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64],
   mime-support, netbase, bzip2, time, python3@bd_qual@,
   net-tools, xvfb, xauth
-Build-Depends-Indep: python3-sphinx
+Build-Depends-Indep: python3-sphinx, texinfo
 Standards-Version: 4.2.1
-Vcs-Browser: https://salsa.debian.org/cpython-team/python3/tree/python3.5
-Vcs-Git: https://salsa.debian.org/cpython-team/python3.git -b python3.5
+Vcs-Browser: https://code.launchpad.net/~doko/python/pkg@VER@-debian
+Vcs-Bzr: http://bazaar.launchpad.net/~doko/python/pkg@VER@-debian
 XS-Testsuite: autopkgtest
 
 Package: @PVER@
 Architecture: any
 Multi-Arch: allowed
 Priority: @PRIO@
-Depends: @PVER@-minimal (= ${binary:Version}), lib@PVER@-stdlib (= ${binary:Version}), mime-support, ${shlibs:Depends}, ${misc:Depends}
+Depends: @PVER@-minimal (= ${binary:Version}),
+ lib@PVER@-stdlib (= ${binary:Version}),
+ mime-support,
+ ${shlibs:Depends}, ${misc:Depends}
 Suggests: @PVER@-venv, @PVER@-doc, binutils
+Breaks: python3-all (<< 3.6.5~rc1-1),
+  python3-dev (<< 3.6.5~rc1-1),
+  python3-venv (<< 3.6.5-2)
 Description: Interactive high-level object-oriented language (version @VER@)
  Python is a high-level, interactive, object-oriented language. Its @VER@ version
  includes an extensive class library with lots of goodies for
@@ -53,8 +59,12 @@ Multi-Arch: same
 Priority: @PRIO@
 Pre-Depends: ${misc:Pre-Depends}
 Depends: lib@PVER@-minimal (= ${binary:Version}), mime-support, ${shlibs:Depends}, ${misc:Depends}
-Breaks: libmpdec2 (<< 2.4.2), lib@PVER@-testsuite (<< 3.5.4~rc1-1), PYFPE_BREAKS
-Replaces: lib@PVER@-testsuite (<< 3.5.4~rc1-1)
+Breaks: python3-tk (<< 3.6.4~rc1-2),
+  python3-distutils (<< 3.6.5-2),
+  lib@PVER@-testsuite (<< 3.6.6-2),
+  libmpdec2 (<< 2.4.2), ${pyfpe:Breaks}
+Replaces: lib@PVER@-testsuite (<< 3.6.6-2),
+  python3-distutils (<< 3.6.5-2),
 Description: Interactive high-level object-oriented language (standard library, version @VER@)
  Python is a high-level, interactive, object-oriented language. Its @VER@ version
  includes an extensive class library with lots of goodies for
@@ -158,6 +168,8 @@ Package: idle-@PVER@
 Architecture: all
 Depends: @PVER@, python3-tk, @PVER@-tk, ${misc:Depends}
 Enhances: @PVER@
+Breaks: lib@PVER@-stdlib (<< 3.6.3-2)
+Replaces: lib@PVER@-stdlib (<< 3.6.3-2)
 Description: IDE for Python (v@VER@) using Tkinter
  IDLE is an Integrated Development Environment for Python (v@VER@).
  IDLE is written using Tkinter and therefore quite platform-independent.
@@ -188,7 +200,6 @@ Package: @PVER@-dbg
 Section: debug
 Architecture: any
 Multi-Arch: allowed
-Priority: optional
 Depends: @PVER@ (= ${binary:Version}), lib@PVER@-dbg (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Recommends: gdb
 Suggests: python3-gdbm-dbg, python3-tk-dbg
@@ -206,7 +217,6 @@ Package: lib@PVER@-dbg
 Section: debug
 Architecture: any
 Multi-Arch: same
-Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
 Depends: lib@PVER@-stdlib (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Description: Debug Build of the Python Interpreter (version @VER@)

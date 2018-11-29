@@ -1,7 +1,8 @@
-# git-updates.diff
+#git-updates.diff
 deb-setup.diff
 deb-locations.diff
 distutils-install-layout.diff
+#sysconfig-debian-schemes.diff
 locale-module.diff
 distutils-link.diff
 distutils-sysconfig.diff
@@ -12,10 +13,7 @@ setup-modules.diff
 platform-lsbrelease.diff
 bdist-wininst-notfound.diff
 profiled-build.diff
-makesetup-bashism.diff
-hurd-disable-nonworking-constants.diff
 langpack-gettext.diff
-no-large-file-support.diff
 disable-sem-check.diff
 lib-argparse.diff
 ctypes-arm.diff
@@ -26,18 +24,15 @@ lib2to3-no-pickled-grammar.diff
 ext-no-libpython-link.diff
 test-no-random-order.diff
 multiarch-extname.diff
-distutils-init.diff
 tempfile-minimal.diff
 disable-some-tests.diff
-# issue21264.diff
 ensurepip-wheels.diff
 ensurepip-disabled.diff
-mpdecimal-version.diff
 mangle-fstack-protector.diff
 reproducible-buildinfo.diff
 pydoc-use-pager.diff
-#asyncio366.diff
-pyhash.diff
-lib2to3-no-pgen-caching.diff
-local-blurb.diff
-issue32185.diff
+mips-r6.diff
+local-doc-references.diff
+doc-build-texinfo.diff
+riscv64.diff
+build-math-object.diff

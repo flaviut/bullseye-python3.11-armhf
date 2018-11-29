@@ -6,3 +6,8 @@
 
 # no, not useless
 @PVER@ binary: manpage-has-useless-whatis-entry
+
+# no, lintian is wrong
+@PVER@ binary: python-package-missing-depends-on-python
+
+@PVER@ binary: command-with-path-in-maintainer-script
