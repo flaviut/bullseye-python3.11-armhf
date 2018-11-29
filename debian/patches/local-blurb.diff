@@ -1,0 +1,13 @@
+Index: b/Doc/Makefile
+===================================================================
+--- a/Doc/Makefile
++++ b/Doc/Makefile
+@@ -7,7 +7,7 @@
+ PYTHON       = python3
+ VENVDIR      = ./venv
+ SPHINXBUILD  = PATH=$(VENVDIR)/bin:$$PATH sphinx-build
+-BLURB        = PATH=$(VENVDIR)/bin:$$PATH blurb
++BLURB        = PATH=$(VENVDIR)/bin:$$PATH $(BLURB_ENV) $(PYTHON) -m blurb
+ PAPER        =
+ SOURCES      =
+ DISTVERSION  = $(shell $(PYTHON) tools/extensions/patchlevel.py)
