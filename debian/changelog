@@ -3,6 +3,7 @@ python3.7 (3.7.1-2) UNRELEASED; urgency=medium
   * Add more breaks for packages not compatible with Python 3.7:
     - python3-dns. Closes: #912988.
     - python3-dkim. Closes: #912084.
+  * Update VCS attributes. Closes: #904097.
 
  -- Matthias Klose <doko@debian.org>  Thu, 29 Nov 2018 11:20:01 +0100
 
