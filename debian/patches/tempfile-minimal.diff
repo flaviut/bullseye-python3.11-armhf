@@ -1,7 +1,5 @@
 # DP: Avoid shutil import when it is not available.
 
-Index: b/Lib/tempfile.py
-===================================================================
 --- a/Lib/tempfile.py
 +++ b/Lib/tempfile.py
 @@ -40,7 +40,146 @@ import functools as _functools
@@ -152,7 +150,7 @@ Index: b/Lib/tempfile.py
  import errno as _errno
  from random import Random as _Random
  import weakref as _weakref
-@@ -792,7 +931,7 @@ class TemporaryDirectory(object):
+@@ -789,7 +928,7 @@ class TemporaryDirectory(object):
  
      @classmethod
      def _cleanup(cls, name, warn_message):
@@ -161,7 +159,7 @@ Index: b/Lib/tempfile.py
          _warnings.warn(warn_message, ResourceWarning)
  
      def __repr__(self):
-@@ -806,4 +945,4 @@ class TemporaryDirectory(object):
+@@ -803,4 +942,4 @@ class TemporaryDirectory(object):
  
      def cleanup(self):
          if self._finalizer.detach():

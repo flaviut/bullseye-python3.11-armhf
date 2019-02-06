@@ -1,10 +1,8 @@
 # DP: pydoc: use the pager command if available.
 
-Index: b/Lib/pydoc.py
-===================================================================
 --- a/Lib/pydoc.py
 +++ b/Lib/pydoc.py
-@@ -1475,6 +1475,8 @@ def getpager():
+@@ -1473,6 +1473,8 @@ def getpager():
          return plainpager
      if sys.platform == 'win32':
          return lambda text: tempfilepager(plain(text), 'more <')

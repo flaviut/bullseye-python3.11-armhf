@@ -1,8 +1,6 @@
 # DP: When using GCC versions older than 4.9, automagically mangle
 # DP: -fstack-protector-strong to -fstack-protector
 
-Index: b/Lib/distutils/sysconfig.py
-===================================================================
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
 @@ -13,6 +13,7 @@ import _imp
@@ -13,7 +11,7 @@ Index: b/Lib/distutils/sysconfig.py
  
  from .errors import DistutilsPlatformError
  
-@@ -197,6 +198,10 @@ def customize_compiler(compiler):
+@@ -195,6 +196,10 @@ def customize_compiler(compiler):
              cc = newcc
          if 'CXX' in os.environ:
              cxx = os.environ['CXX']

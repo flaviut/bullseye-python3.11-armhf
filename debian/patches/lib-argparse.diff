@@ -1,11 +1,9 @@
 # DP: argparse.py: Make the gettext import conditional
 
-Index: b/Lib/argparse.py
-===================================================================
 --- a/Lib/argparse.py
 +++ b/Lib/argparse.py
-@@ -87,7 +87,16 @@ import os as _os
- import re as _re
+@@ -88,7 +88,16 @@ import re as _re
+ import shutil as _shutil
  import sys as _sys
  
 -from gettext import gettext as _, ngettext

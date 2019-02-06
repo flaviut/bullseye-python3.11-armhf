@@ -8,7 +8,7 @@ build
 build-*
 
 .azure-pipelines
-CODE_OF_CONDUCT.rst
+CODE_OF_CONDUCT.md
 Demo
 Doc
 Grammar

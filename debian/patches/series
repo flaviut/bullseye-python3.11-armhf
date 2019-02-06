@@ -10,7 +10,6 @@ tkinter-import.diff
 gdbm-import.diff
 link-opt.diff
 setup-modules.diff
-platform-lsbrelease.diff
 bdist-wininst-notfound.diff
 profiled-build.diff
 langpack-gettext.diff
@@ -18,7 +17,7 @@ disable-sem-check.diff
 lib-argparse.diff
 ctypes-arm.diff
 # link-timemodule.diff
-lto-link-flags.diff
+#lto-link-flags.diff
 multiarch.diff
 lib2to3-no-pickled-grammar.diff
 ext-no-libpython-link.diff

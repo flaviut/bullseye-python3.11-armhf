@@ -1,7 +1,5 @@
 # DP: Disable ensurepip for the system installation, only enable it for virtual environments.
 
-Index: b/Lib/ensurepip/__init__.py
-===================================================================
 --- a/Lib/ensurepip/__init__.py
 +++ b/Lib/ensurepip/__init__.py
 @@ -8,6 +8,34 @@ import tempfile
@@ -51,11 +49,9 @@ Index: b/Lib/ensurepip/__init__.py
      if altinstall and default_pip:
          raise ValueError("Cannot use altinstall and default_pip together")
  
-Index: b/Lib/venv/__init__.py
-===================================================================
 --- a/Lib/venv/__init__.py
 +++ b/Lib/venv/__init__.py
-@@ -242,7 +242,28 @@ class EnvBuilder:
+@@ -261,7 +261,28 @@ class EnvBuilder:
          # intended for the global Python environment
          cmd = [context.env_exe, '-Im', 'ensurepip', '--upgrade',
                                                      '--default-pip']

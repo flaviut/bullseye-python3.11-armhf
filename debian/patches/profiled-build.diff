@@ -1,10 +1,8 @@
 # DP: Ignore errors in the profile task.
 
-Index: b/Makefile.pre.in
-===================================================================
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -501,6 +501,16 @@ build_all_generate_profile:
+@@ -508,6 +508,16 @@ build_all_generate_profile:
  run_profile_task:
  	@ # FIXME: can't run for a cross build
  	$(LLVM_PROF_FILE) $(RUNSHARED) ./$(BUILDPYTHON) $(PROFILE_TASK) || true
