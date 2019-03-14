@@ -11,7 +11,7 @@
  
  from .errors import DistutilsPlatformError
  
-@@ -195,6 +196,10 @@ def customize_compiler(compiler):
+@@ -208,6 +209,10 @@ def customize_compiler(compiler):
              cc = newcc
          if 'CXX' in os.environ:
              cxx = os.environ['CXX']

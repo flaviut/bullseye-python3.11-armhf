@@ -1,12 +1,11 @@
 Source: python3.8
 Section: python
 Priority: optional
-Maintainer: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
-XSBC-Original-Maintainer: Matthias Klose <doko@debian.org>
+Maintainer: Matthias Klose <doko@debian.org>
 Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.17.11),
   quilt, autoconf,
   lsb-release, sharutils,
-  libreadline-dev, libncursesw5-dev (>= 5.3), 
+  libreadline-dev, libncursesw5-dev (>= 5.3), g++-8,
   zlib1g-dev, libbz2-dev, liblzma-dev,
   libgdbm-dev, libdb-dev,
   tk-dev, blt-dev (>= 2.4z), libssl-dev,
@@ -17,7 +16,7 @@ Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.17.11),
   libgpm2 [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64],
   mime-support, netbase, bzip2, time, python3:any,
   net-tools, xvfb, xauth
-Build-Depends-Indep: python3-sphinx, texinfo
+Build-Depends-Indep: python3-sphinx, python3-docs-theme, texinfo
 Standards-Version: 4.3.0
 Vcs-Browser: https://salsa.debian.org/cpython-team/python3
 Vcs-Git: https://salsa.debian.org/cpython-team/python3.git
@@ -34,7 +33,7 @@ Depends: python3.8-minimal (= ${binary:Version}),
 Suggests: python3.8-venv, python3.8-doc, binutils
 Breaks: python3-all (<< 3.6.5~rc1-1),
   python3-dev (<< 3.6.5~rc1-1),
-  python3-venv (<< 3.6.5-2), ${python37:Breaks}
+  python3-venv (<< 3.6.5-2), ${python38:Breaks}
 Description: Interactive high-level object-oriented language (version 3.8)
  Python is a high-level, interactive, object-oriented language. Its 3.8 version
  includes an extensive class library with lots of goodies for
@@ -60,10 +59,6 @@ Multi-Arch: same
 Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
 Depends: libpython3.8-minimal (= ${binary:Version}), mime-support, ${shlibs:Depends}, ${misc:Depends}
-Breaks: python3-tk (<< 3.6.4~rc1-2), libmpdec2 (<< 2.4.2),
-  python3-distutils (<< 3.6.5~rc1-2),
-  libpython3.7-testsuite (<< 3.7.0-4),
-Replaces: python3-distutils (<< 3.6.5~rc1-2), libpython3.7-testsuite (<< 3.7.0-4),
 Description: Interactive high-level object-oriented language (standard library, version 3.8)
  Python is a high-level, interactive, object-oriented language. Its 3.8 version
  includes an extensive class library with lots of goodies for
@@ -94,8 +89,7 @@ Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: libpython3.8-stdlib
-Breaks: libpython3.7-stdlib (<< 3.7.0~b2-1~)
-Conflicts: binfmt-support (<< 1.1.2), libpython3.7-stdlib (<< 3.7.0~b2-1~)
+Conflicts: binfmt-support (<< 1.1.2)
 Description: Minimal subset of the Python language (version 3.8)
  This package contains some essential modules. It is normally not
  used on it's own, but as a dependency of python3.8-minimal.
@@ -165,10 +159,10 @@ Description: Testsuite for the Python standard library (v3.8)
 
 Package: idle-python3.8
 Architecture: all
-Depends: python3.8, python3-tk, python3.8-tk, ${misc:Depends}
+Depends: python3.8, python3-tk, python3.8-tk,
+  ${misc:Depends},
+  libjs-mathjax,
 Enhances: python3.8
-Breaks: libpython3.8-stdlib (<< 3.7.0~a3-1)
-Replaces: libpython3.8-stdlib (<< 3.7.0~a3-1)
 Description: IDE for Python (v3.8) using Tkinter
  IDLE is an Integrated Development Environment for Python (v3.8).
  IDLE is written using Tkinter and therefore quite platform-independent.

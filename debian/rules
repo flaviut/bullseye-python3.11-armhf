@@ -82,7 +82,7 @@ derivative      := $(shell \
 	else echo Unknown; fi)
 
 VER=3.8
-SVER=3.8.0
+SVER=3.8.0~a1
 NVER=3.9
 PVER=python$(VER)
 EXT_VER=$(subst .,,$(VER))
@@ -180,7 +180,8 @@ endif
 ifneq (,$(findstring $(DEB_HOST_ARCH), amd64 armel armhf i386 powerpc ppc64 ppc64el s390x))
   with_lto := yes
 endif
-with_lto := yes
+with_pgo :=
+with_lto :=
 
 ifneq (,$(findstring noopt, $(DEB_BUILD_OPTIONS)))
     OPT_CFLAGS := $(filter-out -O%, $(OPT_CFLAGS))
@@ -215,7 +216,7 @@ sysconfig_substflags = \
 ifeq ($(derivative),Ubuntu)
   arch_substvars =
 else ifeq ($(derivative),Debian)
-  arch_substvars =  '-Vpython37:Breaks=$(shell tr '\n' ' ' < debian/py37-breaks.$(derivative))'
+  arch_substvars = # '-Vpython38:Breaks=$(shell tr '\n' ' ' < debian/py38-breaks.$(derivative))'
 endif
 
 make_build_target = $(if $(with_pgo),profile-opt)
@@ -438,14 +439,14 @@ stamps/stamp-configure-shared-debug: stamps/stamp-patch
 define __post_configure
 	egrep \
 	  "^#($$(awk -v ORS='|' '$$2 ~ /^extension$$/ {print $$1}' debian/PVER-minimal.README.Debian.in)XX)" \
-	  Modules/Setup.dist \
+	  Modules/Setup \
 	    | sed -e 's/^#//' -e 's/-Wl,-Bdynamic//;s/-Wl,-Bstatic//' \
 	    >> $(1)/Modules/Setup.local
 
 	: # unconditionally run makesetup
 	cd $(1) && \
 	  ../Modules/makesetup -c ../Modules/config.c.in -s Modules \
-	    Modules/Setup.local Modules/Setup
+	    Modules/Setup.local ../Modules/Setup
 	mv $(1)/config.c $(1)/Modules/
 
 	: # and fix the timestamps
@@ -776,9 +777,6 @@ stamps/stamp-control:
 	help2man --no-info --version-string=$(VER) --no-discard-stderr \
 	  --name 'pysetup tool' \
 	  pysetup$(VER) > debian/pysetup3.1
-	help2man --no-info --version-string=$(VER) --no-discard-stderr \
-	  --name 'create virtual python environments' \
-	  pyvenv-$(VER) > debian/pyvenv3.1
 
 install: build-arch stamps/stamp-install
 stamps/stamp-install: stamps/stamp-build control-file stamps/stamp-control
@@ -857,7 +855,6 @@ endif
 	ln -sf ../lib/python$(VER)/pdb.py $(d)/usr/bin/pdb$(VER)
 	cp -p debian/pdb.1 $(d)/usr/share/man/man1/pdb$(VER).1
 	cp -p debian/pysetup3.1 $(d)/usr/share/man/man1/pysetup$(VER).1
-	cp -p debian/pyvenv3.1 $(d)/usr/share/man/man1/pyvenv-$(VER).1
 
 	: # versioned install only
 	rm -f $(d)/usr/bin/{2to3,idle3,pydoc3,pysetup3,python3,python3-config}
@@ -1129,12 +1126,8 @@ endif
 
 	: # pyvenv and ensurepip files into $(p_venv)
 	dh_installdirs -p$(p_venv) \
-		usr/bin \
-		usr/share/man/man1 \
 		usr/lib/python$(VER)
 	dh_movefiles -p$(p_venv) \
-		usr/bin/pyvenv-$(VER) \
-		usr/share/man/man1/pyvenv-$(VER).1 \
 		usr/lib/python$(VER)/ensurepip
 
 	: # library files into $(p_lbase)
@@ -1147,7 +1140,6 @@ endif
 	mkdir -p $(d)/usr/lib/python3/dist-packages
 	(cd $(d) && tar cf - .) | (cd $(d_base) && tar xpf -)
 	rm -f $(d_base)/usr/bin/python
-	rm -f $(d_base)/usr/bin/pyvenv
 
 	: # Install menu icon
 	dh_installdirs -p$(p_base) usr/share/pixmaps

@@ -1,6 +1,6 @@
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
-@@ -551,6 +551,12 @@ def get_config_vars(*args):
+@@ -558,6 +558,12 @@ def get_config_vars(*args):
          # the init-function.
          _CONFIG_VARS['userbase'] = _getuserbase()
  
@@ -15,7 +15,7 @@
          if os.name == 'posix':
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
-@@ -97,6 +97,9 @@ def get_python_inc(plat_specific=0, pref
+@@ -105,6 +105,9 @@ def get_python_inc(plat_specific=0, pref
                  incdir = os.path.join(get_config_var('srcdir'), 'Include')
                  return os.path.normpath(incdir)
          python_dir = 'python' + get_python_version() + build_flags
@@ -24,7 +24,7 @@
 +            return sysconfig.get_path('platinclude')
          return os.path.join(prefix, "include", python_dir)
      elif os.name == "nt":
-         return os.path.join(prefix, "include")
+         if python_build:
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
 @@ -795,6 +795,7 @@ Modules/signalmodule.o: $(srcdir)/Module
@@ -35,7 +35,7 @@
  		-DSOABI='"$(SOABI)"' \
  		-o $@ $(srcdir)/Python/dynload_shlib.c
  
-@@ -1544,7 +1545,7 @@ inclinstall:
+@@ -1545,7 +1546,7 @@ inclinstall:
  LIBPL=		@LIBPL@
  
  # pkgconfig directory

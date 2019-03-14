@@ -16,7 +16,7 @@ Build-Depends: debhelper (>= 9), @bd_dpkgdev@
   libgpm2 [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64],
   mime-support, netbase, bzip2, time, python3@bd_qual@,
   net-tools, xvfb, xauth
-Build-Depends-Indep: python3-sphinx, texinfo
+Build-Depends-Indep: python3-sphinx, python3-docs-theme, texinfo
 Standards-Version: 4.3.0
 Vcs-Browser: https://salsa.debian.org/cpython-team/python3
 Vcs-Git: https://salsa.debian.org/cpython-team/python3.git
@@ -33,7 +33,7 @@ Depends: @PVER@-minimal (= ${binary:Version}),
 Suggests: @PVER@-venv, @PVER@-doc, binutils
 Breaks: python3-all (<< 3.6.5~rc1-1),
   python3-dev (<< 3.6.5~rc1-1),
-  python3-venv (<< 3.6.5-2), ${python37:Breaks}
+  python3-venv (<< 3.6.5-2), ${python38:Breaks}
 Description: Interactive high-level object-oriented language (version @VER@)
  Python is a high-level, interactive, object-oriented language. Its @VER@ version
  includes an extensive class library with lots of goodies for
@@ -59,10 +59,6 @@ Multi-Arch: same
 Priority: @PRIO@
 Pre-Depends: ${misc:Pre-Depends}
 Depends: lib@PVER@-minimal (= ${binary:Version}), mime-support, ${shlibs:Depends}, ${misc:Depends}
-Breaks: python3-tk (<< 3.6.4~rc1-2), libmpdec2 (<< 2.4.2),
-  python3-distutils (<< 3.6.5~rc1-2),
-  libpython3.7-testsuite (<< 3.7.0-4),
-Replaces: python3-distutils (<< 3.6.5~rc1-2), libpython3.7-testsuite (<< 3.7.0-4),
 Description: Interactive high-level object-oriented language (standard library, version @VER@)
  Python is a high-level, interactive, object-oriented language. Its @VER@ version
  includes an extensive class library with lots of goodies for
@@ -93,8 +89,7 @@ Priority: @MINPRIO@
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: lib@PVER@-stdlib
-Breaks: libpython3.7-stdlib (<< 3.7.0~b2-1~)
-Conflicts: binfmt-support (<< 1.1.2), libpython3.7-stdlib (<< 3.7.0~b2-1~)
+Conflicts: binfmt-support (<< 1.1.2)
 Description: Minimal subset of the Python language (version @VER@)
  This package contains some essential modules. It is normally not
  used on it's own, but as a dependency of @PVER@-minimal.
@@ -164,10 +159,10 @@ Description: Testsuite for the Python standard library (v@VER@)
 
 Package: idle-@PVER@
 Architecture: all
-Depends: @PVER@, python3-tk, @PVER@-tk, ${misc:Depends}
+Depends: @PVER@, python3-tk, @PVER@-tk,
+  ${misc:Depends},
+  libjs-mathjax,
 Enhances: @PVER@
-Breaks: lib@PVER@-stdlib (<< 3.7.0~a3-1)
-Replaces: lib@PVER@-stdlib (<< 3.7.0~a3-1)
 Description: IDE for Python (v@VER@) using Tkinter
  IDLE is an Integrated Development Environment for Python (v@VER@).
  IDLE is written using Tkinter and therefore quite platform-independent.

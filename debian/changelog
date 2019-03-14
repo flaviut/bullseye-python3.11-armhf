@@ -1,12 +1,20 @@
-python3.8 (3.8.0~a1-0ubuntu1) disco; urgency=medium
+python3.8 (3.8.0~a2-1) experimental; urgency=medium
+
+  * Python 3.8.0 alpha 2 release.
+  * Update symbols files and refresh patches.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 14 Mar 2019 10:20:00 +0100
+
+python3.8 (3.8.0~a1-1) experimental; urgency=medium
 
   * Python 3.8.0 alpha 1 release.
-  * Add more breaks for packages not compatible with Python 3.7:
-    - python3-dns. Closes: #912988.
-    - python3-dkim. Closes: #912084.
-  * Update VCS attributes. Closes: #904097.
+  * Update VCS attributes.
+  * Refresh patches.
+  * Update symbols files.
+  * Fix some lintian warnings.
+  * Add pathlib to the set of the minimal modules.
 
- -- Matthias Klose <doko@ubuntu.com>  Wed, 06 Feb 2019 08:51:02 +0100
+ -- Matthias Klose <doko@debian.org>  Wed, 06 Feb 2019 16:07:30 +0100
 
 python3.7 (3.7.1-1) unstable; urgency=medium
 

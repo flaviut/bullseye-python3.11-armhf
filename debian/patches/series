@@ -33,3 +33,4 @@ pydoc-use-pager.diff
 local-doc-references.diff
 doc-build-texinfo.diff
 build-math-object.diff
+argparse-no-shutil.diff

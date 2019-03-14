@@ -106,7 +106,7 @@ def reduce_depgraph(dg):
 
 # guarded imports, which don't need to be included in python-minimal
 excluded_imports = {
-    'argparse': set(('gettext',)),
+    'argparse': set(('gettext', 'shutil')),
     'codecs': set(('encodings',)),
     'collections': set(('cPickle', 'pickle', 'doctest')),
     'compileall': set(('concurrent',)),
@@ -120,9 +120,11 @@ excluded_imports = {
     'os': set(('nt', 'ntpath', 'os2', 'os2emxpath', 'mac', 'macpath',
                'riscos', 'riscospath', 'riscosenviron')),
     'optparse': set(('gettext',)),
+    'pathlib': set(('urllib',)), # Windows only
     'pickle': set(('argparse', 'doctest', 'pprint')),
     'platform': set(('ctypes', 'plistlib', 'tempfile')),
     'reprlib': set(('_dummy_thread',)),
+    'shutil': set(('bz2','lzma', 'tarfile', 'zipfile')),
     #'socket': set(('_ssl',)),
     '_sitebuiltins': set(('pydoc',)),
     'subprocess': set(('dummy_threading',)),

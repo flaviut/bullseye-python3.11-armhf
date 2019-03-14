@@ -108,6 +108,7 @@ are:
   operator		module
   optparse		module
   os			module
+  pathlib		module
   pickle		module
   pkgutil		module
   platform		module
@@ -148,7 +149,7 @@ are:
   unicodedata		extension
   warnings		module
   weakref		module
-  zipimport		extension
+  zipimport		module
   zlib			extension
 
 Included are as well the codecs and stringprep modules, and the encodings

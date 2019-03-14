@@ -1,10 +1,8 @@
 # DP: Don't link extensions with the shared libpython library.
 
-Index: b/Lib/distutils/command/build_ext.py
-===================================================================
 --- a/Lib/distutils/command/build_ext.py
 +++ b/Lib/distutils/command/build_ext.py
-@@ -230,7 +230,7 @@ class build_ext(Command):
+@@ -231,7 +231,7 @@ class build_ext(Command):
          # For building extensions with a shared Python library,
          # Python's library directory must be appended to library_dirs
          # See Issues: #1600860, #4366
@@ -13,7 +11,7 @@ Index: b/Lib/distutils/command/build_ext.py
              if not sysconfig.python_build:
                  # building third party extensions
                  self.library_dirs.append(sysconfig.get_config_var('LIBDIR'))
-@@ -723,7 +723,7 @@ class build_ext(Command):
+@@ -724,7 +724,7 @@ class build_ext(Command):
              return ext.libraries
          else:
              from distutils import sysconfig
