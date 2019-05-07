@@ -11,12 +11,12 @@
              if not sysconfig.python_build:
                  # building third party extensions
                  self.library_dirs.append(sysconfig.get_config_var('LIBDIR'))
-@@ -724,7 +724,7 @@ class build_ext(Command):
-             return ext.libraries
+@@ -721,7 +721,7 @@ class build_ext(Command):
+         # bpo-21536).
          else:
-             from distutils import sysconfig
--            if sysconfig.get_config_var('Py_ENABLE_SHARED'):
-+            if False and sysconfig.get_config_var('Py_ENABLE_SHARED'):
-                 pythonlib = 'python{}.{}{}'.format(
-                     sys.hexversion >> 24, (sys.hexversion >> 16) & 0xff,
-                     sysconfig.get_config_var('ABIFLAGS'))
+             from distutils.sysconfig import get_config_var
+-            if get_config_var('Py_ENABLE_SHARED'):
++            if False and get_config_var('Py_ENABLE_SHARED'):
+                 # Either a native build on an Android device or the
+                 # cross-compilation of Python.
+                 if (hasattr(sys, 'getandroidapilevel') or

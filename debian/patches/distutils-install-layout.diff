@@ -137,7 +137,7 @@
          """Finalizes options for non-posix platforms"""
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
-@@ -133,6 +133,7 @@ def get_python_lib(plat_specific=0, stan
+@@ -139,6 +139,7 @@ def get_python_lib(plat_specific=0, stan
      If 'prefix' is supplied, use it instead of sys.base_prefix or
      sys.base_exec_prefix -- i.e., ignore 'plat_specific'.
      """
@@ -145,7 +145,7 @@
      if prefix is None:
          if standard_lib:
              prefix = plat_specific and BASE_EXEC_PREFIX or BASE_PREFIX
-@@ -144,6 +145,12 @@ def get_python_lib(plat_specific=0, stan
+@@ -150,6 +151,12 @@ def get_python_lib(plat_specific=0, stan
                                   "lib", "python" + get_python_version())
          if standard_lib:
              return libpython
@@ -205,7 +205,7 @@
              sitepackages.append(os.path.join(prefix, "lib", "site-packages"))
 --- a/Lib/test/test_site.py
 +++ b/Lib/test/test_site.py
-@@ -265,10 +265,10 @@ class HelperFunctionsTests(unittest.Test
+@@ -266,10 +266,10 @@ class HelperFunctionsTests(unittest.Test
          dirs = site.getsitepackages()
          if os.sep == '/':
              # OS X, Linux, FreeBSD, etc
@@ -252,7 +252,7 @@
      def test_debug_mode(self):
 --- a/Lib/pydoc.py
 +++ b/Lib/pydoc.py
-@@ -412,6 +412,7 @@ class Doc:
+@@ -414,6 +414,7 @@ class Doc:
                                   'marshal', 'posix', 'signal', 'sys',
                                   '_thread', 'zipimport') or
               (file.startswith(basedir) and

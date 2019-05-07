@@ -150,7 +150,7 @@
  import errno as _errno
  from random import Random as _Random
  import weakref as _weakref
-@@ -789,7 +928,7 @@ class TemporaryDirectory(object):
+@@ -779,7 +918,7 @@ class TemporaryDirectory(object):
  
      @classmethod
      def _cleanup(cls, name, warn_message):
@@ -159,7 +159,7 @@
          _warnings.warn(warn_message, ResourceWarning)
  
      def __repr__(self):
-@@ -803,4 +942,4 @@ class TemporaryDirectory(object):
+@@ -793,4 +932,4 @@ class TemporaryDirectory(object):
  
      def cleanup(self):
          if self._finalizer.detach():

@@ -1,3 +1,36 @@
+python3.8 (3.8.0~a4-1) experimental; urgency=medium
+
+  * Python 3.8.0 alpha 4 release.
+  * Upstream removed the "m" modifier, directory names now don't have the
+    "m" encoded anymore in file and directory names.
+  * Refresh patches.
+  * Update symbols files.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 07 May 2019 20:35:18 +0200
+
+python3.8 (3.8.0~a3-2) experimental; urgency=medium
+
+  * d/p/arm-alignment.diff: Don't allow unaligned memory accesses in the
+    _sha3 extension (Dave Jones). LP: #1821869. Issue #36515.
+  * Tweak the asyncio/ssl test again.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 03 Apr 2019 09:37:42 +0200
+
+python3.8 (3.8.0~a3-1) experimental; urgency=medium
+
+  * Python 3.8.0 alpha 3 release.
+  * Work around issue #35988, reducing the payload size for the asyncio/ssl
+    tests.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 26 Mar 2019 10:17:13 +0100
+
+python3.8 (3.8.0~a2-1ubuntu1) disco; urgency=medium
+
+  * Update to 20190314 from the trunk.
+  * Use a build profile for libbluetooth-dev (<!pkg.python3.8.nobluetooth>).
+
+ -- Matthias Klose <doko@debian.org>  Thu, 14 Mar 2019 16:06:36 +0100
+
 python3.8 (3.8.0~a2-1) experimental; urgency=medium
 
   * Python 3.8.0 alpha 2 release.

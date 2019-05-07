@@ -51,7 +51,7 @@
  
 --- a/Lib/venv/__init__.py
 +++ b/Lib/venv/__init__.py
-@@ -258,7 +258,28 @@ class EnvBuilder:
+@@ -268,7 +268,28 @@ class EnvBuilder:
          # intended for the global Python environment
          cmd = [context.env_exe, '-Im', 'ensurepip', '--upgrade',
                                                      '--default-pip']
