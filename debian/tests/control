@@ -7,6 +7,7 @@ Depends: build-essential,
   python3-distutils,
   python3-tk,
   idle-python3.8,
+  systemtap-sdt-dev,
 # need to turn off apport
 Restrictions: needs-root
 
@@ -20,6 +21,7 @@ Depends: build-essential,
   python3-distutils,
   python3-tk-dbg,
   idle-python3.8,
+  systemtap-sdt-dev,
 # need to turn off apport
 Restrictions: needs-root
 
