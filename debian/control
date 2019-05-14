@@ -13,9 +13,9 @@ Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.17.11),
   libbluetooth-dev [linux-any] <!pkg.python3.8.nobluetooth>,
   locales-all,
   libsqlite3-dev, libffi-dev (>= 3.0.5) [!or1k !avr32],
-  libgpm2 [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64],
+  libgpm2 [linux-any],
   mime-support, netbase, bzip2, time, python3:any,
-  net-tools, xvfb, xauth,
+  net-tools, xvfb <!nocheck>, xauth <!nocheck>,
   systemtap-sdt-dev
 Build-Depends-Indep: python3-sphinx, python3-docs-theme, texinfo
 Standards-Version: 4.3.0
