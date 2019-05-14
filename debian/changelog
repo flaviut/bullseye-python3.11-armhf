@@ -2,6 +2,8 @@ python3.8 (3.8.0~a4-2) experimental; urgency=medium
 
   * Update to 20190514 from the trunk.
   * Fix interpreter name in the -dbg autopkg tests.
+  * Enable dtrace/USDT probe support (--with-dtrace) and build-dep on
+    systemtap-sdt-dev (Trent Lloyd). LP: #1818778.
 
  -- Matthias Klose <doko@debian.org>  Tue, 14 May 2019 15:45:29 +0200
 

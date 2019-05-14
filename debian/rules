@@ -357,6 +357,7 @@ common_configure_args = \
 		--without-ensurepip \
 		--with-system-expat \
 		--with-system-libmpdec \
+		--with-dtrace \
 
 ifneq (,$(filter $(DEB_HOST_ARCH), avr32 or1k))
   common_configure_args += --without-ffi
