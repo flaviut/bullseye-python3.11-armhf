@@ -256,7 +256,6 @@
  PyEval_GetLocals@Base @SVER@
  PyEval_InitThreads@Base @SVER@
  PyEval_MergeCompilerFlags@Base @SVER@
- PyEval_ReInitThreads@Base @SVER@
  PyEval_ReleaseLock@Base @SVER@
  PyEval_ReleaseThread@Base @SVER@
  PyEval_RestoreThread@Base @SVER@
@@ -887,6 +886,7 @@
  PyThread_get_key_value@Base @SVER@
  PyThread_get_stacksize@Base @SVER@
  PyThread_get_thread_ident@Base @SVER@
+ PyThread_get_thread_native_id@Base @SVER@
  PyThread_init_thread@Base @SVER@
  PyThread_release_lock@Base @SVER@
  PyThread_set_key_value@Base @SVER@
@@ -1270,6 +1270,7 @@
  _PyErr_SetKeyError@Base @SVER@
  _PyErr_TrySetFromCause@Base @SVER@
  _PyErr_WarnUnawaitedCoroutine@Base @SVER@
+ _PyEval_AddPendingCall@Base @SVER@
  _PyEval_CallTracing@Base @SVER@
  _PyEval_EvalCodeWithName@Base @SVER@
  _PyEval_EvalFrameDefault@Base @SVER@
@@ -1281,6 +1282,7 @@
  _PyEval_GetCoroutineWrapper@Base @SVER@
  _PyEval_GetSwitchInterval@Base @SVER@
  _PyEval_Initialize@Base @SVER@
+ _PyEval_ReInitThreads@Base @SVER@
  _PyEval_RequestCodeExtraIndex@Base @SVER@
  _PyEval_SetAsyncGenFinalizer@Base @SVER@
  _PyEval_SetAsyncGenFirstiter@Base @SVER@
@@ -1595,6 +1597,7 @@
  _PyThreadState_DeleteExcept@Base @SVER@
  _PyThreadState_Init@Base @SVER@
  _PyThreadState_Prealloc@Base @SVER@
+ _PyThreadState_Swap@Base @SVER@
  _PyThreadState_UncheckedGet@Base @SVER@
  _PyThread_CurrentFrames@Base @SVER@
  _PyThread_cond_after@Base @SVER@
