@@ -90,7 +90,8 @@ Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: libpython3.8-stdlib
-Conflicts: binfmt-support (<< 1.1.2)
+Breaks: libpython3.8-stdlib (<< 3.8.0~b1-1~)
+Conflicts: binfmt-support (<< 1.1.2), libpython3.8-stdlib (<< 3.8.0~b1-1~)
 Description: Minimal subset of the Python language (version 3.8)
  This package contains some essential modules. It is normally not
  used on it's own, but as a dependency of python3.8-minimal.

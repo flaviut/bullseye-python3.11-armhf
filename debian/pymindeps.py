@@ -54,10 +54,10 @@ class mymf(modulefinder.ModuleFinder):
             callee =  m.__name__
             if '.' in callee:
                 callee = callee[:callee.index('.')]
-            #print "XXX last_caller", caller, "MOD", callee
+            #print("XXX last_caller", caller, "MOD", callee)
             #self._depgraph.setdefault(self._last_caller.__name__,{})[r.__name__] = 1
-            #if caller in ('pdb', 'doctest') or callee in ('pdb', 'doctest'):
-            #    print caller, "-->", callee
+            #if caller in ('pdb', 'doctest', 'importlib') or callee in ('pdb', 'doctest', 'importlib'):
+            #    print(caller, "-->", callee)
             if caller != callee:
                 self._depgraph.setdefault(caller,{})[callee] = 1
         return m
@@ -115,6 +115,7 @@ excluded_imports = {
     'hashlib': set(('logging', '_hashlib')),
     #'hashlib': set(('_hashlib', '_md5', '_sha', '_sha256','_sha512',)),
     'heapq': set(('doctest',)),
+    'importlib': set(('csv', 'email', 'zipfile')),
     #'io': set(('_dummy_thread',)),
     'logging': set(('multiprocessing',)),
     'os': set(('nt', 'ntpath', 'os2', 'os2emxpath', 'mac', 'macpath',
@@ -132,6 +133,7 @@ excluded_imports = {
     'tempfile': set(('_dummy_thread', 'shutil')),
     'functools': set(('typing',)),
     'platform': set(('distutils','plistlib')),
+    'zipfile': set(('bz2','lzma')),
     }
 
 def main(argv):
