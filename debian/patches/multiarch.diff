@@ -27,7 +27,7 @@
          if python_build:
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -781,6 +781,7 @@ Modules/signalmodule.o: $(srcdir)/Module
+@@ -782,6 +782,7 @@ Modules/signalmodule.o: $(srcdir)/Module
  
  Python/dynload_shlib.o: $(srcdir)/Python/dynload_shlib.c Makefile
  	$(CC) -c $(PY_CORE_CFLAGS) \
@@ -35,7 +35,7 @@
  		-DSOABI='"$(SOABI)"' \
  		-o $@ $(srcdir)/Python/dynload_shlib.c
  
-@@ -1531,7 +1532,7 @@ inclinstall:
+@@ -1545,7 +1546,7 @@ inclinstall:
  LIBPL=		@LIBPL@
  
  # pkgconfig directory

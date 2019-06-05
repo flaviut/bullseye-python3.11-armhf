@@ -150,18 +150,12 @@
  import errno as _errno
  from random import Random as _Random
  import weakref as _weakref
-@@ -779,7 +918,7 @@ class TemporaryDirectory(object):
+@@ -805,7 +944,7 @@ class TemporaryDirectory(object):
+             else:
+                 raise
+ 
+-        _shutil.rmtree(name, onerror=onerror)
++        _rmtree(name, onerror=onerror)
  
      @classmethod
      def _cleanup(cls, name, warn_message):
--        _shutil.rmtree(name)
-+        _rmtree(name)
-         _warnings.warn(warn_message, ResourceWarning)
- 
-     def __repr__(self):
-@@ -793,4 +932,4 @@ class TemporaryDirectory(object):
- 
-     def cleanup(self):
-         if self._finalizer.detach():
--            _shutil.rmtree(self.name)
-+            _rmtree(self.name)

@@ -1,6 +1,6 @@
 --- a/Doc/tools/templates/layout.html
 +++ b/Doc/tools/templates/layout.html
-@@ -14,7 +14,7 @@
+@@ -24,7 +24,7 @@
  {% endblock %}
  
  {% block extrahead %}

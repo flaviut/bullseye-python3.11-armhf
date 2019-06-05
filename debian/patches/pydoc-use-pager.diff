@@ -2,7 +2,7 @@
 
 --- a/Lib/pydoc.py
 +++ b/Lib/pydoc.py
-@@ -1479,6 +1479,8 @@ def getpager():
+@@ -1491,6 +1491,8 @@ def getpager():
          return plainpager
      if sys.platform == 'win32':
          return lambda text: tempfilepager(plain(text), 'more <')
