@@ -1234,7 +1234,7 @@ endif
 	for i in $(d_ldev)/usr/include/$(PVER)/*; do \
 	  i=$$(basename $$i); \
 	  case $$i in pyconfig.h) continue; esac; \
-	  ln -sf ../$(PVER)m/$$i $(d_ldbg)/usr/include/$(PVER)d/$$i; \
+	  ln -sf ../$(PVER)/$$i $(d_ldbg)/usr/include/$(PVER)d/$$i; \
 	done
 	cp -p $(buildd_debug)/pyconfig.h $(d_ldbg)/usr/include/$(DEB_HOST_MULTIARCH)/$(PVER)d/
 	sed 's/@subdir@/$(PVER)d/;s/@header@/pyconfig.h/' \
