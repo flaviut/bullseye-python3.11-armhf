@@ -699,7 +699,7 @@ stamps/stamp-doc-info:
 	touch stamps/stamp-doc-info
 
 build-doc: stamps/stamp-patch stamps/stamp-build-doc
-stamps/stamp-build-doc: stamps/stamp-doc-html stamps/stamp-doc-info
+stamps/stamp-build-doc: stamps/stamp-doc-html # stamps/stamp-doc-info
 	@mkdir -p stamps
 	touch stamps/stamp-build-doc
 
@@ -1322,7 +1322,7 @@ binary-indep: build-indep install stamps/stamp-control
 		/usr/share/doc/$(p_base)/html /usr/share/doc/$(p_doc)/html \
 		/usr/share/javascript/jquery/jquery.js /usr/share/doc/$(p_base)/html/_static/jquery.js \
 		/usr/share/javascript/underscore/underscore.js /usr/share/doc/$(p_base)/html/_static/underscore.js
-	dh_installinfo -p$(p_doc)
+#	dh_installinfo -p$(p_doc)
 	for f in $(d_doc)/usr/share/doc/$(p_base)/html/_images/*.png; do \
 	  b=$$(basename $$f); \
 	  dh_link -p$(p_doc) /usr/share/doc/$(p_base)/html/_images/$$b /usr/share/info/$(PVER)/$$b; \

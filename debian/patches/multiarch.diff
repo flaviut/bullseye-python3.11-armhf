@@ -1,3 +1,5 @@
+Index: b/Lib/sysconfig.py
+===================================================================
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
 @@ -558,6 +558,12 @@ def get_config_vars(*args):
@@ -13,6 +15,8 @@
          # Always convert srcdir to an absolute path
          srcdir = _CONFIG_VARS.get('srcdir', _PROJECT_BASE)
          if os.name == 'posix':
+Index: b/Lib/distutils/sysconfig.py
+===================================================================
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
 @@ -111,6 +111,9 @@ def get_python_inc(plat_specific=0, pref
@@ -25,6 +29,8 @@
          return os.path.join(prefix, "include", python_dir)
      elif os.name == "nt":
          if python_build:
+Index: b/Makefile.pre.in
+===================================================================
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
 @@ -782,6 +782,7 @@ Modules/signalmodule.o: $(srcdir)/Module
@@ -35,7 +41,7 @@
  		-DSOABI='"$(SOABI)"' \
  		-o $@ $(srcdir)/Python/dynload_shlib.c
  
-@@ -1545,7 +1546,7 @@ inclinstall:
+@@ -1550,7 +1551,7 @@ inclinstall:
  LIBPL=		@LIBPL@
  
  # pkgconfig directory

@@ -1,8 +1,10 @@
 # DP: Assume working semaphores, don't rely on running kernel for the check.
 
+Index: b/configure.ac
+===================================================================
 --- a/configure.ac
 +++ b/configure.ac
-@@ -4470,8 +4470,13 @@ int main(void) {
+@@ -4476,8 +4476,13 @@ int main(void) {
  AC_MSG_RESULT($ac_cv_posix_semaphores_enabled)
  if test $ac_cv_posix_semaphores_enabled = no
  then
@@ -18,7 +20,7 @@
  fi
  
  # Multiprocessing check for broken sem_getvalue
-@@ -4506,8 +4511,13 @@ int main(void){
+@@ -4512,8 +4517,13 @@ int main(void){
  AC_MSG_RESULT($ac_cv_broken_sem_getvalue)
  if test $ac_cv_broken_sem_getvalue = yes
  then

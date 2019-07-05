@@ -2,6 +2,8 @@
 # DP: - installs into $prefix/dist-packages instead of $prefix/site-packages.
 # DP: - doesn't encode the python version into the egg name.
 
+Index: b/Lib/distutils/command/install_egg_info.py
+===================================================================
 --- a/Lib/distutils/command/install_egg_info.py
 +++ b/Lib/distutils/command/install_egg_info.py
 @@ -14,18 +14,38 @@ class install_egg_info(Command):
@@ -48,6 +50,8 @@
          self.target = os.path.join(self.install_dir, basename)
          self.outputs = [self.target]
  
+Index: b/Lib/distutils/command/install.py
+===================================================================
 --- a/Lib/distutils/command/install.py
 +++ b/Lib/distutils/command/install.py
 @@ -35,6 +35,20 @@ INSTALL_SCHEMES = {
@@ -135,6 +139,8 @@
  
      def finalize_other(self):
          """Finalizes options for non-posix platforms"""
+Index: b/Lib/distutils/sysconfig.py
+===================================================================
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
 @@ -139,6 +139,7 @@ def get_python_lib(plat_specific=0, stan
@@ -158,6 +164,8 @@
          else:
              return os.path.join(libpython, "site-packages")
      elif os.name == "nt":
+Index: b/Lib/site.py
+===================================================================
 --- a/Lib/site.py
 +++ b/Lib/site.py
 @@ -7,12 +7,18 @@
@@ -180,7 +188,7 @@
  If a file named "pyvenv.cfg" exists one directory above sys.executable,
  sys.prefix and sys.exec_prefix are set to that directory and
  it is also checked for site-packages (sys.base_prefix and
-@@ -334,9 +340,20 @@ def getsitepackages(prefixes=None):
+@@ -335,9 +341,20 @@ def getsitepackages(prefixes=None):
          seen.add(prefix)
  
          if os.sep == '/':
@@ -203,6 +211,8 @@
          else:
              sitepackages.append(prefix)
              sitepackages.append(os.path.join(prefix, "lib", "site-packages"))
+Index: b/Lib/test/test_site.py
+===================================================================
 --- a/Lib/test/test_site.py
 +++ b/Lib/test/test_site.py
 @@ -266,10 +266,10 @@ class HelperFunctionsTests(unittest.Test
@@ -219,6 +229,8 @@
              self.assertEqual(dirs[0], wanted)
          else:
              # other platforms
+Index: b/Lib/distutils/tests/test_bdist_dumb.py
+===================================================================
 --- a/Lib/distutils/tests/test_bdist_dumb.py
 +++ b/Lib/distutils/tests/test_bdist_dumb.py
 @@ -85,7 +85,7 @@ class BuildDumbTestCase(support.TempdirM
@@ -230,6 +242,8 @@
          if not sys.dont_write_bytecode:
              wanted.append('foo.%s.pyc' % sys.implementation.cache_tag)
          self.assertEqual(contents, sorted(wanted))
+Index: b/Lib/distutils/tests/test_install.py
+===================================================================
 --- a/Lib/distutils/tests/test_install.py
 +++ b/Lib/distutils/tests/test_install.py
 @@ -193,7 +193,7 @@ class InstallTestCase(support.TempdirMan
@@ -250,6 +264,8 @@
          self.assertEqual(found, expected)
  
      def test_debug_mode(self):
+Index: b/Lib/pydoc.py
+===================================================================
 --- a/Lib/pydoc.py
 +++ b/Lib/pydoc.py
 @@ -414,6 +414,7 @@ class Doc:

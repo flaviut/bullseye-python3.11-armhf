@@ -1,3 +1,12 @@
+python3.8 (3.8.0~b2-1) experimental; urgency=medium
+
+  * Python 3.8.0 beta 2 release.
+  * Refresh patches.
+  * Update the symbols files.
+  * Don't build the texinfo documentation, fails. See issue #37504.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 05 Jul 2019 11:20:35 +0200
+
 python3.8 (3.8.0~b1-2) experimental; urgency=medium
 
   * Fix include links in python3.8-dbg.

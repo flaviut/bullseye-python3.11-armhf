@@ -1,6 +1,8 @@
+Index: b/Lib/test/test_asyncio/test_sslproto.py
+===================================================================
 --- a/Lib/test/test_asyncio/test_sslproto.py
 +++ b/Lib/test/test_asyncio/test_sslproto.py
-@@ -163,7 +163,9 @@ class SslProtoHandshakeTests(test_utils.
+@@ -162,7 +162,9 @@ class SslProtoHandshakeTests(test_utils.
  class BaseStartTLS(func_tests.FunctionalTestCaseMixin):
  
      PAYLOAD_SIZE = 1024 * 100
