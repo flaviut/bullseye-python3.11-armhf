@@ -1,4 +1,5 @@
 # git-updates.diff
+kfreebsd-hurd-fix.diff
 deb-setup.diff
 deb-locations.diff
 distutils-install-layout.diff
