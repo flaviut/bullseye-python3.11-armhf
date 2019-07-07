@@ -41,3 +41,12 @@
          if 'AR' in os.environ:
              ar = os.environ['AR']
          if 'ARFLAGS' in os.environ:
+@@ -237,7 +248,7 @@ def customize_compiler(compiler):
+             compiler=cc_cmd,
+             compiler_so=cc_cmd + ' ' + ccshared,
+             compiler_cxx=cxx,
+-            linker_so=ldshared,
++            linker_so=ldshared + ' ' + ccshared,
+             linker_exe=cc,
+             archiver=archiver)
+ 

@@ -1,0 +1,12 @@
+diff --git a/Doc/tools/extensions/pyspecific.py b/Doc/tools/extensions/pyspecific.py
+index 8839033b983c..53e07e8fb9c8 100644
+--- a/Doc/tools/extensions/pyspecific.py
++++ b/Doc/tools/extensions/pyspecific.py
+@@ -536,6 +536,7 @@ def process_audit_events(app, doctree, fromdocname):
+         nodes.colspec(colwidth=30),
+         nodes.colspec(colwidth=55),
+         nodes.colspec(colwidth=15),
++        cols=3
+     )
+     head = nodes.thead()
+     body = nodes.tbody()

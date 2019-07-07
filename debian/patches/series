@@ -37,3 +37,4 @@ build-math-object.diff
 argparse-no-shutil.diff
 issue35998.diff
 arm-alignment.diff
+issue37504.diff

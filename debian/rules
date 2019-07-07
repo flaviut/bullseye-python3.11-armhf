@@ -180,8 +180,6 @@ endif
 ifneq (,$(findstring $(DEB_HOST_ARCH), amd64 armel armhf i386 powerpc ppc64 ppc64el s390x))
   with_lto := yes
 endif
-with_pgo :=
-with_lto :=
 
 ifneq (,$(findstring noopt, $(DEB_BUILD_OPTIONS)))
     OPT_CFLAGS := $(filter-out -O%, $(OPT_CFLAGS))
@@ -304,6 +302,7 @@ stamps/stamp-build-static: stamps/stamp-configure-static
 	dh_testdir
 	$(MAKE) $(NJOBS) -C $(buildd_static) \
 		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" \
+		CONFIGURE_LDFLAGS="$(DPKG_LDFLAGS) $(LTO_CFLAGS)" \
 		PROFILE_TASK='$(PROFILE_TASK)' $(make_build_target)
 
 	: # check that things are correctly built
@@ -382,7 +381,7 @@ stamps/stamp-configure-shared: stamps/stamp-patch
 	mkdir -p $(buildd_shared)
 	cd $(buildd_shared) && \
 	  CC="$(CC)" CXX="$(CXX)" AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(OPT_CFLAGS)" \
-	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS)" \
+	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS) $(LTO_CFLAGS)" \
 	    $(config_site) \
 	    ../configure \
 		--enable-shared \
@@ -400,7 +399,7 @@ stamps/stamp-configure-static: stamps/stamp-patch
 	mkdir -p $(buildd_static)
 	cd $(buildd_static) && \
 	  CC="$(CC)" CXX="$(CXX)" AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(OPT_CFLAGS)" \
-	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS)" \
+	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS) $(LTO_CFLAGS)" \
 	    $(config_site) \
 	    ../configure \
 		$(common_configure_args)
@@ -699,7 +698,7 @@ stamps/stamp-doc-info:
 	touch stamps/stamp-doc-info
 
 build-doc: stamps/stamp-patch stamps/stamp-build-doc
-stamps/stamp-build-doc: stamps/stamp-doc-html # stamps/stamp-doc-info
+stamps/stamp-build-doc: stamps/stamp-doc-html stamps/stamp-doc-info
 	@mkdir -p stamps
 	touch stamps/stamp-build-doc
 
@@ -1322,7 +1321,7 @@ binary-indep: build-indep install stamps/stamp-control
 		/usr/share/doc/$(p_base)/html /usr/share/doc/$(p_doc)/html \
 		/usr/share/javascript/jquery/jquery.js /usr/share/doc/$(p_base)/html/_static/jquery.js \
 		/usr/share/javascript/underscore/underscore.js /usr/share/doc/$(p_base)/html/_static/underscore.js
-#	dh_installinfo -p$(p_doc)
+	dh_installinfo -p$(p_doc)
 	for f in $(d_doc)/usr/share/doc/$(p_base)/html/_images/*.png; do \
 	  b=$$(basename $$f); \
 	  dh_link -p$(p_doc) /usr/share/doc/$(p_base)/html/_images/$$b /usr/share/info/$(PVER)/$$b; \
