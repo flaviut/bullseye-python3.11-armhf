@@ -42,6 +42,7 @@ debian/*.debhelper.log
 debian/*.substvars
 debian/files
 debian/testdir
+debian/python3.8-doc.info
 
 debian/idle-python3.8
 debian/libpython3.8-dbg
@@ -115,3 +116,8 @@ debian/python3.8.overrides
 debian/python3.8.postinst
 debian/python3.8.prerm
 debian/sitecustomize.py
+
+debian/python3.8-venv.overrides
+debian/python3.8-venv.*
+debian/python3.8-venv
+

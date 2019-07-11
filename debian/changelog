@@ -1,3 +1,12 @@
+python3.8 (3.8.0~b2-5) unstable; urgency=high
+
+  * Bump standards version.
+  * Revert the KFreeBSD and Hurd fix for PyThread_get_thread_native_id,
+    and use the implementation from Python3.7.  Mark the symbol as linux only.
+  * Don't encode the MACHDEP into the _sysconfigdata file name.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 11 Jul 2019 11:55:03 +0200
+
 python3.8 (3.8.0~b2-4) unstable; urgency=medium
 
   * Fix the LTO build.
