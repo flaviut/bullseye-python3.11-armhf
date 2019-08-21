@@ -9,6 +9,7 @@ python3.8 (3.8.0~b3-1) unstable; urgency=medium
   * Implement the native thread ids for the Hurd and KFreeBSD (Samuel
     Thibault). Closes: #931624.
   * Enable pgo/lto builds on arm64. Addresses: #934812.
+  * Update symbols files.
 
  -- Matthias Klose <doko@debian.org>  Wed, 21 Aug 2019 12:38:46 +0200
 
