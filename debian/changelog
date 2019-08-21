@@ -11,6 +11,8 @@ python3.8 (3.8.0~b3-1) unstable; urgency=medium
   * Enable pgo/lto builds on arm64. Addresses: #934812.
   * Update symbols files.
   * Don't propagate lto flags to the _sysconfigdata module. Addresses: #934771.
+  * d/patches/issue35998.diff: Disable TLS1.3 in the client on all platforms
+    rather than just reducing the payload size (Michael Hudson-Doyle).
 
  -- Matthias Klose <doko@debian.org>  Wed, 21 Aug 2019 12:38:46 +0200
 
