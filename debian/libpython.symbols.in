@@ -913,7 +913,7 @@
  PyThread_get_key_value@Base @SVER@
  PyThread_get_stacksize@Base @SVER@
  PyThread_get_thread_ident@Base @SVER@
- (arch=linux-any)PyThread_get_thread_native_id@Base @SVER@
+ (arch=linux-any hurd-any)PyThread_get_thread_native_id@Base @SVER@
  PyThread_init_thread@Base @SVER@
  PyThread_release_lock@Base @SVER@
  PyThread_set_key_value@Base @SVER@

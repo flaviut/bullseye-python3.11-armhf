@@ -6,6 +6,8 @@ python3.8 (3.8.0~b3-1) unstable; urgency=medium
     + Export CC, because dtrace needs it.
     + Honour DEB_BUILD_OPTIONS=nocheck more thoroughly.
     + Fix up sysconfigdata-name.diff.
+  * Implement the native thread ids for the Hurd and KFreeBSD (Samuel
+    Thibault). Closes: #931624.
 
  -- Matthias Klose <doko@debian.org>  Wed, 21 Aug 2019 12:38:46 +0200
 
