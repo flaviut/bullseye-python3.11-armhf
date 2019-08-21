@@ -1,6 +1,11 @@
 python3.8 (3.8.0~b3-1) unstable; urgency=medium
 
   * Python 3.8.0 beta 3 release.
+  * Fix FTCBFS: (Helmut Grohne). Closes: #932077.
+    + Build-Depends, when cross compiling we need python3.8.
+    + Export CC, because dtrace needs it.
+    + Honour DEB_BUILD_OPTIONS=nocheck more thoroughly.
+    + Fix up sysconfigdata-name.diff.
 
  -- Matthias Klose <doko@debian.org>  Wed, 21 Aug 2019 12:38:46 +0200
 

@@ -153,6 +153,9 @@ endif
 AR=$(DEB_HOST_GNU_TYPE)-ar
 RANLIB=$(DEB_HOST_GNU_TYPE)-ranlib
 
+# configure and dtrace consume these
+export CC CXX
+
 DPKG_CPPFLAGS= $(shell $(dpkg_buildflags) --get CPPFLAGS)
 DPKG_CFLAGS  := $(shell $(dpkg_buildflags) --get CFLAGS)
 DPKG_CFLAGS  := $(subst -fstack-protector-strong,-fstack-protector,$(DPKG_CFLAGS))
@@ -313,8 +316,8 @@ stamps/stamp-build-static: stamps/stamp-configure-static
 		CONFIGURE_LDFLAGS="$(DPKG_LDFLAGS) $(LTO_CFLAGS)" \
 		PROFILE_TASK='$(PROFILE_TASK)' $(make_build_target)
 
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 	: # check that things are correctly built
-ifeq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
   ifneq (,$(filter $(DEB_HOST_ARCH_OS), linux))
 	cd $(buildd_static) && ./python -c 'from _multiprocessing import SemLock'
   endif
@@ -343,8 +346,10 @@ stamps/stamp-build-debug: stamps/stamp-configure-debug
 	$(MAKE) $(NJOBS) -C $(buildd_debug) \
 		EXTRA_CFLAGS="$(DEBUG_CFLAGS)"
 
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 	cd $(buildd_static) && ./python -c 'import _decimal'
 	cd $(buildd_debug) && ./python -c 'import math, cmath'
+endif
 
 	touch stamps/stamp-build-debug
 
@@ -388,7 +393,7 @@ stamps/stamp-configure-shared: stamps/stamp-patch
 	rm -rf $(buildd_shared)
 	mkdir -p $(buildd_shared)
 	cd $(buildd_shared) && \
-	  CC="$(CC)" CXX="$(CXX)" AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(OPT_CFLAGS)" \
+	  AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(OPT_CFLAGS)" \
 	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS) $(LTO_CFLAGS)" \
 	    $(config_site) \
 	    ../configure \
@@ -406,7 +411,7 @@ stamps/stamp-configure-static: stamps/stamp-patch
 	rm -rf $(buildd_static)
 	mkdir -p $(buildd_static)
 	cd $(buildd_static) && \
-	  CC="$(CC)" CXX="$(CXX)" AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(OPT_CFLAGS)" \
+	  AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(OPT_CFLAGS)" \
 	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS) $(LTO_CFLAGS)" \
 	    $(config_site) \
 	    ../configure \
@@ -419,7 +424,7 @@ stamps/stamp-configure-debug: stamps/stamp-patch
 	rm -rf $(buildd_debug)
 	mkdir -p $(buildd_debug)
 	cd $(buildd_debug) && \
-	  CC="$(CC)" CXX="$(CXX)" AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(DEBUG_CFLAGS)" \
+	  AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(DEBUG_CFLAGS)" \
 	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS)" \
 	    $(config_site) \
 	    ../configure \
@@ -433,7 +438,7 @@ stamps/stamp-configure-shared-debug: stamps/stamp-patch
 	rm -rf $(buildd_shdebug)
 	mkdir -p $(buildd_shdebug)
 	cd $(buildd_shdebug) && \
-	  CC="$(CC)" CXX="$(CXX)" AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(DEBUG_CFLAGS)" \
+	  AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(DEBUG_CFLAGS)" \
 	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS)" \
 	    $(config_site) \
 	    ../configure \
