@@ -199,8 +199,9 @@ ifneq (,$(findstring noopt, $(DEB_BUILD_OPTIONS)))
     with_lto =
 endif
 
+BASE_LTO_CFLAGS = -g -fwrapv -O3
 ifeq ($(with_lto),yes)
-    LTO_CFLAGS = -g -flto -fuse-linker-plugin
+    LTO_CFLAGS = $(BASE_LTO_CFLAGS) -flto -fuse-linker-plugin
     with_fat_lto := $(shell dpkg --compare-versions $$($(CC) --version \
 			| sed -n '/^$(CC)/s,.* ,,p') ge 4.9 && echo yes)
     ifeq ($(with_fat_lto),yes)
@@ -213,8 +214,9 @@ endif
 
 sysconfig_substflags = \
 	-e 's,gcc-8,gcc,;s,g++-8,g++,' \
+	$(if $(with_lto),$(foreach i,-flto -fuse-linker-plugin -ffat-lto-objects,-e 's/$(i)//g')) \
 	-e '/^OPT/s,-O3,-O2,' \
-	-e 's/-O3/-O2/g;s/$(LTO_CFLAGS)//g' \
+	-e 's/-O3/-O2/g' \
 	-e 's/-fprofile-use *-fprofile-correction//g' \
 	-e 's/-fstack-protector /-fstack-protector-strong /g' \
 	-e 's/-specs=[^ ]*//g' \

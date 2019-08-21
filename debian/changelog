@@ -10,6 +10,7 @@ python3.8 (3.8.0~b3-1) unstable; urgency=medium
     Thibault). Closes: #931624.
   * Enable pgo/lto builds on arm64. Addresses: #934812.
   * Update symbols files.
+  * Don't propagate lto flags to the _sysconfigdata module. Addresses: #934771.
 
  -- Matthias Klose <doko@debian.org>  Wed, 21 Aug 2019 12:38:46 +0200
 
