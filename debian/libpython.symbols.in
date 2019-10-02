@@ -1252,9 +1252,9 @@
  _PyConfig_Copy@Base @SVER@
  _PyConfig_InitCompatConfig@Base @SVER@
  _PyConfig_InitPathConfig@Base @SVER@
- _PyConfig_SetPathConfig@Base @SVER@
  _PyConfig_SetPyArgv@Base @SVER@
  _PyConfig_Write@Base @SVER@
+ _PyConfig_WritePathConfig@Base @SVER@
  _PyContext_Fini@Base @SVER@
  _PyContext_Init@Base @SVER@
  _PyContext_NewHamtForTests@Base @SVER@
@@ -1574,7 +1574,6 @@
  _PyPathConfig_Calculate@Base @SVER@
  _PyPathConfig_ClearGlobal@Base @SVER@
  _PyPathConfig_ComputeSysPath0@Base @SVER@
- _PyPathConfig_SetGlobal@Base @SVER@
  _PyPreCmdline_Clear@Base @SVER@
  _PyPreCmdline_Read@Base @SVER@
  _PyPreCmdline_SetArgv@Base @SVER@
@@ -1806,7 +1805,6 @@
  _Py_ClearArgcArgv@Base @SVER@
  _Py_ClearFileSystemEncoding@Base @SVER@
  _Py_ClearStandardStreamEncoding@Base @SVER@
- _Py_CoerceID@Base @SVER@
  _Py_CoerceLegacyLocale@Base @SVER@
  _Py_Compare@Base @SVER@
  _Py_Constant@Base @SVER@
@@ -1822,6 +1820,7 @@
  _Py_DumpASCII@Base @SVER@
  _Py_DumpDecimal@Base @SVER@
  _Py_DumpHexadecimal@Base @SVER@
+ _Py_DumpPathConfig@Base @SVER@
  _Py_DumpTraceback@Base @SVER@
  _Py_DumpTracebackThreads@Base @SVER@
  _Py_EllipsisObject@Base @SVER@

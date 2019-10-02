@@ -1,6 +1,6 @@
 --- a/Lib/argparse.py
 +++ b/Lib/argparse.py
-@@ -85,7 +85,6 @@ __all__ = [
+@@ -86,7 +86,6 @@ __all__ = [
  
  import os as _os
  import re as _re
@@ -8,7 +8,7 @@
  import sys as _sys
  
  try:
-@@ -174,8 +173,12 @@ class HelpFormatter(object):
+@@ -175,8 +174,12 @@ class HelpFormatter(object):
  
          # default setting for width
          if width is None:

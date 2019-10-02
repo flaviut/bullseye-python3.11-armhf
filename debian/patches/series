@@ -36,6 +36,5 @@ build-math-object.diff
 argparse-no-shutil.diff
 issue35998.diff
 arm-alignment.diff
-issue37504.diff
 sysconfigdata-name.diff
 hurd_kfreebsd_thread_native_id.diff

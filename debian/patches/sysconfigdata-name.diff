@@ -1,5 +1,3 @@
-Index: b/Lib/sysconfig.py
-===================================================================
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
 @@ -345,9 +345,8 @@ def get_makefile_filename():
@@ -13,11 +11,9 @@ Index: b/Lib/sysconfig.py
          multiarch=getattr(sys.implementation, '_multiarch', ''),
      ))
  
-Index: b/Makefile.pre.in
-===================================================================
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -1457,7 +1457,7 @@ libinstall:	build_all $(srcdir)/Modules/
+@@ -1463,7 +1463,7 @@ libinstall:	build_all $(srcdir)/Modules/
  			esac; \
  		done; \
  	done
@@ -26,7 +22,7 @@ Index: b/Makefile.pre.in
  		$(DESTDIR)$(LIBDEST); \
  	$(INSTALL_DATA) $(srcdir)/LICENSE $(DESTDIR)$(LIBDEST)/LICENSE.txt
  	if test -d $(DESTDIR)$(LIBDEST)/distutils/tests; then \
-@@ -1613,7 +1613,7 @@ sharedinstall: sharedmods
+@@ -1619,7 +1619,7 @@ sharedinstall: sharedmods
  		--install-scripts=$(BINDIR) \
  		--install-platlib=$(DESTSHARED) \
  		--root=$(DESTDIR)/
@@ -35,8 +31,6 @@ Index: b/Makefile.pre.in
  	-rm -r $(DESTDIR)$(DESTSHARED)/__pycache__
  
  # Here are a couple of targets for MacOSX again, to install a full
-Index: b/Lib/distutils/sysconfig.py
-===================================================================
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
 @@ -459,9 +459,8 @@ def _init_posix():
@@ -50,9 +44,9 @@ Index: b/Lib/distutils/sysconfig.py
          multiarch=getattr(sys.implementation, '_multiarch', ''),
      ))
      _temp = __import__(name, globals(), locals(), ['build_time_vars'], 0)
---- python3.8-3.8.0~b2.orig/configure.ac
-+++ python3.8-3.8.0~b2/configure.ac
-@@ -75,7 +75,7 @@
+--- a/configure.ac
++++ b/configure.ac
+@@ -75,7 +75,7 @@ if test "$cross_compiling" = yes; then
  	    AC_MSG_ERROR([python$PACKAGE_VERSION interpreter not found])
  	fi
          AC_MSG_RESULT($interp)

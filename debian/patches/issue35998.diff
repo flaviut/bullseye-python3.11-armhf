@@ -1,6 +1,6 @@
 --- a/Lib/test/test_asyncio/test_sslproto.py
 +++ b/Lib/test/test_asyncio/test_sslproto.py
-@@ -495,14 +495,11 @@
+@@ -497,14 +497,11 @@ class BaseStartTLS(func_tests.Functional
  
          server_context = test_utils.simple_server_sslcontext()
          client_context = test_utils.simple_client_sslcontext()

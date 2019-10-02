@@ -2,7 +2,7 @@
 
 --- a/Lib/argparse.py
 +++ b/Lib/argparse.py
-@@ -88,7 +88,16 @@ import re as _re
+@@ -89,7 +89,16 @@ import re as _re
  import shutil as _shutil
  import sys as _sys
  
