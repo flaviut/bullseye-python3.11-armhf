@@ -38,3 +38,4 @@ issue35998.diff
 arm-alignment.diff
 sysconfigdata-name.diff
 hurd_kfreebsd_thread_native_id.diff
+issue38368.diff
