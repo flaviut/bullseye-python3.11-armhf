@@ -873,6 +873,7 @@ endif
 	: # versioned install only
 	rm -f $(d)/usr/bin/{2to3,idle3,pydoc3,pysetup3,python3,python3-config}
 	rm -f $(d)/usr/lib/*/pkgconfig/python3.pc
+	rm -f $(d)/usr/lib/*/pkgconfig/python3-embed.pc
 
 	dh_installdirs -p$(p_lib) \
 		usr/lib/$(DEB_HOST_MULTIARCH) \
@@ -1215,6 +1216,8 @@ endif
 	  $(d_ldbg)/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/.
 	ln -s python-$(VER)d.pc \
 	  $(d_ldbg)/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/python-$(VER)-dbg.pc
+	cp $(d)-dbg/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/python-$(VER)d-embed.pc \
+	  $(d_ldbg)/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/.
 
 	dh_installdirs -p$(p_dbg) \
 		usr/bin \
@@ -1239,7 +1242,7 @@ endif
 		$(d_ldbg)/$(scriptdir)/
 	dh_link -p$(p_ldbg) \
 	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)d.so \
-		/$(scriptdir)/config-$(VER)d-$(DEB_HOST_MULTIARCH)/libpython$(VER)m.so \
+		/$(scriptdir)/config-$(VER)d-$(DEB_HOST_MULTIARCH)/libpython$(VER)d.so \
 	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)d.so \
 		/$(scriptdir)/config-$(VER)d-$(DEB_HOST_MULTIARCH)/libpython$(VER).so \
 	    /$(scriptdir)/config-$(VER)d-$(DEB_HOST_MULTIARCH)/libpython$(VER)d.a \

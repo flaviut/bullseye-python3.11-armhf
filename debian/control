@@ -121,7 +121,11 @@ Description: Examples for the Python language (v3.8)
 Package: python3.8-dev
 Architecture: any
 Multi-Arch: allowed
-Depends: python3.8 (= ${binary:Version}), libpython3.8-dev (= ${binary:Version}), libpython3.8 (= ${binary:Version}), libexpat1-dev, ${shlibs:Depends}, ${misc:Depends}
+Depends: python3.8 (= ${binary:Version}),
+  libpython3.8-dev (= ${binary:Version}),
+  libpython3.8 (= ${binary:Version}),
+  libexpat1-dev, zlib1g-dev,
+  ${shlibs:Depends}, ${misc:Depends}
 Recommends: libc6-dev | libc-dev
 Description: Header files and a static library for Python (v3.8)
  Header files, a static library and development tools for building

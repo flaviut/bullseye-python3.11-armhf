@@ -13,24 +13,27 @@
  
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -1463,7 +1463,7 @@ libinstall:	build_all $(srcdir)/Modules/
+@@ -1463,8 +1463,10 @@ libinstall:	build_all $(srcdir)/Modules/
  			esac; \
  		done; \
  	done
 -	$(INSTALL_DATA) `cat pybuilddir.txt`/_sysconfigdata_$(ABIFLAGS)_$(MACHDEP)_$(MULTIARCH).py \
+-		$(DESTDIR)$(LIBDEST); \
 +	$(INSTALL_DATA) `cat pybuilddir.txt`/_sysconfigdata_$(ABIFLAGS)_$(MULTIARCH).py \
- 		$(DESTDIR)$(LIBDEST); \
++		$(DESTDIR)$(LIBDEST)
++	$(LN) -s _sysconfigdata_$(ABIFLAGS)_$(MULTIARCH).py \
++		$(DESTDIR)$(LIBDEST)/_sysconfigdata_$(ABIFLAGS)_$(MACHDEP)_$(MULTIARCH).py
  	$(INSTALL_DATA) $(srcdir)/LICENSE $(DESTDIR)$(LIBDEST)/LICENSE.txt
  	if test -d $(DESTDIR)$(LIBDEST)/distutils/tests; then \
-@@ -1619,7 +1619,7 @@ sharedinstall: sharedmods
+ 		$(INSTALL_DATA) $(srcdir)/Modules/xxmodule.c \
+@@ -1619,6 +1621,7 @@ sharedinstall: sharedmods
  		--install-scripts=$(BINDIR) \
  		--install-platlib=$(DESTSHARED) \
  		--root=$(DESTDIR)/
--	-rm $(DESTDIR)$(DESTSHARED)/_sysconfigdata_$(ABIFLAGS)_$(MACHDEP)_$(MULTIARCH).py
 +	-rm $(DESTDIR)$(DESTSHARED)/_sysconfigdata_$(ABIFLAGS)_$(MULTIARCH).py
+ 	-rm $(DESTDIR)$(DESTSHARED)/_sysconfigdata_$(ABIFLAGS)_$(MACHDEP)_$(MULTIARCH).py
  	-rm -r $(DESTDIR)$(DESTSHARED)/__pycache__
  
- # Here are a couple of targets for MacOSX again, to install a full
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
 @@ -459,9 +459,8 @@ def _init_posix():

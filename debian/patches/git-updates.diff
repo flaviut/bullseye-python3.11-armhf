@@ -1,4 +1,2847 @@
-# DP: updates from the 3.8 branch (until 2019-07-11).
+# DP: updates from the 3.8 branch (until 2019-10-25).
 
-# git diff --no-renames c1004b85464579771db3b50f5b150449275bbbd0 59ad110d7a7784d53d0b502eebce0346597a6bef | filterdiff -x ?/.hgignore -x ?/.hgeol -x ?/.hgtags -x ?/.hgtouch -x ?/.gitignore -x ?/.gitattributes -x '?/.github/*' -x '?/.git*' -x ?/.codecov.yml -x ?/.travis.yml -x ?/configure --remove-timestamps
+# git diff --no-renames fa919fdf2583bdfead1df00e842f24f30b2a34bf edf9e8e98a487229800da832292703a9b3855139 | filterdiff -x ?/.hgignore -x ?/.hgeol -x ?/.hgtags -x ?/.hgtouch -x ?/.gitignore -x ?/.gitattributes -x '?/.github/*' -x '?/.git*' -x ?/.codecov.yml -x ?/.travis.yml -x ?/configure --remove-timestamps
 
+diff --git a/Doc/distributing/index.rst b/Doc/distributing/index.rst
+index 2e46c7ac86..5f7b3bbc4f 100644
+--- a/Doc/distributing/index.rst
++++ b/Doc/distributing/index.rst
+@@ -40,7 +40,7 @@ Key terms
+   evolution of the standard packaging tools and the associated metadata and
+   file format standards. They maintain a variety of tools, documentation
+   and issue trackers on both `GitHub <https://github.com/pypa>`__ and
+-  `BitBucket <https://bitbucket.org/pypa/>`__.
++  `Bitbucket <https://bitbucket.org/pypa/>`__.
+ * :mod:`distutils` is the original build and distribution system first added
+   to the Python standard library in 1998. While direct use of :mod:`distutils`
+   is being phased out, it still laid the foundation for the current packaging
+@@ -148,7 +148,7 @@ These are quick answers or links for some common tasks.
+ This isn't an easy topic, but here are a few tips:
+ 
+ * check the Python Packaging Index to see if the name is already in use
+-* check popular hosting sites like GitHub, BitBucket, etc to see if there
++* check popular hosting sites like GitHub, Bitbucket, etc to see if there
+   is already a project with that name
+ * check what comes up in a web search for the name you're considering
+ * avoid particularly common words, especially ones with multiple meanings,
+diff --git a/Doc/installing/index.rst b/Doc/installing/index.rst
+index dc44aa64b8..31e9b0bde0 100644
+--- a/Doc/installing/index.rst
++++ b/Doc/installing/index.rst
+@@ -53,7 +53,7 @@ Key terms
+   evolution of the standard packaging tools and the associated metadata and
+   file format standards. They maintain a variety of tools, documentation,
+   and issue trackers on both `GitHub <https://github.com/pypa>`__ and
+-  `BitBucket <https://bitbucket.org/pypa/>`__.
++  `Bitbucket <https://bitbucket.org/pypa/>`__.
+ * ``distutils`` is the original build and distribution system first added to
+   the Python standard library in 1998. While direct use of ``distutils`` is
+   being phased out, it still laid the foundation for the current packaging
+diff --git a/Doc/library/argparse.rst b/Doc/library/argparse.rst
+index ee00559485..5a61a5bf8e 100644
+--- a/Doc/library/argparse.rst
++++ b/Doc/library/argparse.rst
+@@ -810,6 +810,8 @@ how the command-line arguments should be handled. The supplied actions are:
+     >>> parser.parse_args(["--foo", "f1", "--foo", "f2", "f3", "f4"])
+     Namespace(foo=['f1', 'f2', 'f3', 'f4'])
+ 
++  .. versionadded:: 3.8
++
+ You may also specify an arbitrary action by passing an Action subclass or
+ other object that implements the same interface.  The recommended way to do
+ this is to extend :class:`Action`, overriding the ``__call__`` method
+diff --git a/Doc/library/hmac.rst b/Doc/library/hmac.rst
+index dc994b07c3..57ac8bb161 100644
+--- a/Doc/library/hmac.rst
++++ b/Doc/library/hmac.rst
+@@ -14,12 +14,13 @@
+ This module implements the HMAC algorithm as described by :rfc:`2104`.
+ 
+ 
+-.. function:: new(key, msg=None, digestmod=None)
++.. function:: new(key, msg=None, digestmod='')
+ 
+    Return a new hmac object.  *key* is a bytes or bytearray object giving the
+    secret key.  If *msg* is present, the method call ``update(msg)`` is made.
+    *digestmod* is the digest name, digest constructor or module for the HMAC
+-   object to use. It supports any name suitable to :func:`hashlib.new`.
++   object to use.  It may be any name suitable to :func:`hashlib.new`.
++   Despite its argument position, it is required.
+ 
+    .. versionchanged:: 3.4
+       Parameter *key* can be a bytes or bytearray object.
+@@ -28,6 +29,8 @@ This module implements the HMAC algorithm as described by :rfc:`2104`.
+ 
+    .. deprecated-removed:: 3.4 3.8
+       MD5 as implicit default digest for *digestmod* is deprecated.
++      The digestmod parameter is now required.  Pass it as a keyword
++      argument to avoid awkwardness when you do not have an initial msg.
+ 
+ 
+ .. function:: digest(key, msg, digest)
+@@ -127,7 +130,6 @@ This module also provides the following helper function:
+       a timing attack could theoretically reveal information about the
+       types and lengths of *a* and *b*—but not their values.
+ 
+-
+    .. versionadded:: 3.3
+ 
+ 
+diff --git a/Doc/library/threading.rst b/Doc/library/threading.rst
+index eb9da2b911..f7c82729e5 100644
+--- a/Doc/library/threading.rst
++++ b/Doc/library/threading.rst
+@@ -62,8 +62,8 @@ This module defines the following functions:
+    should be cleared explicitly to break the reference cycle when the
+    exception is no longer needed.
+ 
+-   Storing *object* using a custom hook can resurrect it if it is set to an
+-   object which is being finalized. Avoid storing *object* after the custom
++   Storing *thread* using a custom hook can resurrect it if it is set to an
++   object which is being finalized. Avoid storing *thread* after the custom
+    hook completes to avoid resurrecting objects.
+ 
+    .. seealso::
+diff --git a/Doc/library/unittest.rst b/Doc/library/unittest.rst
+index cbee94e52c..eb6714a8c8 100644
+--- a/Doc/library/unittest.rst
++++ b/Doc/library/unittest.rst
+@@ -56,8 +56,8 @@ test runner
+       Kent Beck's original paper on testing frameworks using the pattern shared
+       by :mod:`unittest`.
+ 
+-   `Nose <https://nose.readthedocs.io/>`_ and `pytest <https://docs.pytest.org/>`_
+-      Third-party unittest frameworks with a lighter-weight syntax for writing
++   `pytest <https://docs.pytest.org/>`_
++      Third-party unittest framework with a lighter-weight syntax for writing
+       tests.  For example, ``assert func(10) == 42``.
+ 
+    `The Python Testing Tools Taxonomy <https://wiki.python.org/moin/PythonTestingToolsTaxonomy>`_
+diff --git a/Doc/license.rst b/Doc/license.rst
+index d877f45677..810d2e63fd 100644
+--- a/Doc/license.rst
++++ b/Doc/license.rst
+@@ -22,7 +22,7 @@ Virginia where he released several versions of the software.
+ In May 2000, Guido and the Python core development team moved to BeOpen.com to
+ form the BeOpen PythonLabs team.  In October of the same year, the PythonLabs
+ team moved to Digital Creations (now Zope Corporation; see
+-http://www.zope.com/).  In 2001, the Python Software Foundation (PSF, see
++https://www.zope.org/).  In 2001, the Python Software Foundation (PSF, see
+ https://www.python.org/psf/) was formed, a non-profit organization created
+ specifically to own Python-related Intellectual Property.  Zope Corporation is a
+ sponsoring member of the PSF.
+diff --git a/Doc/tools/static/switchers.js b/Doc/tools/static/switchers.js
+index fa298a76b0..ef6f473452 100644
+--- a/Doc/tools/static/switchers.js
++++ b/Doc/tools/static/switchers.js
+@@ -11,7 +11,7 @@
+ 
+   var all_versions = {
+     '3.9': 'dev (3.9)',
+-    '3.8': 'pre (3.8)',
++    '3.8': '3.8',
+     '3.7': '3.7',
+     '3.6': '3.6',
+     '3.5': '3.5',
+diff --git a/Doc/tools/templates/indexsidebar.html b/Doc/tools/templates/indexsidebar.html
+index 4fd7423430..c51dcc7582 100644
+--- a/Doc/tools/templates/indexsidebar.html
++++ b/Doc/tools/templates/indexsidebar.html
+@@ -3,7 +3,7 @@
+ <h3>{% trans %}Docs by version{% endtrans %}</h3>
+ <ul>
+   <li><a href="https://docs.python.org/3.9/">{% trans %}Python 3.9 (in development){% endtrans %}</a></li>
+-  <li><a href="https://docs.python.org/3.8/">{% trans %}Python 3.8 (pre-release){% endtrans %}</a></li>
++  <li><a href="https://docs.python.org/3.8/">{% trans %}Python 3.8 (stable){% endtrans %}</a></li>
+   <li><a href="https://docs.python.org/3.7/">{% trans %}Python 3.7 (stable){% endtrans %}</a></li>
+   <li><a href="https://docs.python.org/3.6/">{% trans %}Python 3.6 (security-fixes){% endtrans %}</a></li>
+   <li><a href="https://docs.python.org/3.5/">{% trans %}Python 3.5 (security-fixes){% endtrans %}</a></li>
+diff --git a/Doc/using/windows.rst b/Doc/using/windows.rst
+index 50eb9d3145..9dc3e796cc 100644
+--- a/Doc/using/windows.rst
++++ b/Doc/using/windows.rst
+@@ -325,6 +325,9 @@ If you have installed another version of Python and added it to your
+ one from the Microsoft Store. To access the new installation, use
+ ``python3.exe`` or ``python3.x.exe``.
+ 
++The ``py.exe`` launcher will detect this Python installation, but will prefer
++installations from the traditional installer.
++
+ To remove Python, open Settings and use Apps and Features, or else find
+ Python in Start and right-click to select Uninstall. Uninstalling will
+ remove all packages you installed directly into this Python installation, but
+@@ -333,9 +336,6 @@ will not remove any virtual environments
+ Known Issues
+ ------------
+ 
+-Currently, the ``py.exe`` launcher cannot be used to start Python when it
+-has been installed from the Microsoft Store.
+-
+ Because of restrictions on Microsoft Store apps, Python scripts may not have
+ full write access to shared locations such as ``TEMP`` and the registry.
+ Instead, it will write to a private copy. If your scripts must modify the
+diff --git a/Doc/whatsnew/3.8.rst b/Doc/whatsnew/3.8.rst
+index d80005fda3..1d547a1fbf 100644
+--- a/Doc/whatsnew/3.8.rst
++++ b/Doc/whatsnew/3.8.rst
+@@ -49,14 +49,6 @@ For full details, see the :ref:`changelog <changelog>`.
+ 
+ Python 3.8 was released on October 14th, 2019.
+ 
+-Prerelease users should be aware that this document is currently in
+-draft form. It will be updated as Python 3.8 moves towards release, so
+-it's worth checking back even after reading earlier versions. Some
+-notable items not yet covered are:
+-
+-* :pep:`578` - Runtime audit hooks for potentially sensitive operations
+-* ``python -m asyncio`` runs a natively async REPL
+-
+ .. testsetup::
+ 
+    from datetime import date
+@@ -289,6 +281,18 @@ calculations can be shown::
+ (Contributed by Eric V. Smith and Larry Hastings in :issue:`36817`.)
+ 
+ 
++PEP 578: Python Runtime Audit Hooks
++-----------------------------------
++
++The PEP adds an Audit Hook and Verified Open Hook. Both are available from
++Python and native code, allowing applications and frameworks written in pure
++Python code to take advantage of extra notifications, while also allowing
++embedders or system administrators to deploy builds of Python where auditing is
++always enabled.
++
++See :pep:`578` for full details.
++
++
+ PEP 587: Python Initialization Configuration
+ --------------------------------------------
+ 
+@@ -353,8 +357,8 @@ It is meant to formalize existing optimizations which were already done
+ for various classes.
+ Any extension type implementing a callable can use this protocol.
+ 
+-This is currently provisional,
+-the aim is to make it fully public in Python 3.9.
++This is currently provisional.
++The aim is to make it fully public in Python 3.9.
+ 
+ See :pep:`590` for a full description.
+ 
+@@ -443,7 +447,7 @@ Other Language Changes
+   an instance of the subclass, rather than the base class. This also affects
+   the return type of operations whose implementation (directly or indirectly)
+   uses :class:`datetime.timedelta` arithmetic, such as
+-  :meth:`datetime.datetime.astimezone`.
++  :meth:`~datetime.datetime.astimezone`.
+   (Contributed by Paul Ganssle in :issue:`32417`.)
+ 
+ * When the Python interpreter is interrupted by Ctrl-C (SIGINT) and the
+@@ -527,6 +531,13 @@ Other Language Changes
+ 
+   (Contributed by Jörn Heissler in :issue:`35224`.)
+ 
++* The :meth:`object.__reduce__` method can now return a tuple from two to
++  six elements long. Formerly, five was the limit.  The new, optional sixth
++  element is a callable with a ``(obj, state)`` signature.  This allows the
++  direct control over the state-updating behavior of a specific object.  If
++  not *None*, this callable will have priority over the object's
++  :meth:`~__setstate__` method.
++  (Contributed by Pierre Glaser and Olivier Grisel in :issue:`35900`.)
+ 
+ New Modules
+ ===========
+@@ -577,8 +588,8 @@ The :func:`ast.parse` function has some new flags:
+   comments" (returned for function definition AST nodes);
+ 
+ * ``feature_version=(3, N)`` allows specifying an earlier Python 3
+-  version. (For example, ``feature_version=(3, 4)`` will treat
+-  ``async`` and ``await`` as non-reserved words.)
++  version.  For example, ``feature_version=(3, 4)`` will treat
++  :keyword:`async` and :keyword:`await` as non-reserved words.
+ 
+ (Contributed by Guido van Rossum in :issue:`35766`.)
+ 
+@@ -586,6 +597,61 @@ The :func:`ast.parse` function has some new flags:
+ asyncio
+ -------
+ 
++:func:`asyncio.run` has graduated from the provisional to stable API. This
++function can be used to execute a :term:`coroutine` and return the result while
++automatically managing the event loop. For example::
++
++    import asyncio
++
++    async def main():
++        await asyncio.sleep(0)
++        return 42
++
++    asyncio.run(main())
++
++This is *roughly* equivalent to::
++
++    import asyncio
++
++    async def main():
++        await asyncio.sleep(0)
++        return 42
++
++    loop = asyncio.new_event_loop()
++    asyncio.set_event_loop(loop)
++    try:
++        loop.run_until_complete(main())
++    finally:
++        asyncio.set_event_loop(None)
++        loop.close()
++
++
++The actual implementation is significantly more complex. Thus,
++:func:`asyncio.run` should be the preferred way of running asyncio programs.
++
++(Contributed by Yury Selivanov in :issue:`32314`.)
++
++Running ``python -m asyncio`` launches a natively async REPL.  This allows rapid
++experimentation with code that has a top-level :keyword:`await`.  There is no
++longer a need to directly call ``asyncio.run()`` which would spawn a new event
++loop on every invocation:
++
++.. code-block:: none
++
++    $ python -m asyncio
++    asyncio REPL 3.8.0
++    Use "await" directly instead of "asyncio.run()".
++    Type "help", "copyright", "credits" or "license" for more information.
++    >>> import asyncio
++    >>> await asyncio.sleep(10, result='hello')
++    hello
++
++(Contributed by Yury Selivanov in :issue:`37028`.)
++
++The exception :class:`asyncio.CancelledError` now inherits from
++:class:`BaseException` rather than :class:`Exception`.
++(Contributed by Yury Selivanov in :issue:`32528`.)
++
+ On Windows, the default event loop is now :class:`~asyncio.ProactorEventLoop`.
+ (Contributed by Victor Stinner in :issue:`34687`.)
+ 
+@@ -596,6 +662,26 @@ On Windows, the default event loop is now :class:`~asyncio.ProactorEventLoop`.
+ :exc:`KeyboardInterrupt` ("CTRL+C").
+ (Contributed by Vladimir Matveev in :issue:`23057`.)
+ 
++Added :meth:`asyncio.Task.get_coro` for getting the wrapped coroutine
++within an :class:`asyncio.Task`.
++(Contributed by Alex Grönholm in :issue:`36999`.)
++
++Asyncio tasks can now be named, either by passing the ``name`` keyword
++argument to :func:`asyncio.create_task` or
++the :meth:`~asyncio.loop.create_task` event loop method, or by
++calling the :meth:`~asyncio.Task.set_name` method on the task object. The
++task name is visible in the ``repr()`` output of :class:`asyncio.Task` and
++can also be retrieved using the :meth:`~asyncio.Task.get_name` method.
++(Contributed by Alex Grönholm in :issue:`34270`.)
++
++Added support for
++`Happy Eyeballs <https://en.wikipedia.org/wiki/Happy_Eyeballs>`_ to
++:func:`asyncio.loop.create_connection`. To specify the behavior, two new
++parameters have been added: *happy_eyeballs_delay* and *interleave*. The Happy
++Eyeballs algorithm improves responsiveness in applications that support IPv4
++and IPv6 by attempting to simultaneously connect using both.
++(Contributed by twisteroid ambassador in :issue:`33530`.)
++
+ 
+ builtins
+ --------
+@@ -611,14 +697,39 @@ marked with the ``CO_COROUTINE`` flag may then be returned.
+ collections
+ -----------
+ 
+-The :meth:`_asdict()` method for :func:`collections.namedtuple` now returns
+-a :class:`dict` instead of a :class:`collections.OrderedDict`. This works because
+-regular dicts have guaranteed ordering since Python 3.7. If the extra
+-features of :class:`OrderedDict` are required, the suggested remediation is
+-to cast the result to the desired type: ``OrderedDict(nt._asdict())``.
++The :meth:`~collections.somenamedtuple._asdict` method for
++:func:`collections.namedtuple` now returns a :class:`dict` instead of a
++:class:`collections.OrderedDict`. This works because regular dicts have
++guaranteed ordering since Python 3.7. If the extra features of
++:class:`OrderedDict` are required, the suggested remediation is to cast the
++result to the desired type: ``OrderedDict(nt._asdict())``.
+ (Contributed by Raymond Hettinger in :issue:`35864`.)
+ 
+ 
++cProfile
++--------
++
++The :class:`cProfile.Profile <profile.Profile>` class can now be used as a context manager.
++Profile a block of code by running::
++
++      import cProfile
++
++      with cProfile.Profile() as profiler:
++            # code to be profiled
++            ...
++
++(Contributed by Scott Sanderson in :issue:`29235`.)
++
++
++csv
++---
++
++The :class:`csv.DictReader` now returns instances of :class:`dict` instead of
++a :class:`collections.OrderedDict`.  The tool is now faster and uses less
++memory while still preserving the field order.
++(Contributed by Michael Seek in :issue:`34003`.)
++
++
+ curses
+ -------
+ 
+@@ -664,6 +775,46 @@ than as a function returning a decorator.  So both of these are now supported::
+ 
+ (Contributed by Raymond Hettinger in :issue:`36772`.)
+ 
++Added a new :func:`functools.cached_property` decorator, for computed properties
++cached for the life of the instance. ::
++
++   import functools
++   import statistics
++
++   class Dataset:
++      def __init__(self, sequence_of_numbers):
++         self.data = sequence_of_numbers
++
++      @functools.cached_property
++      def variance(self):
++         return statistics.variance(self.data)
++
++(Contributed by Carl Meyer in :issue:`21145`)
++
++
++Added a new :func:`functools.singledispatchmethod` decorator that converts
++methods into :term:`generic functions <generic function>` using
++:term:`single dispatch`::
++
++    from functools import singledispatchmethod
++    from contextlib import suppress
++
++    class TaskManager:
++
++        def __init__(self, tasks):
++            self.tasks = list(tasks)
++
++        @singledispatchmethod
++        def discard(self, value):
++            with suppress(ValueError):
++                self.tasks.remove(value)
++
++        @discard.register(list)
++        def _(self, tasks):
++            targets = set(tasks)
++            self.tasks = [x for x in self.tasks if x not in targets]
++
++(Contributed by Ethan Smith in :issue:`32380`)
+ 
+ gc
+ --
+@@ -692,7 +843,7 @@ for certain types of invalid or corrupt gzip files.
+ :issue:`6584`.)
+ 
+ 
+-idlelib and IDLE
++IDLE and idlelib
+ ----------------
+ 
+ Output over N lines (50 by default) is squeezed down to a button.
+@@ -708,12 +859,19 @@ They also re-appear in the box for the next customized run.  One can also
+ suppress the normal Shell main module restart.  (Contributed by Cheryl
+ Sabella, Terry Jan Reedy, and others in :issue:`5680` and :issue:`37627`.)
+ 
+-Add optional line numbers for IDLE editor windows. Windows
++Added optional line numbers for IDLE editor windows. Windows
+ open without line numbers unless set otherwise in the General
+ tab of the configuration dialog.  Line numbers for an existing
+ window are shown and hidden in the Options menu.
+ (Contributed by Tal Einat and Saimadhav Heblikar in :issue:`17535`.)
+ 
++OS native encoding is now used for converting between Python strings and Tcl
++objects. This allows IDLE to work with emoji and other non-BMP characters.
++These characters can be displayed or copied and pasted to or from the
++clipboard.  Converting strings from Tcl to Python and back now never fails.
++(Many people worked on this for eight years but the problem was finally
++solved by Serhiy Storchaka in :issue:`13153`.)
++
+ The changes above have been backported to 3.7 maintenance releases.
+ 
+ 
+@@ -744,13 +902,44 @@ fails. The exception is ignored silently by default in release build.
+ (Contributed by Victor Stinner in :issue:`18748`.)
+ 
+ 
++itertools
++---------
++
++The :func:`itertools.accumulate` function added an option *initial* keyword
++argument to specify an initial value::
++
++    >>> from itertools import accumulate
++    >>> list(accumulate([10, 5, 30, 15], initial=1000))
++    [1000, 1010, 1015, 1045, 1060]
++
++(Contributed by Lisa Roach in :issue:`34659`.)
++
++
+ json.tool
+ ---------
+ 
+-Add option ``--json-lines`` to parse every input line as separate JSON object.
++Add option ``--json-lines`` to parse every input line as a separate JSON object.
+ (Contributed by Weipeng Hong in :issue:`31553`.)
+ 
+ 
++logging
++-------
++
++Added a *force* keyword argument to :func:`logging.basicConfig()`
++When set to *True*, any existing handlers attached
++to the root logger are removed and closed before carrying out the
++configuration specified by the other arguments.
++
++This solves a long-standing problem.  Once a logger or *basicConfig()* had
++been called, subsequent calls to *basicConfig()* were silently ignored.
++This made it difficult to update, experiment with, or teach the various
++logging configuration options using the interactive prompt or a Jupyter
++notebook.
++
++(Suggested by Raymond Hettinger, implemented by Dong-hee Na, and
++reviewed by Vinay Sajip in :issue:`33897`.)
++
++
+ math
+ ----
+ 
+@@ -770,9 +959,30 @@ numbers::
+     >>> math.prod(likelihoods, start=prior)
+     0.126
+ 
+-(Contributed by Pablo Galindo in :issue:`35606`)
++(Contributed by Pablo Galindo in :issue:`35606`.)
++
++Added two new combinatoric functions :func:`math.perm` and :func:`math.comb`::
++
++    >>> math.perm(10, 3)    # Permutations of 10 things taken 3 at a time
++    720
++    >>> math.comb(10, 3)    # Combinations of 10 things taken 3 at a time
++    120
++
++(Contributed by Yash Aggarwal, Keller Fuchs, Serhiy Storchaka, and Raymond
++Hettinger in :issue:`37128`, :issue:`37178`, and :issue:`35431`.)
++
++Added a new function :func:`math.isqrt` for computing accurate integer square
++roots without conversion to floating point.  The new function supports
++arbitrarily large integers.  It is faster than ``floor(sqrt(n))`` but slower
++than :func:`math.sqrt`::
++
++    >>> r = 650320427
++    >>> s = r ** 2
++    >>> isqrt(s - 1)         # correct
++    650320426
++    >>> floor(sqrt(s - 1))   # incorrect
++    650320427
+ 
+-Added new function :func:`math.isqrt` for computing integer square roots.
+ (Contributed by Mark Dickinson in :issue:`36887`.)
+ 
+ The function :func:`math.factorial` no longer accepts arguments that are not
+@@ -873,15 +1083,10 @@ to a path.
+ pickle
+ ------
+ 
+-Reduction methods can now include a 6th item in the tuple they return. This
+-item should specify a custom state-setting method that's called instead of the
+-regular ``__setstate__`` method.
+-(Contributed by Pierre Glaser and Olivier Grisel in :issue:`35900`)
+-
+ :mod:`pickle` extensions subclassing the C-optimized :class:`~pickle.Pickler`
+ can now override the pickling logic of functions and classes by defining the
+ special :meth:`~pickle.Pickler.reducer_override` method.
+-(Contributed by Pierre Glaser and Olivier Grisel in :issue:`35900`)
++(Contributed by Pierre Glaser and Olivier Grisel in :issue:`35900`.)
+ 
+ 
+ plistlib
+@@ -892,6 +1097,32 @@ NSKeyedArchiver-encoded binary plists.
+ (Contributed by Jon Janzen in :issue:`26707`.)
+ 
+ 
++pprint
++------
++
++The :mod:`pprint` module added a *sort_dicts* parameter to several functions.
++By default, those functions continue to sort dictionaries before rendering or
++printing.  However, if *sort_dicts* is set to *False*, the dictionaries retain
++the order that keys were inserted.  This can be useful for comparison to JSON
++inputs during debugging.
++
++In addition, there is a convenience new function, :func:`pprint.pp` that is
++like :func:`pprint.pprint` but with *sort_dicts* defaulting to *False*::
++
++    >>> from pprint import pprint, pp
++    >>> d = dict(source='input.txt', operation='filter', destination='output.txt')
++    >>> pp(d, width=40)                  # Original order
++    {'source': 'input.txt',
++     'operation': 'filter',
++     'destination': 'output.txt'}
++    >>> pprint(d, width=40)              # Keys sorted alphabetically
++    {'destination': 'output.txt',
++     'operation': 'filter',
++     'source': 'input.txt'}
++
++(Contributed by Rémi Lapeyre in :issue:`30670`.)
++
++
+ py_compile
+ ----------
+ 
+@@ -938,8 +1169,8 @@ The :func:`socket.if_nameindex()`, :func:`socket.if_nametoindex()`, and
+ ssl
+ ---
+ 
+-Added :attr:`ssl.SSLContext.post_handshake_auth` to enable and
+-:meth:`ssl.SSLSocket.verify_client_post_handshake` to initiate TLS 1.3
++Added :attr:`~ssl.SSLContext.post_handshake_auth` to enable and
++:meth:`~ssl.SSLSocket.verify_client_post_handshake` to initiate TLS 1.3
+ post-handshake authentication.
+ (Contributed by Christian Heimes in :issue:`34670`.)
+ 
+@@ -1117,8 +1348,9 @@ the string.  (Contributed by Max Belanger, David Euresti, and Greg Price in
+ unittest
+ --------
+ 
+-Added :class:`AsyncMock` to support an asynchronous version of :class:`Mock`.
+-Appropriate new assert functions for testing have been added as well.
++Added :class:`~unittest.mock.AsyncMock` to support an asynchronous version of
++:class:`~unittest.mock.Mock`.  Appropriate new assert functions for testing
++have been added as well.
+ (Contributed by Lisa Roach in :issue:`26467`).
+ 
+ Added :func:`~unittest.addModuleCleanup()` and
+@@ -1198,6 +1430,16 @@ them in the generated tree.
+ (Contributed by Stefan Behnel in :issue:`36676` and :issue:`36673`.)
+ 
+ 
++xmlrpc
++------
++
++:class:`xmlrpc.client.ServerProxy` now supports an optional *headers* keyword
++argument for a sequence of HTTP headers to be sent with each request.  Among
++other things, this makes it possible to upgrade from default basic
++authentication to faster session authentication.
++(Contributed by Cédric Krier in :issue:`35153`.)
++
++
+ Optimizations
+ =============
+ 
+@@ -1241,7 +1483,7 @@ Optimizations
+ 
+ * Removed one ``Py_ssize_t`` member from ``PyGC_Head``.  All GC tracked
+   objects (e.g. tuple, list, dict) size is reduced 4 or 8 bytes.
+-  (Contributed by Inada Naoki in :issue:`33597`)
++  (Contributed by Inada Naoki in :issue:`33597`.)
+ 
+ * :class:`uuid.UUID` now uses ``__slots__`` to reduce its memory footprint.
+   (Contributed by Wouter Bolsterlee and Tal Einat in :issue:`30977`)
+@@ -1393,7 +1635,7 @@ Deprecated
+ 
+ * Passing an object that is not an instance of
+   :class:`concurrent.futures.ThreadPoolExecutor` to
+-  :meth:`asyncio.loop.set_default_executor()` is
++  :meth:`loop.set_default_executor() <asyncio.loop.set_default_executor>` is
+   deprecated and will be prohibited in Python 3.9.
+   (Contributed by Elvis Pranskevichus in :issue:`34075`.)
+ 
+@@ -1421,6 +1663,24 @@ Deprecated
+   constant nodes.
+   (Contributed by Serhiy Storchaka in :issue:`36917`.)
+ 
++* The :func:`asyncio.coroutine` :term:`decorator` is deprecated and will be
++  removed in version 3.10.  Instead of ``@asyncio.coroutine``, use
++  :keyword:`async def` instead.
++  (Contributed by Andrew Svetlov in :issue:`36921`.)
++
++* In :mod:`asyncio`, the explicit passing of a *loop* argument has been
++  deprecated and will be removed in version 3.10 for the following:
++  :func:`asyncio.sleep`, :func:`asyncio.gather`, :func:`asyncio.shield`,
++  :func:`asyncio.wait_for`, :func:`asyncio.wait`, :func:`asyncio.as_completed`,
++  :class:`asyncio.Task`, :class:`asyncio.Lock`, :class:`asyncio.Event`,
++  :class:`asyncio.Condition`, :class:`asyncio.Semaphore`,
++  :class:`asyncio.BoundedSemaphore`, :class:`asyncio.Queue`,
++  :func:`asyncio.create_subprocess_exec`, and
++  :func:`asyncio.create_subprocess_shell`.
++
++* The explicit passing of coroutine objects to :func:`asyncio.wait` has been
++  deprecated and will be removed in version 3.10.
++
+ * The following functions and methods are deprecated in the :mod:`gettext`
+   module: :func:`~gettext.lgettext`, :func:`~gettext.ldgettext`,
+   :func:`~gettext.lngettext` and :func:`~gettext.ldngettext`.
+@@ -1467,7 +1727,7 @@ Deprecated
+     :class:`multiprocessing.managers.SharedMemoryServer`.
+   - *obj* in :func:`weakref.finalize`.
+ 
+-  In future releases of Python they will be :ref:`positional-only
++  In future releases of Python, they will be :ref:`positional-only
+   <positional-only_parameter>`.
+   (Contributed by Serhiy Storchaka in :issue:`36492`.)
+ 
+@@ -1477,6 +1737,11 @@ API and Feature Removals
+ 
+ The following features and APIs have been removed from Python 3.8:
+ 
++*  Starting with Python 3.3, importing ABCs from :mod:`collections` was
++   deprecated, and importing should be done from :mod:`collections.abc`. Being
++   able to import from collections was marked for removal in 3.8, but has been
++   delayed to 3.9. (See :issue:`36952`.)
++
+ * The :mod:`macpath` module, deprecated in Python 3.7, has been removed.
+   (Contributed by Victor Stinner in :issue:`35471`.)
+ 
+@@ -1595,7 +1860,7 @@ Changes in the Python API
+   (Contributed by Eric Snow in :issue:`34651`, modified by Christian Heimes
+   in :issue:`37951`.)
+ 
+-* The :meth:`imap.IMAP4.logout` method no longer ignores silently arbitrary
++* The :meth:`imap.IMAP4.logout` method no longer silently ignores arbitrary
+   exceptions.
+   (Contributed by Victor Stinner in :issue:`36348`.)
+ 
+@@ -1650,7 +1915,7 @@ Changes in the Python API
+ * The ``PyGC_Head`` struct has changed completely.  All code that touched the
+   struct member should be rewritten.  (See :issue:`33597`.)
+ 
+-* The ``PyInterpreterState`` struct has been moved into the "internal"
++* The :c:type:`PyInterpreterState` struct has been moved into the "internal"
+   header files (specifically Include/internal/pycore_pystate.h).  An
+   opaque ``PyInterpreterState`` is still available as part of the public
+   API (and stable ABI).  The docs indicate that none of the struct's
+@@ -1660,13 +1925,6 @@ Changes in the Python API
+   you adjust (possibly including adding accessor functions to the
+   public API).  (See :issue:`35886`.)
+ 
+-* Asyncio tasks can now be named, either by passing the ``name`` keyword
+-  argument to :func:`asyncio.create_task` or
+-  the :meth:`~asyncio.loop.create_task` event loop method, or by
+-  calling the :meth:`~asyncio.Task.set_name` method on the task object. The
+-  task name is visible in the ``repr()`` output of :class:`asyncio.Task` and
+-  can also be retrieved using the :meth:`~asyncio.Task.get_name` method.
+-
+ * The :meth:`mmap.flush() <mmap.mmap.flush>` method now returns ``None`` on
+   success and raises an exception on error under all platforms.  Previously,
+   its behavior was platform-dependent: a nonzero value was returned on success;
+@@ -1689,8 +1947,19 @@ Changes in the Python API
+   (Contributed by Anthony Sottile in :issue:`36264`.)
+ 
+ * The exception :class:`asyncio.CancelledError` now inherits from
+-  :class:`BaseException` rather than a :class:`Exception`.
+-  (Contributed by Yury Selivanov in :issue:`13528`.)
++  :class:`BaseException` rather than :class:`Exception`.
++  (Contributed by Yury Selivanov in :issue:`32528`.)
++
++* The function :func:`asyncio.wait_for` now correctly waits for cancellation
++  when using an instance of :class:`asyncio.Task`. Previously, upon reaching
++  *timeout*, it was cancelled and immediately returned.
++  (Contributed by Elvis Pranskevichus in :issue:`32751`.)
++
++* The function :func:`asyncio.BaseTransport.get_extra_info` now returns a safe
++  to use socket object when 'socket' is passed to the *name* parameter.
++  (Contributed by Yury Selivanov in :issue:`37027`.)
++
++* :class:`asyncio.BufferedProtocol` has graduated to the stable API.
+ 
+ .. _bpo-36085-whatsnew:
+ 
+diff --git a/Include/internal/pycore_pymem.h b/Include/internal/pycore_pymem.h
+index 22677d3738..47d092f3e5 100644
+--- a/Include/internal/pycore_pymem.h
++++ b/Include/internal/pycore_pymem.h
+@@ -155,9 +155,25 @@ PyAPI_FUNC(int) _PyMem_SetDefaultAllocator(
+     PyMemAllocatorDomain domain,
+     PyMemAllocatorEx *old_alloc);
+ 
++/* Special bytes broadcast into debug memory blocks at appropriate times.
++   Strings of these are unlikely to be valid addresses, floats, ints or
++   7-bit ASCII.
++
++   - PYMEM_CLEANBYTE: clean (newly allocated) memory
++   - PYMEM_DEADBYTE dead (newly freed) memory
++   - PYMEM_FORBIDDENBYTE: untouchable bytes at each end of a block
++
++   Byte patterns 0xCB, 0xDB and 0xFB have been replaced with 0xCD, 0xDD and
++   0xFD to use the same values than Windows CRT debug malloc() and free().
++   If modified, _PyMem_IsPtrFreed() should be updated as well. */
++#define PYMEM_CLEANBYTE      0xCD
++#define PYMEM_DEADBYTE       0xDD
++#define PYMEM_FORBIDDENBYTE  0xFD
++
+ /* Heuristic checking if a pointer value is newly allocated
+-   (uninitialized) or newly freed. The pointer is not dereferenced, only the
+-   pointer value is checked.
++   (uninitialized), newly freed or NULL (is equal to zero).
++
++   The pointer is not dereferenced, only the pointer value is checked.
+ 
+    The heuristic relies on the debug hooks on Python memory allocators which
+    fills newly allocated memory with CLEANBYTE (0xCD) and newly freed memory
+@@ -167,11 +183,13 @@ static inline int _PyMem_IsPtrFreed(void *ptr)
+ {
+     uintptr_t value = (uintptr_t)ptr;
+ #if SIZEOF_VOID_P == 8
+-    return (value == (uintptr_t)0xCDCDCDCDCDCDCDCD
++    return (value == 0
++            || value == (uintptr_t)0xCDCDCDCDCDCDCDCD
+             || value == (uintptr_t)0xDDDDDDDDDDDDDDDD
+             || value == (uintptr_t)0xFDFDFDFDFDFDFDFD);
+ #elif SIZEOF_VOID_P == 4
+-    return (value == (uintptr_t)0xCDCDCDCD
++    return (value == 0
++            || value == (uintptr_t)0xCDCDCDCD
+             || value == (uintptr_t)0xDDDDDDDD
+             || value == (uintptr_t)0xFDFDFDFD);
+ #else
+diff --git a/Include/patchlevel.h b/Include/patchlevel.h
+index d685a85709..df8bd3448b 100644
+--- a/Include/patchlevel.h
++++ b/Include/patchlevel.h
+@@ -23,7 +23,7 @@
+ #define PY_RELEASE_SERIAL       0
+ 
+ /* Version as a string */
+-#define PY_VERSION              "3.8.0"
++#define PY_VERSION              "3.8.0+"
+ /*--end constants--*/
+ 
+ /* Version as a single 4-byte hex number, e.g. 0x010502B2 == 1.5.2b2.
+diff --git a/Lib/asyncio/proactor_events.py b/Lib/asyncio/proactor_events.py
+index 229f56e6bb..830d8edc32 100644
+--- a/Lib/asyncio/proactor_events.py
++++ b/Lib/asyncio/proactor_events.py
+@@ -627,10 +627,9 @@ class BaseProactorEventLoop(base_events.BaseEventLoop):
+         self._accept_futures = {}   # socket file descriptor => Future
+         proactor.set_loop(self)
+         self._make_self_pipe()
+-        self_no = self._csock.fileno()
+         if threading.current_thread() is threading.main_thread():
+             # wakeup fd can only be installed to a file descriptor from the main thread
+-            signal.set_wakeup_fd(self_no)
++            signal.set_wakeup_fd(self._csock.fileno())
+ 
+     def _make_socket_transport(self, sock, protocol, waiter=None,
+                                extra=None, server=None):
+@@ -676,7 +675,8 @@ class BaseProactorEventLoop(base_events.BaseEventLoop):
+         if self.is_closed():
+             return
+ 
+-        signal.set_wakeup_fd(-1)
++        if threading.current_thread() is threading.main_thread():
++            signal.set_wakeup_fd(-1)
+         # Call these methods before closing the event loop (before calling
+         # BaseEventLoop.close), because they can schedule callbacks with
+         # call_soon(), which is forbidden when the event loop is closed.
+diff --git a/Lib/hmac.py b/Lib/hmac.py
+index 890eaba08e..b769876e6f 100644
+--- a/Lib/hmac.py
++++ b/Lib/hmac.py
+@@ -1,4 +1,4 @@
+-"""HMAC (Keyed-Hashing for Message Authentication) Python module.
++"""HMAC (Keyed-Hashing for Message Authentication) module.
+ 
+ Implements the HMAC algorithm as described by RFC 2104.
+ """
+@@ -30,23 +30,25 @@ class HMAC:
+     """
+     blocksize = 64  # 512-bit HMAC; can be changed in subclasses.
+ 
+-    def __init__(self, key, msg = None, digestmod = None):
++    def __init__(self, key, msg=None, digestmod=''):
+         """Create a new HMAC object.
+ 
+-        key:       key for the keyed hash object.
+-        msg:       Initial input for the hash, if provided.
+-        digestmod: Required.  A module supporting PEP 247.  *OR*
+-                   A hashlib constructor returning a new hash object.  *OR*
+-                   A hash name suitable for hashlib.new().
++        key: bytes or buffer, key for the keyed hash object.
++        msg: bytes or buffer, Initial input for the hash or None.
++        digestmod: A hash name suitable for hashlib.new(). *OR*
++                   A hashlib constructor returning a new hash object. *OR*
++                   A module supporting PEP 247.
+ 
+-        Note: key and msg must be a bytes or bytearray objects.
++                   Required as of 3.8, despite its position after the optional
++                   msg argument.  Passing it as a keyword argument is
++                   recommended, though not required for legacy API reasons.
+         """
+ 
+         if not isinstance(key, (bytes, bytearray)):
+             raise TypeError("key: expected bytes or bytearray, but got %r" % type(key).__name__)
+ 
+-        if digestmod is None:
+-            raise ValueError('`digestmod` is required.')
++        if not digestmod:
++            raise TypeError("Missing required parameter 'digestmod'.")
+ 
+         if callable(digestmod):
+             self.digest_cons = digestmod
+@@ -90,8 +92,7 @@ class HMAC:
+         return "hmac-" + self.inner.name
+ 
+     def update(self, msg):
+-        """Update this hashing object with the string msg.
+-        """
++        """Feed data from msg into this hashing object."""
+         self.inner.update(msg)
+ 
+     def copy(self):
+@@ -119,7 +120,7 @@ class HMAC:
+     def digest(self):
+         """Return the hash value of this hashing object.
+ 
+-        This returns a string containing 8-bit data.  The object is
++        This returns the hmac value as bytes.  The object is
+         not altered in any way by this function; you can continue
+         updating the object after calling this function.
+         """
+@@ -132,30 +133,34 @@ class HMAC:
+         h = self._current()
+         return h.hexdigest()
+ 
+-def new(key, msg = None, digestmod = None):
++def new(key, msg=None, digestmod=''):
+     """Create a new hashing object and return it.
+ 
+-    key: The starting key for the hash.
+-    msg: if available, will immediately be hashed into the object's starting
+-    state.
++    key: bytes or buffer, The starting key for the hash.
++    msg: bytes or buffer, Initial input for the hash, or None.
++    digestmod: A hash name suitable for hashlib.new(). *OR*
++               A hashlib constructor returning a new hash object. *OR*
++               A module supporting PEP 247.
++
++               Required as of 3.8, despite its position after the optional
++               msg argument.  Passing it as a keyword argument is
++               recommended, though not required for legacy API reasons.
+ 
+-    You can now feed arbitrary strings into the object using its update()
++    You can now feed arbitrary bytes into the object using its update()
+     method, and can ask for the hash value at any time by calling its digest()
+-    method.
++    or hexdigest() methods.
+     """
+     return HMAC(key, msg, digestmod)
+ 
+ 
+ def digest(key, msg, digest):
+-    """Fast inline implementation of HMAC
++    """Fast inline implementation of HMAC.
+ 
+-    key:    key for the keyed hash object.
+-    msg:    input message
++    key: bytes or buffer, The key for the keyed hash object.
++    msg: bytes or buffer, Input message.
+     digest: A hash name suitable for hashlib.new() for best performance. *OR*
+             A hashlib constructor returning a new hash object. *OR*
+             A module supporting PEP 247.
+-
+-    Note: key and msg must be a bytes or bytearray objects.
+     """
+     if (_hashopenssl is not None and
+             isinstance(digest, str) and digest in _openssl_md_meths):
+diff --git a/Lib/inspect.py b/Lib/inspect.py
+index c2a1ed4148..3ff395ca33 100644
+--- a/Lib/inspect.py
++++ b/Lib/inspect.py
+@@ -2960,7 +2960,7 @@ class Signature:
+                         arguments[param.name] = tuple(values)
+                         break
+ 
+-                    if param.name in kwargs:
++                    if param.name in kwargs and param.kind != _POSITIONAL_ONLY:
+                         raise TypeError(
+                             'multiple values for argument {arg!r}'.format(
+                                 arg=param.name)) from None
+diff --git a/Lib/lib2to3/Grammar.txt b/Lib/lib2to3/Grammar.txt
+index a7ddad3cf3..68b73868b5 100644
+--- a/Lib/lib2to3/Grammar.txt
++++ b/Lib/lib2to3/Grammar.txt
+@@ -138,8 +138,8 @@ arglist: argument (',' argument)* [',']
+ # that precede iterable unpackings are blocked; etc.
+ argument: ( test [comp_for] |
+             test '=' test |
+-	    '**' expr |
+-	    star_expr )
++            '**' test |
++	        '*' test )
+ 
+ comp_iter: comp_for | comp_if
+ comp_for: [ASYNC] 'for' exprlist 'in' testlist_safe [comp_iter]
+diff --git a/Lib/lib2to3/fixes/fix_apply.py b/Lib/lib2to3/fixes/fix_apply.py
+index 826ec8c9b6..6408582c42 100644
+--- a/Lib/lib2to3/fixes/fix_apply.py
++++ b/Lib/lib2to3/fixes/fix_apply.py
+@@ -37,10 +37,8 @@ class FixApply(fixer_base.BaseFix):
+         # I feel like we should be able to express this logic in the
+         # PATTERN above but I don't know how to do it so...
+         if args:
+-            if args.type == self.syms.star_expr:
+-                return  # Make no change.
+             if (args.type == self.syms.argument and
+-                args.children[0].value == '**'):
++                args.children[0].value in {'**', '*'}):
+                 return  # Make no change.
+         if kwds and (kwds.type == self.syms.argument and
+                      kwds.children[0].value == '**'):
+diff --git a/Lib/lib2to3/fixes/fix_intern.py b/Lib/lib2to3/fixes/fix_intern.py
+index a852330908..d752843092 100644
+--- a/Lib/lib2to3/fixes/fix_intern.py
++++ b/Lib/lib2to3/fixes/fix_intern.py
+@@ -30,10 +30,8 @@ class FixIntern(fixer_base.BaseFix):
+             # PATTERN above but I don't know how to do it so...
+             obj = results['obj']
+             if obj:
+-                if obj.type == self.syms.star_expr:
+-                    return  # Make no change.
+                 if (obj.type == self.syms.argument and
+-                    obj.children[0].value == '**'):
++                    obj.children[0].value in {'**', '*'}):
+                     return  # Make no change.
+         names = ('sys', 'intern')
+         new = ImportAndCall(node, results, names)
+diff --git a/Lib/lib2to3/fixes/fix_reload.py b/Lib/lib2to3/fixes/fix_reload.py
+index 6c7fbbd3be..b30841131c 100644
+--- a/Lib/lib2to3/fixes/fix_reload.py
++++ b/Lib/lib2to3/fixes/fix_reload.py
+@@ -27,10 +27,8 @@ class FixReload(fixer_base.BaseFix):
+             # PATTERN above but I don't know how to do it so...
+             obj = results['obj']
+             if obj:
+-                if obj.type == self.syms.star_expr:
+-                    return  # Make no change.
+                 if (obj.type == self.syms.argument and
+-                    obj.children[0].value == '**'):
++                    obj.children[0].value in {'**', '*'}):
+                     return  # Make no change.
+         names = ('importlib', 'reload')
+         new = ImportAndCall(node, results, names)
+diff --git a/Lib/lib2to3/tests/test_parser.py b/Lib/lib2to3/tests/test_parser.py
+index 01b2b51e4a..868ada71cd 100644
+--- a/Lib/lib2to3/tests/test_parser.py
++++ b/Lib/lib2to3/tests/test_parser.py
+@@ -253,6 +253,13 @@ class TestUnpackingGeneralizations(GrammarTest):
+     def test_double_star_dict_literal_after_keywords(self):
+         self.validate("""func(spam='fried', **{'eggs':'scrambled'})""")
+ 
++    def test_double_star_expression(self):
++        self.validate("""func(**{'a':2} or {})""")
++        self.validate("""func(**() or {})""")
++
++    def test_star_expression(self):
++        self.validate("""func(*[] or [2])""")
++
+     def test_list_display(self):
+         self.validate("""[*{2}, 3, *[4]]""")
+ 
+diff --git a/Lib/pathlib.py b/Lib/pathlib.py
+index 91ce4a1257..70b011b0e8 100644
+--- a/Lib/pathlib.py
++++ b/Lib/pathlib.py
+@@ -187,6 +187,9 @@ class _WindowsFlavour(_Flavour):
+     def casefold_parts(self, parts):
+         return [p.lower() for p in parts]
+ 
++    def compile_pattern(self, pattern):
++        return re.compile(fnmatch.translate(pattern), re.IGNORECASE).fullmatch
++
+     def resolve(self, path, strict=False):
+         s = str(path)
+         if not s:
+@@ -309,6 +312,9 @@ class _PosixFlavour(_Flavour):
+     def casefold_parts(self, parts):
+         return parts
+ 
++    def compile_pattern(self, pattern):
++        return re.compile(fnmatch.translate(pattern)).fullmatch
++
+     def resolve(self, path, strict=False):
+         sep = self.sep
+         accessor = path._accessor
+@@ -446,7 +452,7 @@ _normal_accessor = _NormalAccessor()
+ # Globbing helpers
+ #
+ 
+-def _make_selector(pattern_parts):
++def _make_selector(pattern_parts, flavour):
+     pat = pattern_parts[0]
+     child_parts = pattern_parts[1:]
+     if pat == '**':
+@@ -457,7 +463,7 @@ def _make_selector(pattern_parts):
+         cls = _WildcardSelector
+     else:
+         cls = _PreciseSelector
+-    return cls(pat, child_parts)
++    return cls(pat, child_parts, flavour)
+ 
+ if hasattr(functools, "lru_cache"):
+     _make_selector = functools.lru_cache()(_make_selector)
+@@ -467,10 +473,10 @@ class _Selector:
+     """A selector matches a specific glob pattern part against the children
+     of a given path."""
+ 
+-    def __init__(self, child_parts):
++    def __init__(self, child_parts, flavour):
+         self.child_parts = child_parts
+         if child_parts:
+-            self.successor = _make_selector(child_parts)
++            self.successor = _make_selector(child_parts, flavour)
+             self.dironly = True
+         else:
+             self.successor = _TerminatingSelector()
+@@ -496,9 +502,9 @@ class _TerminatingSelector:
+ 
+ class _PreciseSelector(_Selector):
+ 
+-    def __init__(self, name, child_parts):
++    def __init__(self, name, child_parts, flavour):
+         self.name = name
+-        _Selector.__init__(self, child_parts)
++        _Selector.__init__(self, child_parts, flavour)
+ 
+     def _select_from(self, parent_path, is_dir, exists, scandir):
+         try:
+@@ -512,13 +518,12 @@ class _PreciseSelector(_Selector):
+ 
+ class _WildcardSelector(_Selector):
+ 
+-    def __init__(self, pat, child_parts):
+-        self.pat = re.compile(fnmatch.translate(pat))
+-        _Selector.__init__(self, child_parts)
++    def __init__(self, pat, child_parts, flavour):
++        self.match = flavour.compile_pattern(pat)
++        _Selector.__init__(self, child_parts, flavour)
+ 
+     def _select_from(self, parent_path, is_dir, exists, scandir):
+         try:
+-            cf = parent_path._flavour.casefold
+             entries = list(scandir(parent_path))
+             for entry in entries:
+                 entry_is_dir = False
+@@ -529,8 +534,7 @@ class _WildcardSelector(_Selector):
+                         raise
+                 if not self.dironly or entry_is_dir:
+                     name = entry.name
+-                    casefolded = cf(name)
+-                    if self.pat.match(casefolded):
++                    if self.match(name):
+                         path = parent_path._make_child_relpath(name)
+                         for p in self.successor._select_from(path, is_dir, exists, scandir):
+                             yield p
+@@ -541,8 +545,8 @@ class _WildcardSelector(_Selector):
+ 
+ class _RecursiveWildcardSelector(_Selector):
+ 
+-    def __init__(self, pat, child_parts):
+-        _Selector.__init__(self, child_parts)
++    def __init__(self, pat, child_parts, flavour):
++        _Selector.__init__(self, child_parts, flavour)
+ 
+     def _iterate_directories(self, parent_path, is_dir, scandir):
+         yield parent_path
+@@ -1109,11 +1113,10 @@ class Path(PurePath):
+         """
+         if not pattern:
+             raise ValueError("Unacceptable pattern: {!r}".format(pattern))
+-        pattern = self._flavour.casefold(pattern)
+         drv, root, pattern_parts = self._flavour.parse_parts((pattern,))
+         if drv or root:
+             raise NotImplementedError("Non-relative patterns are unsupported")
+-        selector = _make_selector(tuple(pattern_parts))
++        selector = _make_selector(tuple(pattern_parts), self._flavour)
+         for p in selector.select_from(self):
+             yield p
+ 
+@@ -1122,11 +1125,10 @@ class Path(PurePath):
+         directories) matching the given relative pattern, anywhere in
+         this subtree.
+         """
+-        pattern = self._flavour.casefold(pattern)
+         drv, root, pattern_parts = self._flavour.parse_parts((pattern,))
+         if drv or root:
+             raise NotImplementedError("Non-relative patterns are unsupported")
+-        selector = _make_selector(("**",) + tuple(pattern_parts))
++        selector = _make_selector(("**",) + tuple(pattern_parts), self._flavour)
+         for p in selector.select_from(self):
+             yield p
+ 
+diff --git a/Lib/statistics.py b/Lib/statistics.py
+index 0d747b3d6c..461ffae3f4 100644
+--- a/Lib/statistics.py
++++ b/Lib/statistics.py
+@@ -1092,7 +1092,7 @@ class NormalDist:
+         "Two NormalDist objects are equal if their mu and sigma are both equal."
+         if not isinstance(x2, NormalDist):
+             return NotImplemented
+-        return (x1._mu, x2._sigma) == (x2._mu, x2._sigma)
++        return x1._mu == x2._mu and x1._sigma == x2._sigma
+ 
+     def __hash__(self):
+         "NormalDist objects hash equal if their mu and sigma are both equal."
+diff --git a/Lib/test/support/__init__.py b/Lib/test/support/__init__.py
+index 2ff7640535..d6a7819cb0 100644
+--- a/Lib/test/support/__init__.py
++++ b/Lib/test/support/__init__.py
+@@ -1066,7 +1066,7 @@ def change_cwd(path, quiet=False):
+     """
+     saved_dir = os.getcwd()
+     try:
+-        os.chdir(path)
++        os.chdir(os.path.realpath(path))
+     except OSError as exc:
+         if not quiet:
+             raise
+diff --git a/Lib/test/test_asyncio/test_sslproto.py b/Lib/test/test_asyncio/test_sslproto.py
+index c115e46e70..a7c089018a 100644
+--- a/Lib/test/test_asyncio/test_sslproto.py
++++ b/Lib/test/test_asyncio/test_sslproto.py
+@@ -497,14 +497,6 @@ class BaseStartTLS(func_tests.FunctionalTestCaseMixin):
+ 
+         server_context = test_utils.simple_server_sslcontext()
+         client_context = test_utils.simple_client_sslcontext()
+-        if (sys.platform.startswith('freebsd')
+-                or sys.platform.startswith('win')
+-                or sys.platform.startswith('darwin')):
+-            # bpo-35031: Some FreeBSD and Windows buildbots fail to run this test
+-            # as the eof was not being received by the server if the payload
+-            # size is not big enough. This behaviour only appears if the
+-            # client is using TLS1.3.  Also seen on macOS.
+-            client_context.options |= ssl.OP_NO_TLSv1_3
+         answer = None
+ 
+         def client(sock, addr):
+@@ -521,9 +513,10 @@ class BaseStartTLS(func_tests.FunctionalTestCaseMixin):
+             sock.close()
+ 
+         class ServerProto(asyncio.Protocol):
+-            def __init__(self, on_con, on_con_lost):
++            def __init__(self, on_con, on_con_lost, on_got_hello):
+                 self.on_con = on_con
+                 self.on_con_lost = on_con_lost
++                self.on_got_hello = on_got_hello
+                 self.data = b''
+                 self.transport = None
+ 
+@@ -537,7 +530,7 @@ class BaseStartTLS(func_tests.FunctionalTestCaseMixin):
+             def data_received(self, data):
+                 self.data += data
+                 if len(self.data) >= len(HELLO_MSG):
+-                    self.transport.write(ANSWER)
++                    self.on_got_hello.set_result(None)
+ 
+             def connection_lost(self, exc):
+                 self.transport = None
+@@ -546,7 +539,7 @@ class BaseStartTLS(func_tests.FunctionalTestCaseMixin):
+                 else:
+                     self.on_con_lost.set_exception(exc)
+ 
+-        async def main(proto, on_con, on_con_lost):
++        async def main(proto, on_con, on_con_lost, on_got_hello):
+             tr = await on_con
+             tr.write(HELLO_MSG)
+ 
+@@ -556,9 +549,11 @@ class BaseStartTLS(func_tests.FunctionalTestCaseMixin):
+                 tr, proto, server_context,
+                 server_side=True,
+                 ssl_handshake_timeout=self.TIMEOUT)
+-
+             proto.replace_transport(new_tr)
+ 
++            await on_got_hello
++            new_tr.write(ANSWER)
++
+             await on_con_lost
+             self.assertEqual(proto.data, HELLO_MSG)
+             new_tr.close()
+@@ -566,7 +561,8 @@ class BaseStartTLS(func_tests.FunctionalTestCaseMixin):
+         async def run_main():
+             on_con = self.loop.create_future()
+             on_con_lost = self.loop.create_future()
+-            proto = ServerProto(on_con, on_con_lost)
++            on_got_hello = self.loop.create_future()
++            proto = ServerProto(on_con, on_con_lost, on_got_hello)
+ 
+             server = await self.loop.create_server(
+                 lambda: proto, '127.0.0.1', 0)
+@@ -575,7 +571,7 @@ class BaseStartTLS(func_tests.FunctionalTestCaseMixin):
+             with self.tcp_client(lambda sock: client(sock, addr),
+                                  timeout=self.TIMEOUT):
+                 await asyncio.wait_for(
+-                    main(proto, on_con, on_con_lost),
++                    main(proto, on_con, on_con_lost, on_got_hello),
+                     timeout=self.TIMEOUT)
+ 
+             server.close()
+diff --git a/Lib/test/test_asyncio/test_windows_events.py b/Lib/test/test_asyncio/test_windows_events.py
+index 9ed10fc20f..6b005702c9 100644
+--- a/Lib/test/test_asyncio/test_windows_events.py
++++ b/Lib/test/test_asyncio/test_windows_events.py
+@@ -69,6 +69,8 @@ class ProactorMultithreading(test_utils.TestCase):
+             nonlocal finished
+             loop = asyncio.new_event_loop()
+             loop.run_until_complete(coro())
++            # close() must not call signal.set_wakeup_fd()
++            loop.close()
+             finished = True
+ 
+         thread = threading.Thread(target=func)
+diff --git a/Lib/test/test_capi.py b/Lib/test/test_capi.py
+index ff7acac43b..78c51b3cb6 100644
+--- a/Lib/test/test_capi.py
++++ b/Lib/test/test_capi.py
+@@ -692,6 +692,9 @@ class PyMemDebugTests(unittest.TestCase):
+         ''')
+         assert_python_ok('-c', code, PYTHONMALLOC=self.PYTHONMALLOC)
+ 
++    def test_pyobject_null_is_freed(self):
++        self.check_pyobject_is_freed('check_pyobject_null_is_freed')
++
+     def test_pyobject_uninitialized_is_freed(self):
+         self.check_pyobject_is_freed('check_pyobject_uninitialized_is_freed')
+ 
+diff --git a/Lib/test/test_dict.py b/Lib/test/test_dict.py
+index 13be857f7a..5b513765f7 100644
+--- a/Lib/test/test_dict.py
++++ b/Lib/test/test_dict.py
+@@ -1312,6 +1312,31 @@ class DictTest(unittest.TestCase):
+         self.assertEqual(list(r), list('dcba'))
+         self.assertRaises(StopIteration, next, r)
+ 
++    def test_reverse_iterator_for_empty_dict(self):
++        # bpo-38525: revered iterator should work properly
++
++        # empty dict is directly used for reference count test
++        self.assertEqual(list(reversed({})), [])
++        self.assertEqual(list(reversed({}.items())), [])
++        self.assertEqual(list(reversed({}.values())), [])
++        self.assertEqual(list(reversed({}.keys())), [])
++
++        # dict() and {} don't trigger the same code path
++        self.assertEqual(list(reversed(dict())), [])
++        self.assertEqual(list(reversed(dict().items())), [])
++        self.assertEqual(list(reversed(dict().values())), [])
++        self.assertEqual(list(reversed(dict().keys())), [])
++
++    def test_reverse_iterator_for_shared_shared_dicts(self):
++        class A:
++            def __init__(self, x, y):
++                if x: self.x = x
++                if y: self.y = y
++
++        self.assertEqual(list(reversed(A(1, 2).__dict__)), ['y', 'x'])
++        self.assertEqual(list(reversed(A(1, 0).__dict__)), ['x'])
++        self.assertEqual(list(reversed(A(0, 1).__dict__)), ['y'])
++
+     def test_dict_copy_order(self):
+         # bpo-34320
+         od = collections.OrderedDict([('a', 1), ('b', 2)])
+diff --git a/Lib/test/test_gc.py b/Lib/test/test_gc.py
+index 6c29e96c30..f52db1eab1 100644
+--- a/Lib/test/test_gc.py
++++ b/Lib/test/test_gc.py
+@@ -1055,16 +1055,19 @@ class GCCallbackTests(unittest.TestCase):
+             br'gcmodule\.c:[0-9]+: gc_decref: Assertion "gc_get_refs\(g\) > 0" failed.')
+         self.assertRegex(stderr,
+             br'refcount is too small')
++        # "address : 0x7fb5062efc18"
++        # "address : 7FB5062EFC18"
++        address_regex = br'[0-9a-fA-Fx]+'
+         self.assertRegex(stderr,
+-            br'object  : \[1, 2, 3\]')
++            br'object address  : ' + address_regex)
+         self.assertRegex(stderr,
+-            br'type    : list')
++            br'object refcount : 1')
+         self.assertRegex(stderr,
+-            br'refcount: 1')
+-        # "address : 0x7fb5062efc18"
+-        # "address : 7FB5062EFC18"
++            br'object type     : ' + address_regex)
++        self.assertRegex(stderr,
++            br'object type name: list')
+         self.assertRegex(stderr,
+-            br'address : [0-9a-fA-Fx]+')
++            br'object repr     : \[1, 2, 3\]')
+ 
+ 
+ class GCTogglingTests(unittest.TestCase):
+diff --git a/Lib/test/test_hmac.py b/Lib/test/test_hmac.py
+index 1bbf201727..ea00367c80 100644
+--- a/Lib/test/test_hmac.py
++++ b/Lib/test/test_hmac.py
+@@ -312,10 +312,15 @@ class TestVectorsTestCase(unittest.TestCase):
+                 self.fail('Expected warning about small block_size')
+ 
+     def test_with_digestmod_no_default(self):
+-        with self.assertRaises(ValueError):
++        """The digestmod parameter is required as of Python 3.8."""
++        with self.assertRaisesRegex(TypeError, r'required.*digestmod'):
+             key = b"\x0b" * 16
+             data = b"Hi There"
+             hmac.HMAC(key, data, digestmod=None)
++        with self.assertRaisesRegex(TypeError, r'required.*digestmod'):
++            hmac.new(key, data)
++        with self.assertRaisesRegex(TypeError, r'required.*digestmod'):
++            hmac.HMAC(key, msg=data, digestmod='')
+ 
+ 
+ class ConstructorTestCase(unittest.TestCase):
+diff --git a/Lib/test/test_inspect.py b/Lib/test/test_inspect.py
+index 1c516546f7..ad93f30482 100644
+--- a/Lib/test/test_inspect.py
++++ b/Lib/test/test_inspect.py
+@@ -3577,6 +3577,16 @@ class TestSignatureBind(unittest.TestCase):
+         iterator = iter(range(5))
+         self.assertEqual(self.call(setcomp_func, iterator), {0, 1, 4, 9, 16})
+ 
++    def test_signature_bind_posonly_kwargs(self):
++        def foo(bar, /, **kwargs):
++            return bar, kwargs.get(bar)
++
++        sig = inspect.signature(foo)
++        result = sig.bind("pos-only", bar="keyword")
++
++        self.assertEqual(result.kwargs, {"bar": "keyword"})
++        self.assertIn(("bar", "pos-only"), result.arguments.items())
++
+ 
+ class TestBoundArguments(unittest.TestCase):
+     def test_signature_bound_arguments_unhashable(self):
+diff --git a/Lib/test/test_pathlib.py b/Lib/test/test_pathlib.py
+index 95d0b09882..4543e3773d 100644
+--- a/Lib/test/test_pathlib.py
++++ b/Lib/test/test_pathlib.py
+@@ -2291,11 +2291,15 @@ class WindowsPathTest(_BasePathTest, unittest.TestCase):
+         P = self.cls
+         p = P(BASE)
+         self.assertEqual(set(p.glob("FILEa")), { P(BASE, "fileA") })
++        self.assertEqual(set(p.glob("F*a")), { P(BASE, "fileA") })
++        self.assertEqual(set(map(str, p.glob("FILEa"))), {f"{p}\\FILEa"})
++        self.assertEqual(set(map(str, p.glob("F*a"))), {f"{p}\\fileA"})
+ 
+     def test_rglob(self):
+         P = self.cls
+         p = P(BASE, "dirC")
+         self.assertEqual(set(p.rglob("FILEd")), { P(BASE, "dirC/dirD/fileD") })
++        self.assertEqual(set(map(str, p.rglob("FILEd"))), {f"{p}\\dirD\\FILEd"})
+ 
+     def test_expanduser(self):
+         P = self.cls
+diff --git a/Lib/test/test_statistics.py b/Lib/test/test_statistics.py
+index af26473e8f..bebd9b5d6f 100644
+--- a/Lib/test/test_statistics.py
++++ b/Lib/test/test_statistics.py
+@@ -2651,9 +2651,13 @@ class TestNormalDist:
+         nd2 = NormalDist(2, 4)
+         nd3 = NormalDist()
+         nd4 = NormalDist(2, 4)
++        nd5 = NormalDist(2, 8)
++        nd6 = NormalDist(8, 4)
+         self.assertNotEqual(nd1, nd2)
+         self.assertEqual(nd1, nd3)
+         self.assertEqual(nd2, nd4)
++        self.assertNotEqual(nd2, nd5)
++        self.assertNotEqual(nd2, nd6)
+ 
+         # Test NotImplemented when types are different
+         class A:
+diff --git a/Lib/test/test_subprocess.py b/Lib/test/test_subprocess.py
+index 69ac584667..b2afd127df 100644
+--- a/Lib/test/test_subprocess.py
++++ b/Lib/test/test_subprocess.py
+@@ -45,6 +45,18 @@ NONEXISTING_CMD = ('nonexisting_i_hope',)
+ # Ignore errors that indicate the command was not found
+ NONEXISTING_ERRORS = (FileNotFoundError, NotADirectoryError, PermissionError)
+ 
++ZERO_RETURN_CMD = (sys.executable, '-c', 'pass')
++
++
++def setUpModule():
++    shell_true = shutil.which('true')
++    if shell_true is None:
++        return
++    if (os.access(shell_true, os.X_OK) and
++        subprocess.run([shell_true]).returncode == 0):
++        global ZERO_RETURN_CMD
++        ZERO_RETURN_CMD = (shell_true,)  # Faster than Python startup.
++
+ 
+ class BaseTestCase(unittest.TestCase):
+     def setUp(self):
+@@ -89,7 +101,7 @@ class PopenExecuteChildRaises(subprocess.Popen):
+ class ProcessTestCase(BaseTestCase):
+ 
+     def test_io_buffered_by_default(self):
+-        p = subprocess.Popen([sys.executable, "-c", "import sys; sys.exit(0)"],
++        p = subprocess.Popen(ZERO_RETURN_CMD,
+                              stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                              stderr=subprocess.PIPE)
+         try:
+@@ -103,7 +115,7 @@ class ProcessTestCase(BaseTestCase):
+             p.wait()
+ 
+     def test_io_unbuffered_works(self):
+-        p = subprocess.Popen([sys.executable, "-c", "import sys; sys.exit(0)"],
++        p = subprocess.Popen(ZERO_RETURN_CMD,
+                              stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                              stderr=subprocess.PIPE, bufsize=0)
+         try:
+@@ -133,8 +145,7 @@ class ProcessTestCase(BaseTestCase):
+ 
+     def test_check_call_zero(self):
+         # check_call() function with zero return code
+-        rc = subprocess.check_call([sys.executable, "-c",
+-                                    "import sys; sys.exit(0)"])
++        rc = subprocess.check_call(ZERO_RETURN_CMD)
+         self.assertEqual(rc, 0)
+ 
+     def test_check_call_nonzero(self):
+@@ -700,19 +711,19 @@ class ProcessTestCase(BaseTestCase):
+         newenv = os.environ.copy()
+         newenv["FRUIT\0VEGETABLE"] = "cabbage"
+         with self.assertRaises(ValueError):
+-            subprocess.Popen([sys.executable, "-c", "pass"], env=newenv)
++            subprocess.Popen(ZERO_RETURN_CMD, env=newenv)
+ 
+         # null character in the environment variable value
+         newenv = os.environ.copy()
+         newenv["FRUIT"] = "orange\0VEGETABLE=cabbage"
+         with self.assertRaises(ValueError):
+-            subprocess.Popen([sys.executable, "-c", "pass"], env=newenv)
++            subprocess.Popen(ZERO_RETURN_CMD, env=newenv)
+ 
+         # equal character in the environment variable name
+         newenv = os.environ.copy()
+         newenv["FRUIT=ORANGE"] = "lemon"
+         with self.assertRaises(ValueError):
+-            subprocess.Popen([sys.executable, "-c", "pass"], env=newenv)
++            subprocess.Popen(ZERO_RETURN_CMD, env=newenv)
+ 
+         # equal character in the environment variable value
+         newenv = os.environ.copy()
+@@ -813,7 +824,7 @@ class ProcessTestCase(BaseTestCase):
+                         options['stderr'] = subprocess.PIPE
+                     if not options:
+                         continue
+-                    p = subprocess.Popen((sys.executable, "-c", "pass"), **options)
++                    p = subprocess.Popen(ZERO_RETURN_CMD, **options)
+                     p.communicate()
+                     if p.stdin is not None:
+                         self.assertTrue(p.stdin.closed)
+@@ -952,7 +963,7 @@ class ProcessTestCase(BaseTestCase):
+         #
+         # We set stdout to PIPE because, as of this writing, a different
+         # code path is tested when the number of pipes is zero or one.
+-        p = subprocess.Popen([sys.executable, "-c", "pass"],
++        p = subprocess.Popen(ZERO_RETURN_CMD,
+                              stdin=subprocess.PIPE,
+                              stdout=subprocess.PIPE,
+                              universal_newlines=True)
+@@ -1100,7 +1111,7 @@ class ProcessTestCase(BaseTestCase):
+         self.assertEqual(p.poll(), 0)
+ 
+     def test_wait(self):
+-        p = subprocess.Popen([sys.executable, "-c", "pass"])
++        p = subprocess.Popen(ZERO_RETURN_CMD)
+         self.assertEqual(p.wait(), 0)
+         # Subsequent invocations should just return the returncode
+         self.assertEqual(p.wait(), 0)
+@@ -1119,14 +1130,14 @@ class ProcessTestCase(BaseTestCase):
+         # an invalid type of the bufsize argument should raise
+         # TypeError.
+         with self.assertRaises(TypeError):
+-            subprocess.Popen([sys.executable, "-c", "pass"], "orange")
++            subprocess.Popen(ZERO_RETURN_CMD, "orange")
+ 
+     def test_bufsize_is_none(self):
+         # bufsize=None should be the same as bufsize=0.
+-        p = subprocess.Popen([sys.executable, "-c", "pass"], None)
++        p = subprocess.Popen(ZERO_RETURN_CMD, None)
+         self.assertEqual(p.wait(), 0)
+         # Again with keyword arg
+-        p = subprocess.Popen([sys.executable, "-c", "pass"], bufsize=None)
++        p = subprocess.Popen(ZERO_RETURN_CMD, bufsize=None)
+         self.assertEqual(p.wait(), 0)
+ 
+     def _test_bufsize_equal_one(self, line, expected, universal_newlines):
+@@ -1331,7 +1342,7 @@ class ProcessTestCase(BaseTestCase):
+ 
+     def test_communicate_epipe(self):
+         # Issue 10963: communicate() should hide EPIPE
+-        p = subprocess.Popen([sys.executable, "-c", 'pass'],
++        p = subprocess.Popen(ZERO_RETURN_CMD,
+                              stdin=subprocess.PIPE,
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.PIPE)
+@@ -1342,7 +1353,7 @@ class ProcessTestCase(BaseTestCase):
+ 
+     def test_communicate_epipe_only_stdin(self):
+         # Issue 10963: communicate() should hide EPIPE
+-        p = subprocess.Popen([sys.executable, "-c", 'pass'],
++        p = subprocess.Popen(ZERO_RETURN_CMD,
+                              stdin=subprocess.PIPE)
+         self.addCleanup(p.stdin.close)
+         p.wait()
+@@ -1381,7 +1392,7 @@ class ProcessTestCase(BaseTestCase):
+         fds_before_popen = os.listdir(fd_directory)
+         with self.assertRaises(PopenTestException):
+             PopenExecuteChildRaises(
+-                    [sys.executable, '-c', 'pass'], stdin=subprocess.PIPE,
++                    ZERO_RETURN_CMD, stdin=subprocess.PIPE,
+                     stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+ 
+         # NOTE: This test doesn't verify that the real _execute_child
+@@ -1424,7 +1435,7 @@ class RunFuncTestCase(BaseTestCase):
+ 
+     def test_check_zero(self):
+         # check_returncode shouldn't raise when returncode is zero
+-        cp = self.run_python("import sys; sys.exit(0)", check=True)
++        cp = subprocess.run(ZERO_RETURN_CMD, check=True)
+         self.assertEqual(cp.returncode, 0)
+ 
+     def test_timeout(self):
+@@ -1824,7 +1835,7 @@ class POSIXProcessTestCase(BaseTestCase):
+ 
+         with self.assertRaises(subprocess.SubprocessError):
+             self._TestExecuteChildPopen(
+-                        self, [sys.executable, "-c", "pass"],
++                        self, ZERO_RETURN_CMD,
+                         stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE, preexec_fn=raise_it)
+ 
+@@ -2281,7 +2292,7 @@ class POSIXProcessTestCase(BaseTestCase):
+ 
+         try:
+             subprocess.call(
+-                [sys.executable, "-c", "pass"],
++                ZERO_RETURN_CMD,
+                 preexec_fn=prepare)
+         except ValueError as err:
+             # Pure Python implementations keeps the message
+@@ -2324,29 +2335,30 @@ class POSIXProcessTestCase(BaseTestCase):
+             self.assertEqual(stdout.decode('ascii'), ascii(encoded_value))
+ 
+     def test_bytes_program(self):
+-        abs_program = os.fsencode(sys.executable)
+-        path, program = os.path.split(sys.executable)
++        abs_program = os.fsencode(ZERO_RETURN_CMD[0])
++        args = list(ZERO_RETURN_CMD[1:])
++        path, program = os.path.split(ZERO_RETURN_CMD[0])
+         program = os.fsencode(program)
+ 
+         # absolute bytes path
+-        exitcode = subprocess.call([abs_program, "-c", "pass"])
++        exitcode = subprocess.call([abs_program]+args)
+         self.assertEqual(exitcode, 0)
+ 
+         # absolute bytes path as a string
+-        cmd = b"'" + abs_program + b"' -c pass"
++        cmd = b"'%s' %s" % (abs_program, " ".join(args).encode("utf-8"))
+         exitcode = subprocess.call(cmd, shell=True)
+         self.assertEqual(exitcode, 0)
+ 
+         # bytes program, unicode PATH
+         env = os.environ.copy()
+         env["PATH"] = path
+-        exitcode = subprocess.call([program, "-c", "pass"], env=env)
++        exitcode = subprocess.call([program]+args, env=env)
+         self.assertEqual(exitcode, 0)
+ 
+         # bytes program, bytes PATH
+         envb = os.environb.copy()
+         envb[b"PATH"] = os.fsencode(path)
+-        exitcode = subprocess.call([program, "-c", "pass"], env=envb)
++        exitcode = subprocess.call([program]+args, env=envb)
+         self.assertEqual(exitcode, 0)
+ 
+     def test_pipe_cloexec(self):
+@@ -2574,7 +2586,7 @@ class POSIXProcessTestCase(BaseTestCase):
+             # pass_fds overrides close_fds with a warning.
+             with self.assertWarns(RuntimeWarning) as context:
+                 self.assertFalse(subprocess.call(
+-                        [sys.executable, "-c", "import sys; sys.exit(0)"],
++                        ZERO_RETURN_CMD,
+                         close_fds=False, pass_fds=(fd, )))
+             self.assertIn('overriding close_fds', str(context.warning))
+ 
+@@ -2636,19 +2648,19 @@ class POSIXProcessTestCase(BaseTestCase):
+ 
+     def test_stdout_stdin_are_single_inout_fd(self):
+         with io.open(os.devnull, "r+") as inout:
+-            p = subprocess.Popen([sys.executable, "-c", "import sys; sys.exit(0)"],
++            p = subprocess.Popen(ZERO_RETURN_CMD,
+                                  stdout=inout, stdin=inout)
+             p.wait()
+ 
+     def test_stdout_stderr_are_single_inout_fd(self):
+         with io.open(os.devnull, "r+") as inout:
+-            p = subprocess.Popen([sys.executable, "-c", "import sys; sys.exit(0)"],
++            p = subprocess.Popen(ZERO_RETURN_CMD,
+                                  stdout=inout, stderr=inout)
+             p.wait()
+ 
+     def test_stderr_stdin_are_single_inout_fd(self):
+         with io.open(os.devnull, "r+") as inout:
+-            p = subprocess.Popen([sys.executable, "-c", "import sys; sys.exit(0)"],
++            p = subprocess.Popen(ZERO_RETURN_CMD,
+                                  stderr=inout, stdin=inout)
+             p.wait()
+ 
+@@ -2836,7 +2848,7 @@ class POSIXProcessTestCase(BaseTestCase):
+     def test_communicate_BrokenPipeError_stdin_close(self):
+         # By not setting stdout or stderr or a timeout we force the fast path
+         # that just calls _stdin_write() internally due to our mock.
+-        proc = subprocess.Popen([sys.executable, '-c', 'pass'])
++        proc = subprocess.Popen(ZERO_RETURN_CMD)
+         with proc, mock.patch.object(proc, 'stdin') as mock_proc_stdin:
+             mock_proc_stdin.close.side_effect = BrokenPipeError
+             proc.communicate()  # Should swallow BrokenPipeError from close.
+@@ -2845,7 +2857,7 @@ class POSIXProcessTestCase(BaseTestCase):
+     def test_communicate_BrokenPipeError_stdin_write(self):
+         # By not setting stdout or stderr or a timeout we force the fast path
+         # that just calls _stdin_write() internally due to our mock.
+-        proc = subprocess.Popen([sys.executable, '-c', 'pass'])
++        proc = subprocess.Popen(ZERO_RETURN_CMD)
+         with proc, mock.patch.object(proc, 'stdin') as mock_proc_stdin:
+             mock_proc_stdin.write.side_effect = BrokenPipeError
+             proc.communicate(b'stuff')  # Should swallow the BrokenPipeError.
+@@ -2884,7 +2896,7 @@ class POSIXProcessTestCase(BaseTestCase):
+                          'need _testcapi.W_STOPCODE')
+     def test_stopped(self):
+         """Test wait() behavior when waitpid returns WIFSTOPPED; issue29335."""
+-        args = [sys.executable, '-c', 'pass']
++        args = ZERO_RETURN_CMD
+         proc = subprocess.Popen(args)
+ 
+         # Wait until the real process completes to avoid zombie process
+@@ -2914,7 +2926,7 @@ class Win32ProcessTestCase(BaseTestCase):
+         # Since Python is a console process, it won't be affected
+         # by wShowWindow, but the argument should be silently
+         # ignored
+-        subprocess.call([sys.executable, "-c", "import sys; sys.exit(0)"],
++        subprocess.call(ZERO_RETURN_CMD,
+                         startupinfo=startupinfo)
+ 
+     def test_startupinfo_keywords(self):
+@@ -2930,7 +2942,7 @@ class Win32ProcessTestCase(BaseTestCase):
+         # Since Python is a console process, it won't be affected
+         # by wShowWindow, but the argument should be silently
+         # ignored
+-        subprocess.call([sys.executable, "-c", "import sys; sys.exit(0)"],
++        subprocess.call(ZERO_RETURN_CMD,
+                         startupinfo=startupinfo)
+ 
+     def test_startupinfo_copy(self):
+@@ -2942,7 +2954,7 @@ class Win32ProcessTestCase(BaseTestCase):
+         # Call Popen() twice with the same startupinfo object to make sure
+         # that it's not modified
+         for _ in range(2):
+-            cmd = [sys.executable, "-c", "pass"]
++            cmd = ZERO_RETURN_CMD
+             with open(os.devnull, 'w') as null:
+                 proc = subprocess.Popen(cmd,
+                                         stdout=null,
+@@ -2982,7 +2994,7 @@ class Win32ProcessTestCase(BaseTestCase):
+         class BadEnv(dict):
+             keys = None
+         with self.assertRaises(TypeError):
+-            subprocess.Popen([sys.executable, "-c", "pass"], env=BadEnv())
++            subprocess.Popen(ZERO_RETURN_CMD, env=BadEnv())
+ 
+     def test_close_fds(self):
+         # close file descriptors
+@@ -3043,13 +3055,13 @@ class Win32ProcessTestCase(BaseTestCase):
+     def test_empty_attribute_list(self):
+         startupinfo = subprocess.STARTUPINFO()
+         startupinfo.lpAttributeList = {}
+-        subprocess.call([sys.executable, "-c", "import sys; sys.exit(0)"],
++        subprocess.call(ZERO_RETURN_CMD,
+                         startupinfo=startupinfo)
+ 
+     def test_empty_handle_list(self):
+         startupinfo = subprocess.STARTUPINFO()
+         startupinfo.lpAttributeList = {"handle_list": []}
+-        subprocess.call([sys.executable, "-c", "import sys; sys.exit(0)"],
++        subprocess.call(ZERO_RETURN_CMD,
+                         startupinfo=startupinfo)
+ 
+     def test_shell_sequence(self):
+@@ -3348,7 +3360,7 @@ class ContextManagerTests(BaseTestCase):
+ 
+     def test_broken_pipe_cleanup(self):
+         """Broken pipe error should not prevent wait() (Issue 21619)"""
+-        proc = subprocess.Popen([sys.executable, '-c', 'pass'],
++        proc = subprocess.Popen(ZERO_RETURN_CMD,
+                                 stdin=subprocess.PIPE,
+                                 bufsize=support.PIPE_MAX_SIZE*2)
+         proc = proc.__enter__()
+diff --git a/Lib/test/test_urlparse.py b/Lib/test/test_urlparse.py
+index 4ae6ed3385..762500789f 100644
+--- a/Lib/test/test_urlparse.py
++++ b/Lib/test/test_urlparse.py
+@@ -709,15 +709,17 @@ class UrlParseTestCase(unittest.TestCase):
+ 
+     def test_portseparator(self):
+         # Issue 754016 makes changes for port separator ':' from scheme separator
+-        self.assertEqual(urllib.parse.urlparse("path:80"),
+-                ('','','path:80','','',''))
++        self.assertEqual(urllib.parse.urlparse("http:80"), ('http','','80','','',''))
++        self.assertEqual(urllib.parse.urlparse("https:80"), ('https','','80','','',''))
++        self.assertEqual(urllib.parse.urlparse("path:80"), ('path','','80','','',''))
+         self.assertEqual(urllib.parse.urlparse("http:"),('http','','','','',''))
+         self.assertEqual(urllib.parse.urlparse("https:"),('https','','','','',''))
+         self.assertEqual(urllib.parse.urlparse("http://www.python.org:80"),
+                 ('http','www.python.org:80','','','',''))
+         # As usual, need to check bytes input as well
+-        self.assertEqual(urllib.parse.urlparse(b"path:80"),
+-                (b'',b'',b'path:80',b'',b'',b''))
++        self.assertEqual(urllib.parse.urlparse(b"http:80"), (b'http',b'',b'80',b'',b'',b''))
++        self.assertEqual(urllib.parse.urlparse(b"https:80"), (b'https',b'',b'80',b'',b'',b''))
++        self.assertEqual(urllib.parse.urlparse(b"path:80"), (b'path',b'',b'80',b'',b'',b''))
+         self.assertEqual(urllib.parse.urlparse(b"http:"),(b'http',b'',b'',b'',b'',b''))
+         self.assertEqual(urllib.parse.urlparse(b"https:"),(b'https',b'',b'',b'',b'',b''))
+         self.assertEqual(urllib.parse.urlparse(b"http://www.python.org:80"),
+diff --git a/Lib/urllib/parse.py b/Lib/urllib/parse.py
+index b6608783a8..d497925b94 100644
+--- a/Lib/urllib/parse.py
++++ b/Lib/urllib/parse.py
+@@ -431,31 +431,11 @@ def urlsplit(url, scheme='', allow_fragments=True):
+     netloc = query = fragment = ''
+     i = url.find(':')
+     if i > 0:
+-        if url[:i] == 'http': # optimize the common case
+-            url = url[i+1:]
+-            if url[:2] == '//':
+-                netloc, url = _splitnetloc(url, 2)
+-                if (('[' in netloc and ']' not in netloc) or
+-                        (']' in netloc and '[' not in netloc)):
+-                    raise ValueError("Invalid IPv6 URL")
+-            if allow_fragments and '#' in url:
+-                url, fragment = url.split('#', 1)
+-            if '?' in url:
+-                url, query = url.split('?', 1)
+-            _checknetloc(netloc)
+-            v = SplitResult('http', netloc, url, query, fragment)
+-            _parse_cache[key] = v
+-            return _coerce_result(v)
+         for c in url[:i]:
+             if c not in scheme_chars:
+                 break
+         else:
+-            # make sure "url" is not actually a port number (in which case
+-            # "scheme" is really part of the path)
+-            rest = url[i+1:]
+-            if not rest or any(c not in '0123456789' for c in rest):
+-                # not a port number
+-                scheme, url = url[:i].lower(), rest
++            scheme, url = url[:i].lower(), url[i+1:]
+ 
+     if url[:2] == '//':
+         netloc, url = _splitnetloc(url, 2)
+diff --git a/Mac/BuildScript/resources/License.rtf b/Mac/BuildScript/resources/License.rtf
+index 86e54f6662..7566cf3b44 100644
+--- a/Mac/BuildScript/resources/License.rtf
++++ b/Mac/BuildScript/resources/License.rtf
+@@ -16,7 +16,7 @@ Python was created in the early 1990s by Guido van Rossum at Stichting Mathemati
+ \
+ In 1995, Guido continued his work on Python at the Corporation for National Research Initiatives (CNRI, see http://www.cnri.reston.va.us) in Reston, Virginia where he released several versions of the software.\
+ \
+-In May 2000, Guido and the Python core development team moved to BeOpen.com to form the BeOpen PythonLabs team. In October of the same year, the PythonLabs team moved to Digital Creations (now Zope Corporation, see http://www.zope.com). In 2001, the Python Software Foundation (PSF, see http://www.python.org/psf/) was formed, a non-profit organization created specifically to own Python-related Intellectual Property. Zope Corporation is a sponsoring member of the PSF.\
++In May 2000, Guido and the Python core development team moved to BeOpen.com to form the BeOpen PythonLabs team. In October of the same year, the PythonLabs team moved to Digital Creations (now Zope Corporation, see http://www.zope.org). In 2001, the Python Software Foundation (PSF, see http://www.python.org/psf/) was formed, a non-profit organization created specifically to own Python-related Intellectual Property. Zope Corporation is a sponsoring member of the PSF.\
+ \
+ All Python releases are Open Source (see http://www.opensource.org for the Open Source Definition). Historically, most, but not all, Python releases have also been GPL-compatible; the table below summarizes the various releases.\
+ \
+diff --git a/Modules/_testcapimodule.c b/Modules/_testcapimodule.c
+index cccf924904..46d772cff6 100644
+--- a/Modules/_testcapimodule.c
++++ b/Modules/_testcapimodule.c
+@@ -4500,6 +4500,14 @@ test_pyobject_is_freed(const char *test_name, PyObject *op)
+ }
+ 
+ 
++static PyObject*
++check_pyobject_null_is_freed(PyObject *self, PyObject *Py_UNUSED(args))
++{
++    PyObject *op = NULL;
++    return test_pyobject_is_freed("check_pyobject_null_is_freed", op);
++}
++
++
+ static PyObject*
+ check_pyobject_uninitialized_is_freed(PyObject *self, PyObject *Py_UNUSED(args))
+ {
+@@ -5268,6 +5276,7 @@ static PyMethodDef TestMethods[] = {
+     {"pymem_api_misuse", pymem_api_misuse, METH_NOARGS},
+     {"pymem_malloc_without_gil", pymem_malloc_without_gil, METH_NOARGS},
+     {"pymem_getallocatorsname", test_pymem_getallocatorsname, METH_NOARGS},
++    {"check_pyobject_null_is_freed", check_pyobject_null_is_freed, METH_NOARGS},
+     {"check_pyobject_uninitialized_is_freed", check_pyobject_uninitialized_is_freed, METH_NOARGS},
+     {"check_pyobject_forbidden_bytes_is_freed", check_pyobject_forbidden_bytes_is_freed, METH_NOARGS},
+     {"check_pyobject_freed_is_freed", check_pyobject_freed_is_freed, METH_NOARGS},
+diff --git a/Modules/gcmodule.c b/Modules/gcmodule.c
+index 8d7d67cb67..5a6a81d813 100644
+--- a/Modules/gcmodule.c
++++ b/Modules/gcmodule.c
+@@ -373,10 +373,9 @@ update_refs(PyGC_Head *containers)
+ 
+ /* A traversal callback for subtract_refs. */
+ static int
+-visit_decref(PyObject *op, void *data)
++visit_decref(PyObject *op, void *parent)
+ {
+-    assert(op != NULL);
+-    _PyObject_ASSERT(op, !_PyObject_IsFreed(op));
++    _PyObject_ASSERT(_PyObject_CAST(parent), !_PyObject_IsFreed(op));
+ 
+     if (PyObject_IS_GC(op)) {
+         PyGC_Head *gc = AS_GC(op);
+@@ -402,10 +401,11 @@ subtract_refs(PyGC_Head *containers)
+     traverseproc traverse;
+     PyGC_Head *gc = GC_NEXT(containers);
+     for (; gc != containers; gc = GC_NEXT(gc)) {
+-        traverse = Py_TYPE(FROM_GC(gc))->tp_traverse;
++        PyObject *op = FROM_GC(gc);
++        traverse = Py_TYPE(op)->tp_traverse;
+         (void) traverse(FROM_GC(gc),
+                        (visitproc)visit_decref,
+-                       NULL);
++                       op);
+     }
+ }
+ 
+diff --git a/Modules/posixmodule.c b/Modules/posixmodule.c
+index b09204d633..7c823434e6 100644
+--- a/Modules/posixmodule.c
++++ b/Modules/posixmodule.c
+@@ -4316,7 +4316,7 @@ os_system_impl(PyObject *module, const Py_UNICODE *command)
+ {
+     long result;
+ 
+-    if (PySys_Audit("system", "(u)", command) < 0) {
++    if (PySys_Audit("os.system", "(u)", command) < 0) {
+         return -1;
+     }
+ 
+@@ -4343,7 +4343,7 @@ os_system_impl(PyObject *module, PyObject *command)
+     long result;
+     const char *bytes = PyBytes_AsString(command);
+ 
+-    if (PySys_Audit("system", "(O)", command) < 0) {
++    if (PySys_Audit("os.system", "(O)", command) < 0) {
+         return -1;
+     }
+ 
+diff --git a/Objects/bytesobject.c b/Objects/bytesobject.c
+index 3b69fecde2..feeabcb8b4 100644
+--- a/Objects/bytesobject.c
++++ b/Objects/bytesobject.c
+@@ -667,9 +667,6 @@ _PyBytes_FormatEx(const char *format, Py_ssize_t format_len,
+             Py_ssize_t len = 0;
+             char onechar; /* For byte_converter() */
+             Py_ssize_t alloc;
+-#ifdef Py_DEBUG
+-            char *before;
+-#endif
+ 
+             fmt++;
+             if (*fmt == '%') {
+@@ -981,8 +978,8 @@ _PyBytes_FormatEx(const char *format, Py_ssize_t format_len,
+                 if (res == NULL)
+                     goto error;
+             }
+-#ifdef Py_DEBUG
+-            before = res;
++#ifndef NDEBUG
++            char *before = res;
+ #endif
+ 
+             /* Write the sign if needed */
+@@ -1047,7 +1044,7 @@ _PyBytes_FormatEx(const char *format, Py_ssize_t format_len,
+             }
+             Py_XDECREF(temp);
+ 
+-#ifdef Py_DEBUG
++#ifndef NDEBUG
+             /* check that we computed the exact size for this write */
+             assert((res - before) == alloc);
+ #endif
+@@ -3225,8 +3222,9 @@ _PyBytesWriter_Init(_PyBytesWriter *writer)
+ {
+     /* Set all attributes before small_buffer to 0 */
+     memset(writer, 0, offsetof(_PyBytesWriter, small_buffer));
+-#ifdef Py_DEBUG
+-    memset(writer->small_buffer, 0xCB, sizeof(writer->small_buffer));
++#ifndef NDEBUG
++    memset(writer->small_buffer, PYMEM_CLEANBYTE,
++           sizeof(writer->small_buffer));
+ #endif
+ }
+ 
+@@ -3263,10 +3261,10 @@ _PyBytesWriter_GetSize(_PyBytesWriter *writer, char *str)
+     return str - start;
+ }
+ 
+-Py_LOCAL_INLINE(void)
++#ifndef NDEBUG
++Py_LOCAL_INLINE(int)
+ _PyBytesWriter_CheckConsistency(_PyBytesWriter *writer, char *str)
+ {
+-#ifdef Py_DEBUG
+     char *start, *end;
+ 
+     if (writer->use_small_buffer) {
+@@ -3296,15 +3294,16 @@ _PyBytesWriter_CheckConsistency(_PyBytesWriter *writer, char *str)
+     end = start + writer->allocated;
+     assert(str != NULL);
+     assert(start <= str && str <= end);
+-#endif
++    return 1;
+ }
++#endif
+ 
+ void*
+ _PyBytesWriter_Resize(_PyBytesWriter *writer, void *str, Py_ssize_t size)
+ {
+     Py_ssize_t allocated, pos;
+ 
+-    _PyBytesWriter_CheckConsistency(writer, str);
++    assert(_PyBytesWriter_CheckConsistency(writer, str));
+     assert(writer->allocated < size);
+ 
+     allocated = size;
+@@ -3353,14 +3352,15 @@ _PyBytesWriter_Resize(_PyBytesWriter *writer, void *str, Py_ssize_t size)
+         }
+ 
+         writer->use_small_buffer = 0;
+-#ifdef Py_DEBUG
+-        memset(writer->small_buffer, 0xDB, sizeof(writer->small_buffer));
++#ifndef NDEBUG
++        memset(writer->small_buffer, PYMEM_CLEANBYTE,
++               sizeof(writer->small_buffer));
+ #endif
+     }
+     writer->allocated = allocated;
+ 
+     str = _PyBytesWriter_AsString(writer) + pos;
+-    _PyBytesWriter_CheckConsistency(writer, str);
++    assert(_PyBytesWriter_CheckConsistency(writer, str));
+     return str;
+ 
+ error:
+@@ -3373,7 +3373,7 @@ _PyBytesWriter_Prepare(_PyBytesWriter *writer, void *str, Py_ssize_t size)
+ {
+     Py_ssize_t new_min_size;
+ 
+-    _PyBytesWriter_CheckConsistency(writer, str);
++    assert(_PyBytesWriter_CheckConsistency(writer, str));
+     assert(size >= 0);
+ 
+     if (size == 0) {
+@@ -3406,7 +3406,7 @@ _PyBytesWriter_Alloc(_PyBytesWriter *writer, Py_ssize_t size)
+     assert(size >= 0);
+ 
+     writer->use_small_buffer = 1;
+-#ifdef Py_DEBUG
++#ifndef NDEBUG
+     writer->allocated = sizeof(writer->small_buffer) - 1;
+     /* In debug mode, don't use the full small buffer because it is less
+        efficient than bytes and bytearray objects to detect buffer underflow
+@@ -3434,7 +3434,7 @@ _PyBytesWriter_Finish(_PyBytesWriter *writer, void *str)
+     Py_ssize_t size;
+     PyObject *result;
+ 
+-    _PyBytesWriter_CheckConsistency(writer, str);
++    assert(_PyBytesWriter_CheckConsistency(writer, str));
+ 
+     size = _PyBytesWriter_GetSize(writer, str);
+     if (size == 0 && !writer->use_bytearray) {
+diff --git a/Objects/dictobject.c b/Objects/dictobject.c
+index a6ddf70cd8..76f4fefe09 100644
+--- a/Objects/dictobject.c
++++ b/Objects/dictobject.c
+@@ -459,23 +459,26 @@ static PyObject *empty_values[1] = { NULL };
+ int
+ _PyDict_CheckConsistency(PyObject *op, int check_content)
+ {
+-#ifndef NDEBUG
+-    _PyObject_ASSERT(op, PyDict_Check(op));
++#define CHECK(expr) \
++    do { if (!(expr)) { _PyObject_ASSERT_FAILED_MSG(op, Py_STRINGIFY(expr)); } } while (0)
++
++    assert(op != NULL);
++    CHECK(PyDict_Check(op));
+     PyDictObject *mp = (PyDictObject *)op;
+ 
+     PyDictKeysObject *keys = mp->ma_keys;
+     int splitted = _PyDict_HasSplitTable(mp);
+     Py_ssize_t usable = USABLE_FRACTION(keys->dk_size);
+ 
+-    _PyObject_ASSERT(op, 0 <= mp->ma_used && mp->ma_used <= usable);
+-    _PyObject_ASSERT(op, IS_POWER_OF_2(keys->dk_size));
+-    _PyObject_ASSERT(op, 0 <= keys->dk_usable && keys->dk_usable <= usable);
+-    _PyObject_ASSERT(op, 0 <= keys->dk_nentries && keys->dk_nentries <= usable);
+-    _PyObject_ASSERT(op, keys->dk_usable + keys->dk_nentries <= usable);
++    CHECK(0 <= mp->ma_used && mp->ma_used <= usable);
++    CHECK(IS_POWER_OF_2(keys->dk_size));
++    CHECK(0 <= keys->dk_usable && keys->dk_usable <= usable);
++    CHECK(0 <= keys->dk_nentries && keys->dk_nentries <= usable);
++    CHECK(keys->dk_usable + keys->dk_nentries <= usable);
+ 
+     if (!splitted) {
+         /* combined table */
+-        _PyObject_ASSERT(op, keys->dk_refcnt == 1);
++        CHECK(keys->dk_refcnt == 1);
+     }
+ 
+     if (check_content) {
+@@ -484,7 +487,7 @@ _PyDict_CheckConsistency(PyObject *op, int check_content)
+ 
+         for (i=0; i < keys->dk_size; i++) {
+             Py_ssize_t ix = dictkeys_get_index(keys, i);
+-            _PyObject_ASSERT(op, DKIX_DUMMY <= ix && ix <= usable);
++            CHECK(DKIX_DUMMY <= ix && ix <= usable);
+         }
+ 
+         for (i=0; i < usable; i++) {
+@@ -494,32 +497,33 @@ _PyDict_CheckConsistency(PyObject *op, int check_content)
+             if (key != NULL) {
+                 if (PyUnicode_CheckExact(key)) {
+                     Py_hash_t hash = ((PyASCIIObject *)key)->hash;
+-                    _PyObject_ASSERT(op, hash != -1);
+-                    _PyObject_ASSERT(op, entry->me_hash == hash);
++                    CHECK(hash != -1);
++                    CHECK(entry->me_hash == hash);
+                 }
+                 else {
+                     /* test_dict fails if PyObject_Hash() is called again */
+-                    _PyObject_ASSERT(op, entry->me_hash != -1);
++                    CHECK(entry->me_hash != -1);
+                 }
+                 if (!splitted) {
+-                    _PyObject_ASSERT(op, entry->me_value != NULL);
++                    CHECK(entry->me_value != NULL);
+                 }
+             }
+ 
+             if (splitted) {
+-                _PyObject_ASSERT(op, entry->me_value == NULL);
++                CHECK(entry->me_value == NULL);
+             }
+         }
+ 
+         if (splitted) {
+             /* splitted table */
+             for (i=0; i < mp->ma_used; i++) {
+-                _PyObject_ASSERT(op, mp->ma_values[i] != NULL);
++                CHECK(mp->ma_values[i] != NULL);
+             }
+         }
+     }
+-#endif
+     return 1;
++
++#undef CHECK
+ }
+ 
+ 
+@@ -3458,10 +3462,15 @@ dictiter_new(PyDictObject *dict, PyTypeObject *itertype)
+     di->di_dict = dict;
+     di->di_used = dict->ma_used;
+     di->len = dict->ma_used;
+-    if ((itertype == &PyDictRevIterKey_Type ||
++    if (itertype == &PyDictRevIterKey_Type ||
+          itertype == &PyDictRevIterItem_Type ||
+-         itertype == &PyDictRevIterValue_Type) && dict->ma_used) {
++         itertype == &PyDictRevIterValue_Type) {
++        if (dict->ma_values) {
++            di->di_pos = dict->ma_used - 1;
++        }
++        else {
+             di->di_pos = dict->ma_keys->dk_nentries - 1;
++        }
+     }
+     else {
+         di->di_pos = 0;
+@@ -3831,22 +3840,21 @@ dictreviter_iternext(dictiterobject *di)
+     PyDictKeysObject *k = d->ma_keys;
+     PyObject *key, *value, *result;
+ 
++    if (i < 0) {
++        goto fail;
++    }
+     if (d->ma_values) {
+-        if (i < 0) {
+-            goto fail;
+-        }
+         key = DK_ENTRIES(k)[i].me_key;
+         value = d->ma_values[i];
+         assert (value != NULL);
+     }
+     else {
+         PyDictKeyEntry *entry_ptr = &DK_ENTRIES(k)[i];
+-        while (i >= 0 && entry_ptr->me_value == NULL) {
++        while (entry_ptr->me_value == NULL) {
++            if (--i < 0) {
++                goto fail;
++            }
+             entry_ptr--;
+-            i--;
+-        }
+-        if (i < 0) {
+-            goto fail;
+         }
+         key = entry_ptr->me_key;
+         value = entry_ptr->me_value;
+diff --git a/Objects/object.c b/Objects/object.c
+index df2531371f..566593a9c6 100644
+--- a/Objects/object.c
++++ b/Objects/object.c
+@@ -25,13 +25,14 @@ _Py_IDENTIFIER(__isabstractmethod__);
+ int
+ _PyObject_CheckConsistency(PyObject *op, int check_content)
+ {
+-    _PyObject_ASSERT(op, op != NULL);
+-    _PyObject_ASSERT(op, !_PyObject_IsFreed(op));
+-    _PyObject_ASSERT(op, Py_REFCNT(op) >= 1);
++#define CHECK(expr) \
++    do { if (!(expr)) { _PyObject_ASSERT_FAILED_MSG(op, Py_STRINGIFY(expr)); } } while (0)
+ 
+-    PyTypeObject *type = op->ob_type;
+-    _PyObject_ASSERT(op, type != NULL);
+-    _PyType_CheckConsistency(type);
++    CHECK(!_PyObject_IsFreed(op));
++    CHECK(Py_REFCNT(op) >= 1);
++
++    CHECK(op->ob_type != NULL);
++    _PyType_CheckConsistency(op->ob_type);
+ 
+     if (PyUnicode_Check(op)) {
+         _PyUnicode_CheckConsistency(op, check_content);
+@@ -40,6 +41,8 @@ _PyObject_CheckConsistency(PyObject *op, int check_content)
+         _PyDict_CheckConsistency(op, check_content);
+     }
+     return 1;
++
++#undef CHECK
+ }
+ 
+ 
+@@ -463,41 +466,41 @@ _PyObject_IsFreed(PyObject *op)
+ void
+ _PyObject_Dump(PyObject* op)
+ {
+-    if (op == NULL) {
+-        fprintf(stderr, "<object at NULL>\n");
+-        fflush(stderr);
+-        return;
+-    }
+-
+     if (_PyObject_IsFreed(op)) {
+         /* It seems like the object memory has been freed:
+            don't access it to prevent a segmentation fault. */
+         fprintf(stderr, "<object at %p is freed>\n", op);
++        fflush(stderr);
+         return;
+     }
+ 
+-    PyGILState_STATE gil;
+-    PyObject *error_type, *error_value, *error_traceback;
++    /* first, write fields which are the least likely to crash */
++    fprintf(stderr, "object address  : %p\n", (void *)op);
++    /* XXX(twouters) cast refcount to long until %zd is
++       universally available */
++    fprintf(stderr, "object refcount : %ld\n", (long)op->ob_refcnt);
++    fflush(stderr);
+ 
+-    fprintf(stderr, "object  : ");
++    PyTypeObject *type = Py_TYPE(op);
++    fprintf(stderr, "object type     : %p\n", type);
++    fprintf(stderr, "object type name: %s\n",
++            type==NULL ? "NULL" : type->tp_name);
++
++    /* the most dangerous part */
++    fprintf(stderr, "object repr     : ");
+     fflush(stderr);
+-    gil = PyGILState_Ensure();
+ 
++    PyGILState_STATE gil = PyGILState_Ensure();
++    PyObject *error_type, *error_value, *error_traceback;
+     PyErr_Fetch(&error_type, &error_value, &error_traceback);
++
+     (void)PyObject_Print(op, stderr, 0);
+     fflush(stderr);
+-    PyErr_Restore(error_type, error_value, error_traceback);
+ 
++    PyErr_Restore(error_type, error_value, error_traceback);
+     PyGILState_Release(gil);
+-    /* XXX(twouters) cast refcount to long until %zd is
+-       universally available */
+-    fprintf(stderr, "\n"
+-        "type    : %s\n"
+-        "refcount: %ld\n"
+-        "address : %p\n",
+-        Py_TYPE(op)==NULL ? "NULL" : Py_TYPE(op)->tp_name,
+-        (long)op->ob_refcnt,
+-        (void *)op);
++
++    fprintf(stderr, "\n");
+     fflush(stderr);
+ }
+ 
+@@ -2148,6 +2151,7 @@ _PyObject_AssertFailed(PyObject *obj, const char *expr, const char *msg,
+         fprintf(stderr, "%s: ", function);
+     }
+     fflush(stderr);
++
+     if (expr) {
+         fprintf(stderr, "Assertion \"%s\" failed", expr);
+     }
+@@ -2155,26 +2159,18 @@ _PyObject_AssertFailed(PyObject *obj, const char *expr, const char *msg,
+         fprintf(stderr, "Assertion failed");
+     }
+     fflush(stderr);
++
+     if (msg) {
+         fprintf(stderr, ": %s", msg);
+     }
+     fprintf(stderr, "\n");
+     fflush(stderr);
+ 
+-    if (obj == NULL) {
+-        fprintf(stderr, "<object at NULL>\n");
+-    }
+-    else if (_PyObject_IsFreed(obj)) {
++    if (_PyObject_IsFreed(obj)) {
+         /* It seems like the object memory has been freed:
+            don't access it to prevent a segmentation fault. */
+         fprintf(stderr, "<object at %p is freed>\n", obj);
+-    }
+-    else if (Py_TYPE(obj) == NULL) {
+-        fprintf(stderr, "<object at %p: ob_type=NULL>\n", obj);
+-    }
+-    else if (_PyObject_IsFreed((PyObject *)Py_TYPE(obj))) {
+-        fprintf(stderr, "<object at %p: type at %p is freed>\n",
+-                obj, (void *)Py_TYPE(obj));
++        fflush(stderr);
+     }
+     else {
+         /* Display the traceback where the object has been allocated.
+@@ -2193,8 +2189,10 @@ _PyObject_AssertFailed(PyObject *obj, const char *expr, const char *msg,
+         /* This might succeed or fail, but we're about to abort, so at least
+            try to provide any extra info we can: */
+         _PyObject_Dump(obj);
++
++        fprintf(stderr, "\n");
++        fflush(stderr);
+     }
+-    fflush(stderr);
+ 
+     Py_FatalError("_PyObject_AssertFailed");
+ }
+diff --git a/Objects/obmalloc.c b/Objects/obmalloc.c
+index f420e19761..bd6480a625 100644
+--- a/Objects/obmalloc.c
++++ b/Objects/obmalloc.c
+@@ -2006,20 +2006,6 @@ _Py_GetAllocatedBlocks(void)
+  * it wraps a real allocator, adding extra debugging info to the memory blocks.
+  */
+ 
+-/* Special bytes broadcast into debug memory blocks at appropriate times.
+- * Strings of these are unlikely to be valid addresses, floats, ints or
+- * 7-bit ASCII. If modified, _PyMem_IsPtrFreed() should be updated as well.
+- *
+- * Byte patterns 0xCB, 0xBB and 0xFB have been replaced with 0xCD, 0xDD and
+- * 0xFD to use the same values than Windows CRT debug malloc() and free().
+- */
+-#undef CLEANBYTE
+-#undef DEADBYTE
+-#undef FORBIDDENBYTE
+-#define CLEANBYTE      0xCD    /* clean (newly allocated) memory */
+-#define DEADBYTE       0xDD    /* dead (newly freed) memory */
+-#define FORBIDDENBYTE  0xFD    /* untouchable bytes at each end of a block */
+-
+ /* Uncomment this define to add the "serialno" field */
+ /* #define PYMEM_DEBUG_SERIALNO */
+ 
+@@ -2081,14 +2067,14 @@ p[0: S]
+ p[S]
+     API ID.  See PEP 445.  This is a character, but seems undocumented.
+ p[S+1: 2*S]
+-    Copies of FORBIDDENBYTE.  Used to catch under- writes and reads.
++    Copies of PYMEM_FORBIDDENBYTE.  Used to catch under- writes and reads.
+ p[2*S: 2*S+n]
+-    The requested memory, filled with copies of CLEANBYTE.
++    The requested memory, filled with copies of PYMEM_CLEANBYTE.
+     Used to catch reference to uninitialized memory.
+     &p[2*S] is returned.  Note that this is 8-byte aligned if pymalloc
+     handled the request itself.
+ p[2*S+n: 2*S+n+S]
+-    Copies of FORBIDDENBYTE.  Used to catch over- writes and reads.
++    Copies of PYMEM_FORBIDDENBYTE.  Used to catch over- writes and reads.
+ p[2*S+n+S: 2*S+n+2*S]
+     A serial number, incremented by 1 on each call to _PyMem_DebugMalloc
+     and _PyMem_DebugRealloc.
+@@ -2145,15 +2131,15 @@ _PyMem_DebugRawAlloc(int use_calloc, void *ctx, size_t nbytes)
+     /* at p, write size (SST bytes), id (1 byte), pad (SST-1 bytes) */
+     write_size_t(p, nbytes);
+     p[SST] = (uint8_t)api->api_id;
+-    memset(p + SST + 1, FORBIDDENBYTE, SST-1);
++    memset(p + SST + 1, PYMEM_FORBIDDENBYTE, SST-1);
+ 
+     if (nbytes > 0 && !use_calloc) {
+-        memset(data, CLEANBYTE, nbytes);
++        memset(data, PYMEM_CLEANBYTE, nbytes);
+     }
+ 
+     /* at tail, write pad (SST bytes) and serialno (SST bytes) */
+     tail = data + nbytes;
+-    memset(tail, FORBIDDENBYTE, SST);
++    memset(tail, PYMEM_FORBIDDENBYTE, SST);
+ #ifdef PYMEM_DEBUG_SERIALNO
+     write_size_t(tail + SST, serialno);
+ #endif
+@@ -2179,7 +2165,7 @@ _PyMem_DebugRawCalloc(void *ctx, size_t nelem, size_t elsize)
+ 
+ /* The debug free first checks the 2*SST bytes on each end for sanity (in
+    particular, that the FORBIDDENBYTEs with the api ID are still intact).
+-   Then fills the original bytes with DEADBYTE.
++   Then fills the original bytes with PYMEM_DEADBYTE.
+    Then calls the underlying free.
+ */
+ static void
+@@ -2197,7 +2183,7 @@ _PyMem_DebugRawFree(void *ctx, void *p)
+     _PyMem_DebugCheckAddress(api->api_id, p);
+     nbytes = read_size_t(q);
+     nbytes += PYMEM_DEBUG_EXTRA_BYTES;
+-    memset(q, DEADBYTE, nbytes);
++    memset(q, PYMEM_DEADBYTE, nbytes);
+     api->alloc.free(api->alloc.ctx, q);
+ }
+ 
+@@ -2239,14 +2225,14 @@ _PyMem_DebugRawRealloc(void *ctx, void *p, size_t nbytes)
+      */
+     if (original_nbytes <= sizeof(save)) {
+         memcpy(save, data, original_nbytes);
+-        memset(data - 2 * SST, DEADBYTE,
++        memset(data - 2 * SST, PYMEM_DEADBYTE,
+                original_nbytes + PYMEM_DEBUG_EXTRA_BYTES);
+     }
+     else {
+         memcpy(save, data, ERASED_SIZE);
+-        memset(head, DEADBYTE, ERASED_SIZE + 2 * SST);
++        memset(head, PYMEM_DEADBYTE, ERASED_SIZE + 2 * SST);
+         memcpy(&save[ERASED_SIZE], tail - ERASED_SIZE, ERASED_SIZE);
+-        memset(tail - ERASED_SIZE, DEADBYTE,
++        memset(tail - ERASED_SIZE, PYMEM_DEADBYTE,
+                ERASED_SIZE + PYMEM_DEBUG_EXTRA_BYTES - 2 * SST);
+     }
+ 
+@@ -2268,10 +2254,10 @@ _PyMem_DebugRawRealloc(void *ctx, void *p, size_t nbytes)
+ 
+     write_size_t(head, nbytes);
+     head[SST] = (uint8_t)api->api_id;
+-    memset(head + SST + 1, FORBIDDENBYTE, SST-1);
++    memset(head + SST + 1, PYMEM_FORBIDDENBYTE, SST-1);
+ 
+     tail = data + nbytes;
+-    memset(tail, FORBIDDENBYTE, SST);
++    memset(tail, PYMEM_FORBIDDENBYTE, SST);
+ #ifdef PYMEM_DEBUG_SERIALNO
+     write_size_t(tail + SST, block_serialno);
+ #endif
+@@ -2295,7 +2281,8 @@ _PyMem_DebugRawRealloc(void *ctx, void *p, size_t nbytes)
+ 
+     if (nbytes > original_nbytes) {
+         /* growing: mark new extra memory clean */
+-        memset(data + original_nbytes, CLEANBYTE, nbytes - original_nbytes);
++        memset(data + original_nbytes, PYMEM_CLEANBYTE,
++               nbytes - original_nbytes);
+     }
+ 
+     return data;
+@@ -2374,7 +2361,7 @@ _PyMem_DebugCheckAddress(char api, const void *p)
+      * the tail could lead to a segfault then.
+      */
+     for (i = SST-1; i >= 1; --i) {
+-        if (*(q-i) != FORBIDDENBYTE) {
++        if (*(q-i) != PYMEM_FORBIDDENBYTE) {
+             msg = "bad leading pad byte";
+             goto error;
+         }
+@@ -2383,7 +2370,7 @@ _PyMem_DebugCheckAddress(char api, const void *p)
+     nbytes = read_size_t(q - 2*SST);
+     tail = q + nbytes;
+     for (i = 0; i < SST; ++i) {
+-        if (tail[i] != FORBIDDENBYTE) {
++        if (tail[i] != PYMEM_FORBIDDENBYTE) {
+             msg = "bad trailing pad byte";
+             goto error;
+         }
+@@ -2423,7 +2410,7 @@ _PyObject_DebugDumpAddress(const void *p)
+     fprintf(stderr, "    The %d pad bytes at p-%d are ", SST-1, SST-1);
+     ok = 1;
+     for (i = 1; i <= SST-1; ++i) {
+-        if (*(q-i) != FORBIDDENBYTE) {
++        if (*(q-i) != PYMEM_FORBIDDENBYTE) {
+             ok = 0;
+             break;
+         }
+@@ -2432,11 +2419,11 @@ _PyObject_DebugDumpAddress(const void *p)
+         fputs("FORBIDDENBYTE, as expected.\n", stderr);
+     else {
+         fprintf(stderr, "not all FORBIDDENBYTE (0x%02x):\n",
+-            FORBIDDENBYTE);
++            PYMEM_FORBIDDENBYTE);
+         for (i = SST-1; i >= 1; --i) {
+             const uint8_t byte = *(q-i);
+             fprintf(stderr, "        at p-%d: 0x%02x", i, byte);
+-            if (byte != FORBIDDENBYTE)
++            if (byte != PYMEM_FORBIDDENBYTE)
+                 fputs(" *** OUCH", stderr);
+             fputc('\n', stderr);
+         }
+@@ -2451,7 +2438,7 @@ _PyObject_DebugDumpAddress(const void *p)
+     fprintf(stderr, "    The %d pad bytes at tail=%p are ", SST, (void *)tail);
+     ok = 1;
+     for (i = 0; i < SST; ++i) {
+-        if (tail[i] != FORBIDDENBYTE) {
++        if (tail[i] != PYMEM_FORBIDDENBYTE) {
+             ok = 0;
+             break;
+         }
+@@ -2460,12 +2447,12 @@ _PyObject_DebugDumpAddress(const void *p)
+         fputs("FORBIDDENBYTE, as expected.\n", stderr);
+     else {
+         fprintf(stderr, "not all FORBIDDENBYTE (0x%02x):\n",
+-                FORBIDDENBYTE);
++                PYMEM_FORBIDDENBYTE);
+         for (i = 0; i < SST; ++i) {
+             const uint8_t byte = tail[i];
+             fprintf(stderr, "        at tail+%d: 0x%02x",
+                     i, byte);
+-            if (byte != FORBIDDENBYTE)
++            if (byte != PYMEM_FORBIDDENBYTE)
+                 fputs(" *** OUCH", stderr);
+             fputc('\n', stderr);
+         }
+diff --git a/Objects/typeobject.c b/Objects/typeobject.c
+index e635b718d6..5df121775a 100644
+--- a/Objects/typeobject.c
++++ b/Objects/typeobject.c
+@@ -137,22 +137,24 @@ skip_signature(const char *doc)
+ int
+ _PyType_CheckConsistency(PyTypeObject *type)
+ {
+-#define ASSERT(expr) _PyObject_ASSERT((PyObject *)type, (expr))
++#define CHECK(expr) \
++    do { if (!(expr)) { _PyObject_ASSERT_FAILED_MSG((PyObject *)type, Py_STRINGIFY(expr)); } } while (0)
++
++    CHECK(!_PyObject_IsFreed((PyObject *)type));
+ 
+     if (!(type->tp_flags & Py_TPFLAGS_READY)) {
+-        /* don't check types before PyType_Ready() */
++        /* don't check static types before PyType_Ready() */
+         return 1;
+     }
+ 
+-    ASSERT(!_PyObject_IsFreed((PyObject *)type));
+-    ASSERT(Py_REFCNT(type) >= 1);
+-    ASSERT(PyType_Check(type));
++    CHECK(Py_REFCNT(type) >= 1);
++    CHECK(PyType_Check(type));
+ 
+-    ASSERT(!(type->tp_flags & Py_TPFLAGS_READYING));
+-    ASSERT(type->tp_dict != NULL);
++    CHECK(!(type->tp_flags & Py_TPFLAGS_READYING));
++    CHECK(type->tp_dict != NULL);
+ 
+     return 1;
+-#undef ASSERT
++#undef CHECK
+ }
+ 
+ static const char *
+diff --git a/Objects/unicodeobject.c b/Objects/unicodeobject.c
+index 9eef05a621..0556eff8d0 100644
+--- a/Objects/unicodeobject.c
++++ b/Objects/unicodeobject.c
+@@ -442,65 +442,63 @@ PyUnicode_GetMax(void)
+ int
+ _PyUnicode_CheckConsistency(PyObject *op, int check_content)
+ {
++#define CHECK(expr) \
++    do { if (!(expr)) { _PyObject_ASSERT_FAILED_MSG(op, Py_STRINGIFY(expr)); } } while (0)
++
+     PyASCIIObject *ascii;
+     unsigned int kind;
+ 
+-    _PyObject_ASSERT(op, PyUnicode_Check(op));
++    assert(op != NULL);
++    CHECK(PyUnicode_Check(op));
+ 
+     ascii = (PyASCIIObject *)op;
+     kind = ascii->state.kind;
+ 
+     if (ascii->state.ascii == 1 && ascii->state.compact == 1) {
+-        _PyObject_ASSERT(op, kind == PyUnicode_1BYTE_KIND);
+-        _PyObject_ASSERT(op, ascii->state.ready == 1);
++        CHECK(kind == PyUnicode_1BYTE_KIND);
++        CHECK(ascii->state.ready == 1);
+     }
+     else {
+         PyCompactUnicodeObject *compact = (PyCompactUnicodeObject *)op;
+-#ifndef NDEBUG
+         void *data;
+-#endif
+ 
+         if (ascii->state.compact == 1) {
+-#ifndef NDEBUG
+             data = compact + 1;
+-#endif
+-            _PyObject_ASSERT(op, kind == PyUnicode_1BYTE_KIND
++            CHECK(kind == PyUnicode_1BYTE_KIND
+                                  || kind == PyUnicode_2BYTE_KIND
+                                  || kind == PyUnicode_4BYTE_KIND);
+-            _PyObject_ASSERT(op, ascii->state.ascii == 0);
+-            _PyObject_ASSERT(op, ascii->state.ready == 1);
+-            _PyObject_ASSERT(op, compact->utf8 != data);
++            CHECK(ascii->state.ascii == 0);
++            CHECK(ascii->state.ready == 1);
++            CHECK(compact->utf8 != data);
+         }
+         else {
+-#ifndef NDEBUG
+             PyUnicodeObject *unicode = (PyUnicodeObject *)op;
+ 
+             data = unicode->data.any;
+-#endif
+             if (kind == PyUnicode_WCHAR_KIND) {
+-                _PyObject_ASSERT(op, ascii->length == 0);
+-                _PyObject_ASSERT(op, ascii->hash == -1);
+-                _PyObject_ASSERT(op, ascii->state.compact == 0);
+-                _PyObject_ASSERT(op, ascii->state.ascii == 0);
+-                _PyObject_ASSERT(op, ascii->state.ready == 0);
+-                _PyObject_ASSERT(op, ascii->state.interned == SSTATE_NOT_INTERNED);
+-                _PyObject_ASSERT(op, ascii->wstr != NULL);
+-                _PyObject_ASSERT(op, data == NULL);
+-                _PyObject_ASSERT(op, compact->utf8 == NULL);
++                CHECK(ascii->length == 0);
++                CHECK(ascii->hash == -1);
++                CHECK(ascii->state.compact == 0);
++                CHECK(ascii->state.ascii == 0);
++                CHECK(ascii->state.ready == 0);
++                CHECK(ascii->state.interned == SSTATE_NOT_INTERNED);
++                CHECK(ascii->wstr != NULL);
++                CHECK(data == NULL);
++                CHECK(compact->utf8 == NULL);
+             }
+             else {
+-                _PyObject_ASSERT(op, kind == PyUnicode_1BYTE_KIND
++                CHECK(kind == PyUnicode_1BYTE_KIND
+                                      || kind == PyUnicode_2BYTE_KIND
+                                      || kind == PyUnicode_4BYTE_KIND);
+-                _PyObject_ASSERT(op, ascii->state.compact == 0);
+-                _PyObject_ASSERT(op, ascii->state.ready == 1);
+-                _PyObject_ASSERT(op, data != NULL);
++                CHECK(ascii->state.compact == 0);
++                CHECK(ascii->state.ready == 1);
++                CHECK(data != NULL);
+                 if (ascii->state.ascii) {
+-                    _PyObject_ASSERT(op, compact->utf8 == data);
+-                    _PyObject_ASSERT(op, compact->utf8_length == ascii->length);
++                    CHECK(compact->utf8 == data);
++                    CHECK(compact->utf8_length == ascii->length);
+                 }
+                 else
+-                    _PyObject_ASSERT(op, compact->utf8 != data);
++                    CHECK(compact->utf8 != data);
+             }
+         }
+         if (kind != PyUnicode_WCHAR_KIND) {
+@@ -512,16 +510,16 @@ _PyUnicode_CheckConsistency(PyObject *op, int check_content)
+ #endif
+                )
+             {
+-                _PyObject_ASSERT(op, ascii->wstr == data);
+-                _PyObject_ASSERT(op, compact->wstr_length == ascii->length);
++                CHECK(ascii->wstr == data);
++                CHECK(compact->wstr_length == ascii->length);
+             } else
+-                _PyObject_ASSERT(op, ascii->wstr != data);
++                CHECK(ascii->wstr != data);
+         }
+ 
+         if (compact->utf8 == NULL)
+-            _PyObject_ASSERT(op, compact->utf8_length == 0);
++            CHECK(compact->utf8_length == 0);
+         if (ascii->wstr == NULL)
+-            _PyObject_ASSERT(op, compact->wstr_length == 0);
++            CHECK(compact->wstr_length == 0);
+     }
+ 
+     /* check that the best kind is used: O(n) operation */
+@@ -540,23 +538,25 @@ _PyUnicode_CheckConsistency(PyObject *op, int check_content)
+         }
+         if (kind == PyUnicode_1BYTE_KIND) {
+             if (ascii->state.ascii == 0) {
+-                _PyObject_ASSERT(op, maxchar >= 128);
+-                _PyObject_ASSERT(op, maxchar <= 255);
++                CHECK(maxchar >= 128);
++                CHECK(maxchar <= 255);
+             }
+             else
+-                _PyObject_ASSERT(op, maxchar < 128);
++                CHECK(maxchar < 128);
+         }
+         else if (kind == PyUnicode_2BYTE_KIND) {
+-            _PyObject_ASSERT(op, maxchar >= 0x100);
+-            _PyObject_ASSERT(op, maxchar <= 0xFFFF);
++            CHECK(maxchar >= 0x100);
++            CHECK(maxchar <= 0xFFFF);
+         }
+         else {
+-            _PyObject_ASSERT(op, maxchar >= 0x10000);
+-            _PyObject_ASSERT(op, maxchar <= MAX_UNICODE);
++            CHECK(maxchar >= 0x10000);
++            CHECK(maxchar <= MAX_UNICODE);
+         }
+-        _PyObject_ASSERT(op, PyUnicode_READ(kind, data, ascii->length) == 0);
++        CHECK(PyUnicode_READ(kind, data, ascii->length) == 0);
+     }
+     return 1;
++
++#undef CHECK
+ }
+ 
+ 
+diff --git a/Python/formatter_unicode.c b/Python/formatter_unicode.c
+index 3e9e9ba086..7c4ecf0b3e 100644
+--- a/Python/formatter_unicode.c
++++ b/Python/formatter_unicode.c
+@@ -590,7 +590,7 @@ calc_number_widths(NumberFieldWidths *spec, Py_ssize_t n_prefix,
+         spec->n_remainder + spec->n_rpadding;
+ }
+ 
+-/* Fill in the digit parts of a numbers's string representation,
++/* Fill in the digit parts of a number's string representation,
+    as determined in calc_number_widths().
+    Return -1 on error, or 0 on success. */
+ static int
+diff --git a/Python/getargs.c b/Python/getargs.c
+index c65530d859..c1b7b1a275 100644
+--- a/Python/getargs.c
++++ b/Python/getargs.c
+@@ -1199,7 +1199,19 @@ convertsimple(PyObject *arg, const char **p_format, va_list *p_va, int flags,
+                trailing 0-byte
+ 
+             */
+-            FETCH_SIZE;
++            int *q = NULL; Py_ssize_t *q2 = NULL;
++            if (flags & FLAG_SIZE_T) {
++                q2 = va_arg(*p_va, Py_ssize_t*);
++            }
++            else {
++                if (PyErr_WarnEx(PyExc_DeprecationWarning,
++                            "PY_SSIZE_T_CLEAN will be required for '#' formats", 1))
++                {
++                    Py_DECREF(s);
++                    return NULL;
++                }
++                q = va_arg(*p_va, int*);
++            }
+ 
+             format++;
+             if (q == NULL && q2 == NULL) {
+@@ -1232,7 +1244,19 @@ convertsimple(PyObject *arg, const char **p_format, va_list *p_va, int flags,
+                 }
+             }
+             memcpy(*buffer, ptr, size+1);
+-            STORE_SIZE(size);
++
++            if (flags & FLAG_SIZE_T) {
++                *q2 = size;
++            }
++            else {
++                if (INT_MAX < size) {
++                    Py_DECREF(s);
++                    PyErr_SetString(PyExc_OverflowError,
++                                    "size does not fit in an int");
++                    return converterr("", arg, msgbuf, bufsize);
++                }
++                *q = (int)size;
++            }
+         } else {
+             /* Using a 0-terminated buffer:
+ 
+diff --git a/Python/hamt.c b/Python/hamt.c
+index b3cbf9ac82..38412596a3 100644
+--- a/Python/hamt.c
++++ b/Python/hamt.c
+@@ -6,7 +6,7 @@
+ #include "structmember.h"
+ 
+ /*
+-This file provides an implemention of an immutable mapping using the
++This file provides an implementation of an immutable mapping using the
+ Hash Array Mapped Trie (or HAMT) datastructure.
+ 
+ This design allows to have:
+diff --git a/configure.ac b/configure.ac
+index a189d42c2c..7051dc109a 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -5403,9 +5403,12 @@ AC_LINK_IFELSE(
+ [
+   AC_LANG_SOURCE([[
+     #include <stdatomic.h>
+-    atomic_int value = ATOMIC_VAR_INIT(1);
++    atomic_int int_var;
++    atomic_uintptr_t uintptr_var;
+     int main() {
+-      int loaded_value = atomic_load(&value);
++      atomic_store_explicit(&int_var, 5, memory_order_relaxed);
++      atomic_store_explicit(&uintptr_var, 0, memory_order_relaxed);
++      int loaded_value = atomic_load_explicit(&int_var, memory_order_seq_cst);
+       return 0;
+     }
+   ]])
+@@ -5415,7 +5418,7 @@ AC_MSG_RESULT($have_stdatomic_h)
+ 
+ if test "$have_stdatomic_h" = yes; then
+     AC_DEFINE(HAVE_STD_ATOMIC, 1,
+-              [Has stdatomic.h with atomic_int])
++              [Has stdatomic.h with atomic_int and atomic_uintptr_t])
+ fi
+ 
+ # Check for GCC >= 4.7 __atomic builtins
+diff --git a/pyconfig.h.in b/pyconfig.h.in
+index 5f952d2cfc..aaa7b72cac 100644
+--- a/pyconfig.h.in
++++ b/pyconfig.h.in
+@@ -1025,7 +1025,7 @@
+ /* Define to 1 if you have the <stdlib.h> header file. */
+ #undef HAVE_STDLIB_H
+ 
+-/* Has stdatomic.h with atomic_int */
++/* Has stdatomic.h with atomic_int and atomic_uintptr_t */
+ #undef HAVE_STD_ATOMIC
+ 
+ /* Define to 1 if you have the `strdup' function. */

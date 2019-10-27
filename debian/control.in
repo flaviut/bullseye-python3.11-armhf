@@ -121,7 +121,11 @@ Description: Examples for the Python language (v@VER@)
 Package: @PVER@-dev
 Architecture: any
 Multi-Arch: allowed
-Depends: @PVER@ (= ${binary:Version}), lib@PVER@-dev (= ${binary:Version}), lib@PVER@ (= ${binary:Version}), libexpat1-dev, ${shlibs:Depends}, ${misc:Depends}
+Depends: @PVER@ (= ${binary:Version}),
+  lib@PVER@-dev (= ${binary:Version}),
+  lib@PVER@ (= ${binary:Version}),
+  libexpat1-dev, zlib1g-dev,
+  ${shlibs:Depends}, ${misc:Depends}
 Recommends: libc6-dev | libc-dev
 Description: Header files and a static library for Python (v@VER@)
  Header files, a static library and development tools for building
