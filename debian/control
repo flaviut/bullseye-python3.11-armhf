@@ -115,7 +115,7 @@ Description: Shared Python runtime library (version 3.8)
 
 Package: python3.8-examples
 Architecture: all
-Depends: python3.8 (>= ${source:Version}), ${misc:Depends}
+Depends: python3.8:any (>= ${source:Version}), ${misc:Depends}
 Description: Examples for the Python language (v3.8)
  Examples, Demos and Tools for Python (v3.8). These are files included in
  the upstream Python distribution (v3.8).

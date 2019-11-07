@@ -2,6 +2,7 @@ python3.8 (3.8.0-4) UNRELEASED; urgency=medium
 
   * Move the test/ann_module{,2,3} modules into libpython-stdlib.
     Closes: #944303.
+  * Annote python-examples dependency on python.
 
  -- Matthias Klose <doko@debian.org>  Thu, 07 Nov 2019 16:14:28 +0100
 

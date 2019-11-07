@@ -115,7 +115,7 @@ Description: Shared Python runtime library (version @VER@)
 
 Package: @PVER@-examples
 Architecture: all
-Depends: @PVER@ (>= ${source:Version}), ${misc:Depends}
+Depends: @PVER@:any (>= ${source:Version}), ${misc:Depends}
 Description: Examples for the Python language (v@VER@)
  Examples, Demos and Tools for Python (v@VER@). These are files included in
  the upstream Python distribution (v@VER@).
