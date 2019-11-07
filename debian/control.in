@@ -59,6 +59,8 @@ Architecture: any
 Multi-Arch: same
 Priority: @PRIO@
 Pre-Depends: ${misc:Pre-Depends}
+Breaks: libpython3.8-testsuite (<< 3.8.0-4)
+Replaces: libpython3.8-testsuite (<< 3.8.0-4)
 Depends: lib@PVER@-minimal (= ${binary:Version}), mime-support, ${shlibs:Depends}, ${misc:Depends}
 Description: Interactive high-level object-oriented language (standard library, version @VER@)
  Python is a high-level, interactive, object-oriented language. Its @VER@ version
