@@ -1,4 +1,4 @@
-#git-updates.diff
+git-updates.diff
 deb-setup.diff
 deb-locations.diff
 distutils-install-layout.diff
@@ -34,7 +34,6 @@ local-doc-references.diff
 doc-build-texinfo.diff
 build-math-object.diff
 argparse-no-shutil.diff
-issue35998.diff
 arm-alignment.diff
 sysconfigdata-name.diff
 hurd_kfreebsd_thread_native_id.diff

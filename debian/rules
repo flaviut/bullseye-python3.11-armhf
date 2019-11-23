@@ -1219,6 +1219,8 @@ endif
 	  $(d_ldbg)/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/python-$(VER)-dbg.pc
 	cp $(d)-dbg/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/python-$(VER)d-embed.pc \
 	  $(d_ldbg)/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/.
+	ln -s python-$(VER)d-embed.pc \
+	  $(d_ldbg)/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/python-$(VER)-dbg-embed.pc
 
 	dh_installdirs -p$(p_dbg) \
 		usr/bin \
