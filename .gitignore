@@ -37,6 +37,9 @@ m4
 pyconfig.h.in
 setup.py
 
+# Un-ignore anything that happens to match the above
+!debian/**
+
 debian/.debhelper
 debian/*.debhelper.log
 debian/*.substvars
