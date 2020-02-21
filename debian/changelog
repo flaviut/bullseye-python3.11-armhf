@@ -1,3 +1,19 @@
+python3.8 (3.8.2~rc2-2) unstable; urgency=medium
+
+  * Ignore some autopkg test failures:
+    - test_ssl: Fails with OPENSSL_TLS_SECURITY_LEVEL=2.
+    - test_io: Fails on Ubuntu's autopkg test infrastructure.
+    - Lower OpenSSL security level from 2 to 1 during testing as test_ssl
+      assumes that (Dimitri John Ledkov).
+
+ -- Matthias Klose <doko@debian.org>  Fri, 21 Feb 2020 12:37:41 +0100
+
+python3.8 (3.8.2~rc2-1) unstable; urgency=medium
+
+  * Python 3.8.2 release candidate 2.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 18 Feb 2020 11:16:50 +0100
+
 python3.8 (3.8.2~rc1-1) unstable; urgency=medium
 
   * Python 3.8.2 release candidate 1.

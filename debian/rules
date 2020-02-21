@@ -127,6 +127,9 @@ ifeq ($(distribution),Ubuntu)
   PY_MINPRIO = required
   PY_MINPRIO = optional
   #with_udeb = yes
+  # test_ssl assumes that openssl is compiled with security level set to 1
+  # make it so, during the build
+  export OPENSSL_CONF = $(CURDIR)/debian/openssl.cnf
 else
   PY_MINPRIO = $(PY_PRIO)
 endif
