@@ -1,3 +1,9 @@
+python3.8 (3.8.2-1) unstable; urgency=medium
+
+  * Python 3.8.2 release.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 25 Feb 2020 14:04:52 +0100
+
 python3.8 (3.8.2~rc2-2) unstable; urgency=medium
 
   * Ignore some autopkg test failures:
