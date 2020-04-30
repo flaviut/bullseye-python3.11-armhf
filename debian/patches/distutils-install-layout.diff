@@ -2,8 +2,6 @@
 # DP: - installs into $prefix/dist-packages instead of $prefix/site-packages.
 # DP: - doesn't encode the python version into the egg name.
 
-Index: b/Lib/distutils/command/install_egg_info.py
-===================================================================
 --- a/Lib/distutils/command/install_egg_info.py
 +++ b/Lib/distutils/command/install_egg_info.py
 @@ -14,18 +14,38 @@ class install_egg_info(Command):
@@ -50,8 +48,6 @@ Index: b/Lib/distutils/command/install_egg_info.py
          self.target = os.path.join(self.install_dir, basename)
          self.outputs = [self.target]
  
-Index: b/Lib/distutils/command/install.py
-===================================================================
 --- a/Lib/distutils/command/install.py
 +++ b/Lib/distutils/command/install.py
 @@ -35,6 +35,20 @@ INSTALL_SCHEMES = {
@@ -139,8 +135,6 @@ Index: b/Lib/distutils/command/install.py
  
      def finalize_other(self):
          """Finalizes options for non-posix platforms"""
-Index: b/Lib/distutils/sysconfig.py
-===================================================================
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
 @@ -139,6 +139,7 @@ def get_python_lib(plat_specific=0, stan
@@ -164,8 +158,6 @@ Index: b/Lib/distutils/sysconfig.py
          else:
              return os.path.join(libpython, "site-packages")
      elif os.name == "nt":
-Index: b/Lib/site.py
-===================================================================
 --- a/Lib/site.py
 +++ b/Lib/site.py
 @@ -7,12 +7,18 @@
@@ -211,11 +203,9 @@ Index: b/Lib/site.py
          else:
              sitepackages.append(prefix)
              sitepackages.append(os.path.join(prefix, "lib", "site-packages"))
-Index: b/Lib/test/test_site.py
-===================================================================
 --- a/Lib/test/test_site.py
 +++ b/Lib/test/test_site.py
-@@ -266,10 +266,10 @@ class HelperFunctionsTests(unittest.Test
+@@ -267,10 +267,10 @@ class HelperFunctionsTests(unittest.Test
          dirs = site.getsitepackages()
          if os.sep == '/':
              # OS X, Linux, FreeBSD, etc
@@ -229,8 +219,6 @@ Index: b/Lib/test/test_site.py
              self.assertEqual(dirs[0], wanted)
          else:
              # other platforms
-Index: b/Lib/distutils/tests/test_bdist_dumb.py
-===================================================================
 --- a/Lib/distutils/tests/test_bdist_dumb.py
 +++ b/Lib/distutils/tests/test_bdist_dumb.py
 @@ -85,7 +85,7 @@ class BuildDumbTestCase(support.TempdirM
@@ -242,8 +230,6 @@ Index: b/Lib/distutils/tests/test_bdist_dumb.py
          if not sys.dont_write_bytecode:
              wanted.append('foo.%s.pyc' % sys.implementation.cache_tag)
          self.assertEqual(contents, sorted(wanted))
-Index: b/Lib/distutils/tests/test_install.py
-===================================================================
 --- a/Lib/distutils/tests/test_install.py
 +++ b/Lib/distutils/tests/test_install.py
 @@ -193,7 +193,7 @@ class InstallTestCase(support.TempdirMan
@@ -264,11 +250,9 @@ Index: b/Lib/distutils/tests/test_install.py
          self.assertEqual(found, expected)
  
      def test_debug_mode(self):
-Index: b/Lib/pydoc.py
-===================================================================
 --- a/Lib/pydoc.py
 +++ b/Lib/pydoc.py
-@@ -414,6 +414,7 @@ class Doc:
+@@ -413,6 +413,7 @@ class Doc:
                                   'marshal', 'posix', 'signal', 'sys',
                                   '_thread', 'zipimport') or
               (file.startswith(basedir) and

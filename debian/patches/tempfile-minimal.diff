@@ -1,7 +1,5 @@
 # DP: Avoid shutil import when it is not available.
 
-Index: b/Lib/tempfile.py
-===================================================================
 --- a/Lib/tempfile.py
 +++ b/Lib/tempfile.py
 @@ -40,7 +40,146 @@ import functools as _functools
@@ -152,7 +150,7 @@ Index: b/Lib/tempfile.py
  import errno as _errno
  from random import Random as _Random
  import sys as _sys
-@@ -808,7 +947,7 @@ class TemporaryDirectory(object):
+@@ -811,7 +950,7 @@ class TemporaryDirectory(object):
              else:
                  raise
  

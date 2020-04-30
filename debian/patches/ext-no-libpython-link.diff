@@ -11,7 +11,7 @@
              if not sysconfig.python_build:
                  # building third party extensions
                  self.library_dirs.append(sysconfig.get_config_var('LIBDIR'))
-@@ -725,7 +725,7 @@ class build_ext(Command):
+@@ -733,7 +733,7 @@ class build_ext(Command):
              # shared libraries are resolved at link time.
              from distutils.sysconfig import get_config_var
              link_libpython = False

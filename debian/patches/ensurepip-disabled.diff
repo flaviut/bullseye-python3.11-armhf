@@ -1,10 +1,8 @@
 # DP: Disable ensurepip for the system installation, only enable it for virtual environments.
 
-Index: b/Lib/ensurepip/__init__.py
-===================================================================
 --- a/Lib/ensurepip/__init__.py
 +++ b/Lib/ensurepip/__init__.py
-@@ -8,6 +8,34 @@ import tempfile
+@@ -9,6 +9,34 @@ import tempfile
  
  __all__ = ["version", "bootstrap"]
  
@@ -39,7 +37,7 @@ Index: b/Lib/ensurepip/__init__.py
  
  _PROJECTS = [
      "setuptools",
-@@ -75,6 +103,11 @@ def _bootstrap(*, root=None, upgrade=Fal
+@@ -80,6 +108,11 @@ def _bootstrap(*, root=None, upgrade=Fal
  
      Note that calling this function will alter both sys.path and os.environ.
      """
@@ -51,8 +49,6 @@ Index: b/Lib/ensurepip/__init__.py
      if altinstall and default_pip:
          raise ValueError("Cannot use altinstall and default_pip together")
  
-Index: b/Lib/venv/__init__.py
-===================================================================
 --- a/Lib/venv/__init__.py
 +++ b/Lib/venv/__init__.py
 @@ -286,7 +286,28 @@ class EnvBuilder:

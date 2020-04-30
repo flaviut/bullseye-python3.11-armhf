@@ -1,3 +1,13 @@
+python3.8 (3.8.3~rc1-1) unstable; urgency=medium
+
+  * Python 3.8.3 release candidate 1.
+    - Issue #38576, CVE-2019-18348: Disallow control characters in hostnames
+      in http.client.
+    - Issue #39503, CVE-2020-8492: Denial of service in
+      urllib.request.AbstractBasicAuthHandler.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 30 Apr 2020 09:33:30 +0200
+
 python3.8 (3.8.2-1) unstable; urgency=medium
 
   * Python 3.8.2 release.

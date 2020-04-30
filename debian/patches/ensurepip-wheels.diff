@@ -5,7 +5,7 @@
  import os
  import os.path
  import pkgutil
-@@ -8,13 +9,10 @@ import tempfile
+@@ -9,13 +10,10 @@ import tempfile
  __all__ = ["version", "bootstrap"]
  
  
@@ -22,21 +22,7 @@
  ]
  
  
-@@ -24,15 +22,22 @@ def _run_pip(args, additional_paths=None
-         sys.path = additional_paths + sys.path
- 
-     # Install the bundled software
--    import pip._internal
--    return pip._internal.main(args)
-+    try:
-+        import pip._internal
-+        return pip._internal.main(args)
-+    except ImportError:
-+        import pip
-+        return pip.main(args)
- 
- 
- def version():
+@@ -42,7 +40,9 @@ def version():
      """
      Returns a string specifying the bundled version of pip.
      """
@@ -44,11 +30,10 @@
 +    wheel_names = glob.glob('/usr/share/python-wheels/pip-*.whl')
 +    assert len(wheel_names) == 1, wheel_names
 +    return os.path.basename(wheel_names[0]).split('-')[1]
-+
  
  def _disable_pip_configuration_settings():
      # We deliberately ignore all pip environment variables
-@@ -90,20 +95,44 @@ def _bootstrap(*, root=None, upgrade=Fal
+@@ -100,20 +100,44 @@ def _bootstrap(*, root=None, upgrade=Fal
          # omit pip and easy_install
          os.environ["ENSUREPIP_OPTIONS"] = "install"
  
@@ -103,7 +88,7 @@
  
          # Construct the arguments to be passed to the pip command
          args = ["install", "--no-index", "--find-links", tmpdir]
-@@ -116,7 +145,7 @@ def _bootstrap(*, root=None, upgrade=Fal
+@@ -126,7 +150,7 @@ def _bootstrap(*, root=None, upgrade=Fal
          if verbosity:
              args += ["-" + "v" * verbosity]
  
@@ -112,7 +97,7 @@
  
  def _uninstall_helper(*, verbosity=0):
      """Helper to support a clean default uninstall process on Windows
-@@ -130,7 +159,8 @@ def _uninstall_helper(*, verbosity=0):
+@@ -140,7 +164,8 @@ def _uninstall_helper(*, verbosity=0):
          return
  
      # If the pip version doesn't match the bundled one, leave it alone
@@ -122,7 +107,7 @@
          msg = ("ensurepip will only uninstall a matching version "
                 "({!r} installed, {!r} bundled)")
          print(msg.format(pip.__version__, _PIP_VERSION), file=sys.stderr)
-@@ -143,7 +173,7 @@ def _uninstall_helper(*, verbosity=0):
+@@ -153,7 +178,7 @@ def _uninstall_helper(*, verbosity=0):
      if verbosity:
          args += ["-" + "v" * verbosity]
  
