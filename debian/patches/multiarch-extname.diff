@@ -2,8 +2,6 @@
  
 this patch can be dropped for python3.5 final, if the upstream chage is kept.
 
-Index: b/Lib/distutils/dir_util.py
-===================================================================
 --- a/Lib/distutils/dir_util.py
 +++ b/Lib/distutils/dir_util.py
 @@ -96,6 +96,9 @@ def create_tree(base_dir, files, mode=0o
@@ -40,8 +38,6 @@ Index: b/Lib/distutils/dir_util.py
  
          if n.startswith('.nfs'):
              # skip NFS rename files
-Index: b/Lib/distutils/command/install_lib.py
-===================================================================
 --- a/Lib/distutils/command/install_lib.py
 +++ b/Lib/distutils/command/install_lib.py
 @@ -56,6 +56,7 @@ class install_lib(Command):
@@ -69,8 +65,6 @@ Index: b/Lib/distutils/command/install_lib.py
              outfiles = self.copy_tree(self.build_dir, self.install_dir)
          else:
              self.warn("'%s' does not exist -- no Python modules to install" %
-Index: b/Lib/distutils/command/install.py
-===================================================================
 --- a/Lib/distutils/command/install.py
 +++ b/Lib/distutils/command/install.py
 @@ -192,6 +192,7 @@ class install(Command):
@@ -81,7 +75,7 @@ Index: b/Lib/distutils/command/install.py
          
          self.compile = None
          self.optimize = None
-@@ -451,6 +452,8 @@ class install(Command):
+@@ -452,6 +453,8 @@ class install(Command):
              self.install_platbase = self.exec_prefix
              if self.install_layout:
                  if self.install_layout.lower() in ['deb']:

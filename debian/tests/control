@@ -1,26 +1,26 @@
 Tests: testsuite
 Depends: build-essential,
   locales-all,
-  python3.8-dev,
-  libpython3.8-testsuite:native,
+  python3.9-dev,
+  libpython3.9-testsuite:native,
   python3-gdbm,
   python3-distutils,
   python3-tk,
-  idle-python3.8,
+  idle-python3.9,
   systemtap-sdt-dev,
 # need to turn off apport
 Restrictions: needs-root
 
 Tests: testsuite-dbg
 Depends: build-essential,
-  locales-all, python3.8-dev,
-  python3.8-dbg,
-  libpython3.8-testsuite:native,
+  locales-all, python3.9-dev,
+  python3.9-dbg,
+  libpython3.9-testsuite:native,
   python3-gdbm-dbg,
   gdb,
   python3-distutils,
   python3-tk-dbg,
-  idle-python3.8,
+  idle-python3.9,
   systemtap-sdt-dev,
 # need to turn off apport
 Restrictions: needs-root
@@ -28,8 +28,8 @@ Restrictions: needs-root
 Tests: failing-tests
 Depends: build-essential,
   locales-all,
-  python3.8-dev,
-  libpython3.8-testsuite:native,
+  python3.9-dev,
+  libpython3.9-testsuite:native,
   python3-gdbm,
   python3-distutils,
 # need to turn off apport
@@ -38,9 +38,9 @@ Restrictions: needs-root allow-stderr
 Tests: failing-tests-dbg
 Depends: build-essential,
   locales-all,
-  python3.8-dev,
-  python3.8-dbg,
-  libpython3.8-testsuite:native,
+  python3.9-dev,
+  python3.9-dbg,
+  libpython3.9-testsuite:native,
   python3-gdbm-dbg,
   gdb,
   python3-distutils,

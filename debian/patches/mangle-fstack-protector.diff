@@ -10,8 +10,8 @@
 +import fnmatch
  
  from .errors import DistutilsPlatformError
- from .util import get_platform, get_host_platform
-@@ -214,6 +215,10 @@ def customize_compiler(compiler):
+ 
+@@ -220,6 +221,10 @@ def customize_compiler(compiler):
              cc = newcc
          if 'CXX' in os.environ:
              cxx = os.environ['CXX']

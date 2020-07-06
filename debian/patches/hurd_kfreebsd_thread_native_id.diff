@@ -1,6 +1,6 @@
 --- a/Include/pythread.h
 +++ b/Include/pythread.h
-@@ -26,7 +26,7 @@ PyAPI_FUNC(unsigned long) PyThread_start
+@@ -25,7 +25,7 @@ PyAPI_FUNC(unsigned long) PyThread_start
  PyAPI_FUNC(void) _Py_NO_RETURN PyThread_exit_thread(void);
  PyAPI_FUNC(unsigned long) PyThread_get_thread_ident(void);
  
@@ -11,7 +11,7 @@
  #endif
 --- a/Python/thread_pthread.h
 +++ b/Python/thread_pthread.h
-@@ -16,12 +16,17 @@
+@@ -17,12 +17,17 @@
  #   include <sys/syscall.h>     /* syscall(SYS_gettid) */
  #elif defined(__FreeBSD__)
  #   include <pthread_np.h>      /* pthread_getthreadid_np() */
@@ -29,7 +29,7 @@
  #endif
  
  /* The POSIX spec requires that use of pthread_attr_setstacksize
-@@ -334,6 +339,9 @@ PyThread_get_thread_native_id(void)
+@@ -338,6 +343,9 @@ PyThread_get_thread_native_id(void)
  #elif defined(__FreeBSD__)
      int native_id;
      native_id = pthread_getthreadid_np();
@@ -39,7 +39,7 @@
  #elif defined(__OpenBSD__)
      pid_t native_id;
      native_id = getthrid();
-@@ -343,6 +351,10 @@ PyThread_get_thread_native_id(void)
+@@ -347,6 +355,10 @@ PyThread_get_thread_native_id(void)
  #elif defined(__NetBSD__)
      lwpid_t native_id;
      native_id = _lwp_self();
