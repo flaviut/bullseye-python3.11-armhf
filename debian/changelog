@@ -1,3 +1,10 @@
+python3.9 (3.9.0~b4-2) unstable; urgency=medium
+
+  * Fix symbols file on i386.
+  * Don't run test_concurrent_futures on riscv64, takes ages.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 16 Jul 2020 13:24:24 +0200
+
 python3.9 (3.9.0~b4-1) unstable; urgency=medium
 
   * Python 3.9.0 beta 4.

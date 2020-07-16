@@ -536,6 +536,10 @@ ifneq (,$(filter $(DEB_HOST_ARCH), sparc sparc64))
   TEST_EXCLUDES += test_gdb
 endif
 
+ifneq (,$(filter $(DEB_HOST_ARCH), riscv64))
+  TEST_EXCLUDES += test_concurrent_futures
+endif
+
 # fail/hang with new OpenSSL
 TEST_EXCLUDES += test_asyncio test_ftplib test_httplib test_imaplib test_nntplib test_poplib test_ssl
 

@@ -12,6 +12,5 @@ libpython@VER@d.so.1.0 libpython@VER@-dbg #MINVER#
  _Py_HashSecret_Initialized@Base @SVER@
  _Py_NegativeRefcount@Base @SVER@
  _Py_RefTotal@Base @SVER@
- _Py_tok_dump@Base @SVER@
  PyModule_Create2@Base @SVER@
  PyModule_FromDefAndSpec2@Base @SVER@
