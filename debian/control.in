@@ -2,7 +2,7 @@ Source: @PVER@
 Section: python
 Priority: optional
 Maintainer: Matthias Klose <doko@debian.org>
-Build-Depends: debhelper (>= 9), @bd_dpkgdev@
+Build-Depends: debhelper (>= 11), @bd_dpkgdev@
   quilt, autoconf,
   lsb-release, sharutils,
   libreadline-dev, libncursesw5-dev (>= 5.3), @bd_gcc@
