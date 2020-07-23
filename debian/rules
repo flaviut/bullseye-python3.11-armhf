@@ -768,6 +768,7 @@ clean: control-file
 	rm -rf locales
 	rm -rf $(d)-dbg
 	rm -f configure
+	rm -f netlify.toml
 	rm -rf $(TEST_DIR) debian/testdir
 
 	for f in debian/*.in; do \

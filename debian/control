@@ -91,6 +91,8 @@ Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: libpython3.9-stdlib
+Breaks: libpython3.9-stdlib (<< 3.9.0~b5-2)
+Replaces: libpython3.9-stdlib (<< 3.9.0~b5-2)
 Conflicts: binfmt-support (<< 1.1.2)
 Description: Minimal subset of the Python language (version 3.9)
  This package contains some essential modules. It is normally not
