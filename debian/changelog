@@ -1,3 +1,9 @@
+python3.9 (3.9.0~rc1-1) unstable; urgency=medium
+
+  * Python 3.9.0 release candidate 1.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 12 Aug 2020 12:42:16 +0200
+
 python3.9 (3.9.0~b5-2) unstable; urgency=medium
 
   * Move typing.py into libpython3.9-minimal.

@@ -37,3 +37,4 @@ argparse-no-shutil.diff
 arm-alignment.diff
 sysconfigdata-name.diff
 hurd_kfreebsd_thread_native_id.diff
+sphinx3.diff
