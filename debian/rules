@@ -57,10 +57,10 @@ ifneq (,$(findstring nobench, $(DEB_BUILD_OPTIONS)))
   WITHOUT_BENCH := yes
 endif
 ifeq ($(on_buildd),yes)
-  ifneq (,$(filter $(DEB_HOST_ARCH), armel hppa mips mipsel mips64 mips64el s390 hurd-i386 kfreebsd-amd64 kfreebsd-i386))
+  ifneq (,$(filter $(DEB_HOST_ARCH), armel hppa mips mipsel mips64 mips64el riscv64 s390 hurd-i386 kfreebsd-amd64 kfreebsd-i386))
     WITHOUT_CHECK := yes
   endif
-  ifneq (,$(filter $(DEB_HOST_ARCH), armel hppa mips mipsel mips64 mips64el s390 hurd-i386 kfreebsd-amd64 kfreebsd-i386))
+  ifneq (,$(filter $(DEB_HOST_ARCH), armel hppa mips mipsel mips64 mips64el riscv64 s390 hurd-i386 kfreebsd-amd64 kfreebsd-i386))
     WITHOUT_BENCH := yes
   endif
 endif
