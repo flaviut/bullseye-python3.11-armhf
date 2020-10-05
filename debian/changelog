@@ -1,3 +1,9 @@
+python3.9 (3.9.0-1) unstable; urgency=medium
+
+  * Python 3.9.0 release.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 05 Oct 2020 22:56:51 +0200
+
 python3.9 (3.9.0~rc2-1) unstable; urgency=medium
 
   * Python 3.9.0 release candidate 2.
