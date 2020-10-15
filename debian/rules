@@ -532,6 +532,7 @@ ifneq (,$(filter $(DEB_HOST_ARCH), arm armel avr32 m68k))
     TEST_EXCLUDES += test_compiler
   endif
 endif
+TEST_EXCLUDES += test_ttk_guionly
 # https://buildd.debian.org/status/logs.php?pkg=python3.5&ver=3.5.1-1&arch=alpha&suite=sid
 ifneq (,$(filter $(DEB_HOST_ARCH), alpha))
   TEST_EXCLUDES += test_signal

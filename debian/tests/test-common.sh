@@ -59,3 +59,6 @@ if [ "$vendor" = Ubuntu ]; then
     TESTEXCLUSIONS="$TESTEXCLUSIONS test_io"
   fi
 fi
+
+# FIXME: test_ttk_guionly times out on many buildds
+TESTEXCLUSIONS="$TESTEXCLUSIONS test_ttk_guionly"
