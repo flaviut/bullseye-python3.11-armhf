@@ -170,6 +170,10 @@ DEBUG_CFLAGS := $(patsubst -O%,-Og,$(DPKG_CFLAGS))
 ifeq ($(DEB_HOST_ARCH),ia64)
     EXTRA_OPT_CFLAGS += -O2
 endif
+# see #972202
+ifeq ($(DEB_HOST_ARCH),sh4)
+    EXTRA_OPT_CFLAGS += -O1
+endif
 ifneq (,$(filter $(DEB_HOST_ARCH), ppc64 ppc64el))
     OPT_CFLAGS += -fexceptions
     DEBUG_CFLAGS += -fexceptions

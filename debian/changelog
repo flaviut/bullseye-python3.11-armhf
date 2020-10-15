@@ -1,6 +1,7 @@
 python3.9 (3.9.0-2) UNRELEASED; urgency=medium
 
   * Update to the 3.9 branch 2020-10-15.
+  * Build with -O1 on sh4 (Adrian Glaubitz). Closes: #972202.
 
  -- Matthias Klose <doko@debian.org>  Thu, 15 Oct 2020 13:54:52 +0200
 
