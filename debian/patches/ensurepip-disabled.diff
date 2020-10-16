@@ -2,7 +2,7 @@
 
 --- a/Lib/ensurepip/__init__.py
 +++ b/Lib/ensurepip/__init__.py
-@@ -12,6 +12,34 @@ from . import _bundled
+@@ -11,6 +11,34 @@ from importlib import resources
  
  __all__ = ["version", "bootstrap"]
  
@@ -37,7 +37,7 @@
  
  _PROJECTS = [
      "setuptools",
-@@ -83,6 +111,11 @@ def _bootstrap(*, root=None, upgrade=Fal
+@@ -78,6 +106,11 @@ def _bootstrap(*, root=None, upgrade=Fal
  
      Note that calling this function will alter both sys.path and os.environ.
      """

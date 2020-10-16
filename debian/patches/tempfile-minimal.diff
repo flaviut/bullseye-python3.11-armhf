@@ -150,7 +150,7 @@
  import errno as _errno
  from random import Random as _Random
  import sys as _sys
-@@ -810,7 +949,7 @@ class TemporaryDirectory(object):
+@@ -809,7 +948,7 @@ class TemporaryDirectory(object):
              else:
                  raise
  
