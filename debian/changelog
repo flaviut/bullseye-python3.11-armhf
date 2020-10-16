@@ -1,4 +1,4 @@
-python3.9 (3.9.0-3) unstable; urgency=medium
+python3.9 (3.9.0-3) unstable; urgency=high
 
   * Update to the 3.9 branch 2020-10-16.
   * ensurepip: Don't try to import the _bundled module.
