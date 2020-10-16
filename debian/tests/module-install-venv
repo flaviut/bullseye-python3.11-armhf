@@ -1,0 +1,30 @@
+#!/bin/sh
+
+cp -a debian/tests/packages "$AUTOPKGTEST_TMP"
+HOME="$AUTOPKGTEST_TMP/home"
+mkdir -p "$HOME"
+python3.9 -m venv "$AUTOPKGTEST_TMP/ve"
+
+VP="$AUTOPKGTEST_TMP/ve/bin/python"
+
+testFibPy() {
+	cd "$AUTOPKGTEST_TMP/packages/fibpy"
+	$VP setup.py install
+	assertTrue 'Install fibpy in a virtualenv' $?
+	cd "$AUTOPKGTEST_TMP"
+	stdout=$($VP -m fibpy 5)
+	assertTrue 'Execute fibpy from a virtualenv' $?
+	assertEquals 'Correct result' 8 "$stdout"
+}
+
+testFibC() {
+	cd "$AUTOPKGTEST_TMP/packages/fibc"
+	$VP setup.py install
+	assertTrue 'Install fibc in a virtualenv' $?
+	cd "$AUTOPKGTEST_TMP"
+	stdout=$($VP -c 'from fibc import fib; print(fib(5))')
+	assertTrue 'Execute fibc from a virtualenv' $?
+	assertEquals 'Correct result' 8 "$stdout"
+}
+
+. shunit2

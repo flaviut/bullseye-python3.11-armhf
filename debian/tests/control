@@ -46,3 +46,16 @@ Depends: build-essential,
   python3-distutils,
 # need to turn off apport
 Restrictions: needs-root allow-stderr
+
+Tests: module-install-local
+Depends: build-essential, python3.9-dev, python3-setuptools, shunit2
+Restrictions: needs-root
+
+Tests: module-install-user
+Depends: build-essential, python3.9-dev, python3-setuptools, shunit2
+
+Tests: module-install-venv
+Depends: build-essential, python3.9-dev, python-pip-whl, shunit2
+
+Tests: module-install-virtualenv
+Depends: build-essential, python3.9-dev, shunit2, virtualenv

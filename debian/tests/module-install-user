@@ -1,0 +1,33 @@
+#!/bin/sh
+
+cp -a debian/tests/packages "$AUTOPKGTEST_TMP"
+
+HOME="$AUTOPKGTEST_TMP/home"
+mkdir "$HOME"
+
+tearDown() {
+	# Remove the --user install directory
+	rm -rf "$HOME/.local/lib/python3.9/site-packages"
+}
+
+testFibPy() {
+	cd "$AUTOPKGTEST_TMP/packages/fibpy"
+	python3.9 setup.py install --user
+	assertTrue 'Install fibpy in --user' $?
+	cd "$AUTOPKGTEST_TMP"
+	stdout=$(python3.9 -m fibpy 5)
+	assertTrue 'Execute fibpy from a virtualenv' $?
+	assertEquals 'Correct result' 8 "$stdout"
+}
+
+testFibC() {
+	cd "$AUTOPKGTEST_TMP/packages/fibc"
+	python3.9 setup.py install --user
+	assertTrue 'Install fibc in --user' $?
+	cd "$AUTOPKGTEST_TMP"
+	stdout=$(python3.9 -c 'from fibc import fib; print(fib(5))')
+	assertTrue 'Execute fibc from a virtualenv' $?
+	assertEquals 'Correct result' 8 "$stdout"
+}
+
+. shunit2

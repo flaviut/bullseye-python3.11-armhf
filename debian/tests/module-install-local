@@ -1,0 +1,33 @@
+#!/bin/sh
+
+cp -a debian/tests/packages "$AUTOPKGTEST_TMP"
+
+setUp() {
+	mount -t tmpfs tmpfs /usr/local/lib/python3.9/dist-packages
+}
+
+tearDown() {
+	umount /usr/local/lib/python3.9/dist-packages
+}
+
+testFibPy() {
+	cd "$AUTOPKGTEST_TMP/packages/fibpy"
+	python3.9 setup.py install
+	assertTrue 'Install fibpy in /usr/local' $?
+	cd "$AUTOPKGTEST_TMP"
+	stdout=$(python3.9 -m fibpy 5)
+	assertTrue 'Execute fibpy from a virtualenv' $?
+	assertEquals 'Correct result' 8 "$stdout"
+}
+
+testFibC() {
+	cd "$AUTOPKGTEST_TMP/packages/fibc"
+	python3.9 setup.py install
+	assertTrue 'Install fibc in /usr/local' $?
+	cd "$AUTOPKGTEST_TMP"
+	stdout=$(python3.9 -c 'from fibc import fib; print(fib(5))')
+	assertTrue 'Execute fibc from a virtualenv' $?
+	assertEquals 'Correct result' 8 "$stdout"
+}
+
+. shunit2
