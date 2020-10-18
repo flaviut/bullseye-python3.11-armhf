@@ -1,3 +1,9 @@
+python3.9 (3.9.0-4) unstable; urgency=medium
+
+  * Fix module-install-venv autopkg test dependency.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 18 Oct 2020 11:42:38 +0200
+
 python3.9 (3.9.0-3) unstable; urgency=high
 
   * Update to the 3.9 branch 2020-10-16.

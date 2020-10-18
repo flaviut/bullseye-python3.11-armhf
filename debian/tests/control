@@ -55,7 +55,7 @@ Tests: module-install-user
 Depends: build-essential, python3.9-dev, python3-setuptools, shunit2
 
 Tests: module-install-venv
-Depends: build-essential, python3.9-dev, python-pip-whl, shunit2
+Depends: build-essential, python3.9-dev, python3.9-venv, shunit2
 
 Tests: module-install-virtualenv
 Depends: build-essential, python3.9-dev, shunit2, virtualenv
