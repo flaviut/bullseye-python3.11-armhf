@@ -1,12 +1,34 @@
-# DP: updates from the 3.9 branch (until 2020-10-16).
+# DP: updates from the 3.9 branch (until 2020-10-19).
 
-# git diff --no-renames 9cf6752276e6fcfd0c23fdb064ad27f448aaaf75 dff9161821032acfd2588d42d88511ebdbabaaf3 | filterdiff -x ?/.hgignore -x ?/.hgeol -x ?/.hgtags -x ?/.hgtouch -x ?/.gitignore -x ?/.gitattributes -x '?/.github/*' -x '?/.git*' -x ?/.codecov.yml -x ?/.travis.yml -x ?/configure --remove-timestamps
+# git diff --no-renames 9cf6752276e6fcfd0c23fdb064ad27f448aaaf75 7c949020ef2520d7a7cbc978f0b34423e6c2a94c | filterdiff -x ?/.hgignore -x ?/.hgeol -x ?/.hgtags -x ?/.hgtouch -x ?/.gitignore -x ?/.gitattributes -x '?/.github/*' -x '?/.git*' -x ?/.codecov.yml -x ?/.travis.yml -x ?/configure --remove-timestamps
 
 diff --git a/Doc/faq/programming.rst b/Doc/faq/programming.rst
-index 66d210a55f..7c6fc51c6b 100644
+index 66d210a55f..106450fb78 100644
 --- a/Doc/faq/programming.rst
 +++ b/Doc/faq/programming.rst
-@@ -1164,6 +1164,21 @@ This converts the list into a set, thereby removing duplicates, and then back
+@@ -942,7 +942,7 @@ There are various techniques.
+      f()
+ 
+ 
+-* Use :func:`locals` or :func:`eval` to resolve the function name::
++* Use :func:`locals` to resolve the function name::
+ 
+      def myFunc():
+          print("hello")
+@@ -952,12 +952,6 @@ There are various techniques.
+      f = locals()[fname]
+      f()
+ 
+-     f = eval(fname)
+-     f()
+-
+-  Note: Using :func:`eval` is slow and dangerous.  If you don't have absolute
+-  control over the contents of the string, someone could pass a string that
+-  resulted in an arbitrary function being executed.
+ 
+ Is there an equivalent to Perl's chomp() for removing trailing newlines from strings?
+ -------------------------------------------------------------------------------------
+@@ -1164,6 +1158,21 @@ This converts the list into a set, thereby removing duplicates, and then back
  into a list.
  
  
@@ -27,6 +49,27 @@ index 66d210a55f..7c6fc51c6b 100644
 +
  How do you make an array in Python?
  -----------------------------------
+ 
+@@ -1366,20 +1375,6 @@ out the element you want. ::
+    ['else', 'sort', 'to', 'something']
+ 
+ 
+-An alternative for the last step is::
+-
+-   >>> result = []
+-   >>> for p in pairs: result.append(p[1])
+-
+-If you find this more legible, you might prefer to use this instead of the final
+-list comprehension.  However, it is almost twice as slow for long lists.  Why?
+-First, the ``append()`` operation has to reallocate memory, and while it uses
+-some tricks to avoid doing that each time, it still has to do it occasionally,
+-and that costs quite a bit.  Second, the expression "result.append" requires an
+-extra attribute lookup, and third, there's a speed reduction from having to make
+-all those function calls.
+-
+-
+ Objects
+ =======
  
 diff --git a/Doc/library/idle.rst b/Doc/library/idle.rst
 index 43096b014f..a59a5d3a46 100644
@@ -425,7 +468,7 @@ index a2fa17811b..6a9fa34156 100644
  inspect
  -------
 diff --git a/Doc/whatsnew/3.9.rst b/Doc/whatsnew/3.9.rst
-index 9a09e710a3..a91494a918 100644
+index 9a09e710a3..da07185615 100644
 --- a/Doc/whatsnew/3.9.rst
 +++ b/Doc/whatsnew/3.9.rst
 @@ -781,41 +781,41 @@ Here's a summary of performance improvements from Python 3.4 through Python 3.9:
@@ -497,6 +540,15 @@ index 9a09e710a3..a91494a918 100644
  
      Timing loop:
          loop_overhead                    0.5     0.6     0.4     0.3     0.3    0.3
+@@ -891,7 +891,7 @@ Deprecated
+   and will be removed in future Python versions.  ``value`` itself should be
+   used instead of ``Index(value)``.  ``Tuple(slices, Load())`` should be
+   used instead of ``ExtSlice(slices)``.
+-  (Contributed by Serhiy Storchaka in :issue:`32892`.)
++  (Contributed by Serhiy Storchaka in :issue:`34822`.)
+ 
+ * :mod:`ast` classes ``Suite``, ``Param``, ``AugLoad`` and ``AugStore``
+   are considered deprecated and will be removed in future Python versions.
 diff --git a/Grammar/python.gram b/Grammar/python.gram
 index 334a7f56f0..8f4d250dc3 100644
 --- a/Grammar/python.gram
@@ -562,6 +614,22 @@ index a9e8ef19e9..2243329744 100644
  /*--end constants--*/
  
  /* Version as a single 4-byte hex number, e.g. 0x010502B2 == 1.5.2b2.
+diff --git a/Lib/cProfile.py b/Lib/cProfile.py
+index 4f202038d6..59b4699feb 100755
+--- a/Lib/cProfile.py
++++ b/Lib/cProfile.py
+@@ -152,6 +152,11 @@ def main():
+     (options, args) = parser.parse_args()
+     sys.argv[:] = args
+ 
++    # The script that we're profiling may chdir, so capture the absolute path
++    # to the output file at startup.
++    if options.outfile is not None:
++        options.outfile = os.path.abspath(options.outfile)
++
+     if len(args) > 0:
+         if options.module:
+             code = "run_module(modname, run_name='__main__')"
 diff --git a/Lib/ctypes/test/test_find.py b/Lib/ctypes/test/test_find.py
 index b99fdcba7b..92ac1840ad 100644
 --- a/Lib/ctypes/test/test_find.py
@@ -661,6 +729,19 @@ index 01176bf969..0c2510e161 100644
  
  ################################################################
  # test code
+diff --git a/Lib/datetime.py b/Lib/datetime.py
+index 2294ac2b68..e508d996fb 100644
+--- a/Lib/datetime.py
++++ b/Lib/datetime.py
+@@ -1579,7 +1579,7 @@ class time:
+         self._tzinfo = tzinfo
+ 
+     def __reduce_ex__(self, protocol):
+-        return (time, self._getstate(protocol))
++        return (self.__class__, self._getstate(protocol))
+ 
+     def __reduce__(self):
+         return self.__reduce_ex__(2)
 diff --git a/Lib/graphlib.py b/Lib/graphlib.py
 index 948f62f1dc..d0e7a4814c 100644
 --- a/Lib/graphlib.py
@@ -866,6 +947,22 @@ index 403dc81b13..7b169a16fb 100644
          """
          if self.nlen == 0:
              return True
+diff --git a/Lib/profile.py b/Lib/profile.py
+index aad458dc95..5cb017ed83 100755
+--- a/Lib/profile.py
++++ b/Lib/profile.py
+@@ -571,6 +571,11 @@ def main():
+     (options, args) = parser.parse_args()
+     sys.argv[:] = args
+ 
++    # The script that we're profiling may chdir, so capture the absolute path
++    # to the output file at startup.
++    if options.outfile is not None:
++        options.outfile = os.path.abspath(options.outfile)
++
+     if len(args) > 0:
+         if options.module:
+             import runpy
 diff --git a/Lib/pstats.py b/Lib/pstats.py
 index e781b91c60..0f93ae02c9 100644
 --- a/Lib/pstats.py
@@ -957,6 +1054,34 @@ index a711676582..521540fe9e 100644
  
      def is_annotated(self):
          return bool(self.__flags & DEF_ANNOT)
+diff --git a/Lib/test/datetimetester.py b/Lib/test/datetimetester.py
+index a9741d6d40..b37ef91707 100644
+--- a/Lib/test/datetimetester.py
++++ b/Lib/test/datetimetester.py
+@@ -1781,6 +1781,7 @@ class TestDate(HarmlessMixedComparison, unittest.TestCase):
+             green = pickler.dumps(orig, proto)
+             derived = unpickler.loads(green)
+             self.assertEqual(orig, derived)
++            self.assertTrue(isinstance(derived, SubclassDate))
+ 
+     def test_backdoor_resistance(self):
+         # For fast unpickling, the constructor accepts a pickle byte string.
+@@ -2308,6 +2309,7 @@ class TestDateTime(TestDate):
+             green = pickler.dumps(orig, proto)
+             derived = unpickler.loads(green)
+             self.assertEqual(orig, derived)
++            self.assertTrue(isinstance(derived, SubclassDatetime))
+ 
+     def test_compat_unpickle(self):
+         tests = [
+@@ -3357,6 +3359,7 @@ class TestTime(HarmlessMixedComparison, unittest.TestCase):
+             green = pickler.dumps(orig, proto)
+             derived = unpickler.loads(green)
+             self.assertEqual(orig, derived)
++            self.assertTrue(isinstance(derived, SubclassTime))
+ 
+     def test_compat_unpickle(self):
+         tests = [
 diff --git a/Lib/test/multibytecodec_support.py b/Lib/test/multibytecodec_support.py
 index cca8af67d6..f76c0153f5 100644
 --- a/Lib/test/multibytecodec_support.py
@@ -999,6 +1124,29 @@ index cca8af67d6..f76c0153f5 100644
                      continue
  
                  unich = unichrs(data[1])
+diff --git a/Lib/test/test_codecs.py b/Lib/test/test_codecs.py
+index 54a3520802..8d112a171d 100644
+--- a/Lib/test/test_codecs.py
++++ b/Lib/test/test_codecs.py
+@@ -2183,6 +2183,18 @@ class CharmapTest(unittest.TestCase):
+             ("", len(allbytes))
+         )
+ 
++        self.assertRaisesRegex(TypeError,
++            "character mapping must be in range\\(0x110000\\)",
++            codecs.charmap_decode,
++            b"\x00\x01\x02", "strict", {0: "A", 1: 'Bb', 2: -2}
++        )
++
++        self.assertRaisesRegex(TypeError,
++            "character mapping must be in range\\(0x110000\\)",
++            codecs.charmap_decode,
++            b"\x00\x01\x02", "strict", {0: "A", 1: 'Bb', 2: 999999999}
++        )
++
+     def test_decode_with_int2int_map(self):
+         a = ord('a')
+         b = ord('b')
 diff --git a/Lib/test/test_finalization.py b/Lib/test/test_finalization.py
 index 35d7913e5b..1d13443090 100644
 --- a/Lib/test/test_finalization.py
@@ -1179,6 +1327,40 @@ index 62759c0701..410eae2208 100644
  
  
  class ExceptionFormatter(logging.Formatter):
+diff --git a/Lib/test/test_profile.py b/Lib/test/test_profile.py
+index 01a8a6eaf5..233649899e 100644
+--- a/Lib/test/test_profile.py
++++ b/Lib/test/test_profile.py
+@@ -6,7 +6,7 @@ import unittest
+ import os
+ from difflib import unified_diff
+ from io import StringIO
+-from test.support import TESTFN, run_unittest, unlink
++from test.support import TESTFN, run_unittest, unlink, temp_dir, change_cwd
+ from contextlib import contextmanager
+ 
+ import profile
+@@ -111,6 +111,20 @@ class ProfileTest(unittest.TestCase):
+         assert_python_ok('-m', self.profilermodule.__name__,
+                          '-m', 'timeit', '-n', '1')
+ 
++    def test_output_file_when_changing_directory(self):
++        with temp_dir() as tmpdir, change_cwd(tmpdir):
++            os.mkdir('dest')
++            with open('demo.py', 'w') as f:
++                f.write('import os; os.chdir("dest")')
++
++            assert_python_ok(
++                '-m', self.profilermodule.__name__,
++                '-o', 'out.pstats',
++                'demo.py',
++            )
++
++            self.assertTrue(os.path.exists('out.pstats'))
++
+ 
+ def regenerate_expected_output(filename, cls):
+     filename = filename.rstrip('co')
 diff --git a/Lib/test/test_pstats.py b/Lib/test/test_pstats.py
 index 10559deb6b..4f78b99fd1 100644
 --- a/Lib/test/test_pstats.py
@@ -1535,7 +1717,18 @@ index a58b922ce3..2548b212d9 100755
                extra_cflags=('-Os '
                              '-DSQLITE_ENABLE_FTS5 '
                              '-DSQLITE_ENABLE_FTS4 '
-diff --git a/Modules/_testcapimodule.c b/Modules/_testcapimodule.c
+diff --git a/Misc/ACKS b/Misc/ACKS
+index a16f15a74e..3125600284 100644
+--- a/Misc/ACKS
++++ b/Misc/ACKS
+@@ -781,6 +781,7 @@ Meador Inge
+ Peter Ingebretson
+ Tony Ingraldi
+ John Interrante
++Dean Inwood
+ Bob Ippolito
+ Roger Irwin
+ Atsuo Ishimoto
 index b2d070cffa..54c1e62a28 100644
 --- a/Modules/_testcapimodule.c
 +++ b/Modules/_testcapimodule.c
@@ -1685,9 +1878,18 @@ index f65434fdb7..1a12b0ce07 100644
      /* store type in class' cell if one is supplied */
      cell = _PyDict_GetItemIdWithError(dict, &PyId___classcell__);
 diff --git a/Objects/unicodeobject.c b/Objects/unicodeobject.c
-index 4c8c880657..3c2383d57c 100644
+index 4c8c880657..d5fbf158d5 100644
 --- a/Objects/unicodeobject.c
 +++ b/Objects/unicodeobject.c
+@@ -8160,7 +8160,7 @@ charmap_decode_mapping(const char *s,
+                 goto Undefined;
+             if (value < 0 || value > MAX_UNICODE) {
+                 PyErr_Format(PyExc_TypeError,
+-                             "character mapping must be in range(0x%lx)",
++                             "character mapping must be in range(0x%x)",
+                              (unsigned long)MAX_UNICODE + 1);
+                 goto onError;
+             }
 @@ -15602,9 +15602,7 @@ PyUnicode_InternInPlace(PyObject **p)
      }
  
