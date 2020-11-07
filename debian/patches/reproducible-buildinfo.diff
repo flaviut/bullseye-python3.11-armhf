@@ -2,7 +2,7 @@
 
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -785,6 +785,8 @@ Modules/getbuildinfo.o: $(PARSER_OBJS) \
+@@ -775,6 +775,8 @@ Modules/getbuildinfo.o: $(PARSER_OBJS) \
  	      -DGITVERSION="\"`LC_ALL=C $(GITVERSION)`\"" \
  	      -DGITTAG="\"`LC_ALL=C $(GITTAG)`\"" \
  	      -DGITBRANCH="\"`LC_ALL=C $(GITBRANCH)`\"" \
