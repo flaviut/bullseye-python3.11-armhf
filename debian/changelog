@@ -1,3 +1,10 @@
+python3.10 (3.10.0~a3-1) experimental; urgency=medium
+
+  * Python 3.10.0 alpha 3 snapshot.
+  * Update symbols files.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 08 Dec 2020 14:18:31 +0100
+
 python3.10 (3.10.0~a2-1) experimental; urgency=medium
 
   * Python 3.10.0 alpha 2 snapshot.
