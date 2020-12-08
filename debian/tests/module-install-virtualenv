@@ -3,7 +3,7 @@
 cp -a debian/tests/packages "$AUTOPKGTEST_TMP"
 HOME="$AUTOPKGTEST_TMP/home"
 mkdir -p "$HOME"
-virtualenv -p python3.9 "$AUTOPKGTEST_TMP/ve"
+virtualenv -p python3.10 "$AUTOPKGTEST_TMP/ve"
 
 VP="$AUTOPKGTEST_TMP/ve/bin/python"
 

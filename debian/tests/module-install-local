@@ -3,29 +3,29 @@
 cp -a debian/tests/packages "$AUTOPKGTEST_TMP"
 
 setUp() {
-	mount -t tmpfs tmpfs /usr/local/lib/python3.9/dist-packages
+	mount -t tmpfs tmpfs /usr/local/lib/python3.10/dist-packages
 }
 
 tearDown() {
-	umount /usr/local/lib/python3.9/dist-packages
+	umount /usr/local/lib/python3.10/dist-packages
 }
 
 testFibPy() {
 	cd "$AUTOPKGTEST_TMP/packages/fibpy"
-	python3.9 setup.py install
+	python3.10 setup.py install
 	assertTrue 'Install fibpy in /usr/local' $?
 	cd "$AUTOPKGTEST_TMP"
-	stdout=$(python3.9 -m fibpy 5)
+	stdout=$(python3.10 -m fibpy 5)
 	assertTrue 'Execute fibpy from a virtualenv' $?
 	assertEquals 'Correct result' 8 "$stdout"
 }
 
 testFibC() {
 	cd "$AUTOPKGTEST_TMP/packages/fibc"
-	python3.9 setup.py install
+	python3.10 setup.py install
 	assertTrue 'Install fibc in /usr/local' $?
 	cd "$AUTOPKGTEST_TMP"
-	stdout=$(python3.9 -c 'from fibc import fib; print(fib(5))')
+	stdout=$(python3.10 -c 'from fibc import fib; print(fib(5))')
 	assertTrue 'Execute fibc from a virtualenv' $?
 	assertEquals 'Correct result' 8 "$stdout"
 }

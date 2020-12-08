@@ -195,6 +195,9 @@ ifneq (,$(findstring nopgo, $(DEB_BUILD_OPTIONS)))
   with_pgo :=
 endif
 
+with_pgo := disabled for now
+with_lto := disabled for now
+
 ifneq (,$(findstring nolto, $(DEB_BUILD_OPTIONS)))
   with_lto :=
 endif
@@ -231,13 +234,7 @@ sysconfig_substflags = \
 	-e 's,^RUNSHARED *=.*,RUNSHARED=,' \
 	-e '/BLDLIBRARY/s/-L\. //'
 
-ifeq ($(derivative),Ubuntu)
-  arch_substvars =
-else ifeq ($(derivative),Debian)
-  arch_substvars = # '-Vpython38:Breaks=$(shell tr '\n' ' ' < debian/py38-breaks.$(derivative))'
-endif
-
-make_build_target = $(if $(with_pgo),profile-opt)
+make_build_target = $(if $(filter yes, $(with_pgo)),profile-opt)
 
 buildd_static	:= $(CURDIR)/build-static
 buildd_shared	:= $(CURDIR)/build-shared
@@ -1468,7 +1465,7 @@ endif
 	dep=`sed -n '/^shlibs:Depends/s/[^=]*=\(.*\)/\1/p' $(d_min).substvars | awk -v RS=', ' -v ORS=', ' '/^libc6/ { print }'`; \
 	echo "shlibs:Pre-Depends=$$dep" >> $(d_min).substvars
 	sed -i '/^shlibs:Depends/s/libc6[^,]*[, ]*//g' $(d_min).substvars
-	dh_gencontrol -a -- $(arch_substvars)
+	dh_gencontrol -a
 	dh_md5sums -a
 	dh_builddeb -a
 

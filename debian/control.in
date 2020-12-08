@@ -34,7 +34,7 @@ Depends: @PVER@-minimal (= ${binary:Version}),
 Suggests: @PVER@-venv, @PVER@-doc, binutils
 Breaks: python3-all (<< 3.6.5~rc1-1),
   python3-dev (<< 3.6.5~rc1-1),
-  python3-venv (<< 3.6.5-2), ${python38:Breaks}
+  python3-venv (<< 3.6.5-2)
 Description: Interactive high-level object-oriented language (version @VER@)
  Python is a high-level, interactive, object-oriented language. Its @VER@ version
  includes an extensive class library with lots of goodies for
@@ -93,8 +93,6 @@ Priority: @MINPRIO@
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: lib@PVER@-stdlib
-Breaks: lib@PVER@-stdlib (<< 3.9.0~rc1)
-Replaces: lib@PVER@-stdlib (<< 3.9.0~rc1)
 Conflicts: binfmt-support (<< 1.1.2)
 Description: Minimal subset of the Python language (version @VER@)
  This package contains some essential modules. It is normally not

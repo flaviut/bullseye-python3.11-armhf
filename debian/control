@@ -34,7 +34,7 @@ Depends: python3.10-minimal (= ${binary:Version}),
 Suggests: python3.10-venv, python3.10-doc, binutils
 Breaks: python3-all (<< 3.6.5~rc1-1),
   python3-dev (<< 3.6.5~rc1-1),
-  python3-venv (<< 3.6.5-2), ${python38:Breaks}
+  python3-venv (<< 3.6.5-2)
 Description: Interactive high-level object-oriented language (version 3.10)
  Python is a high-level, interactive, object-oriented language. Its 3.10 version
  includes an extensive class library with lots of goodies for
@@ -93,8 +93,6 @@ Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: libpython3.10-stdlib
-Breaks: libpython3.10-stdlib (<< 3.9.0~rc1)
-Replaces: libpython3.10-stdlib (<< 3.9.0~rc1)
 Conflicts: binfmt-support (<< 1.1.2)
 Description: Minimal subset of the Python language (version 3.10)
  This package contains some essential modules. It is normally not
