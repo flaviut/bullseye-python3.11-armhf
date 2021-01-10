@@ -1037,6 +1037,7 @@
  Py_Finalize@Base @SVER@
  Py_FinalizeEx@Base @SVER@
  Py_FrozenFlag@Base @SVER@
+ Py_FrozenMain@Base @SVER@
  Py_GenericAlias@Base @SVER@
  Py_GenericAliasType@Base @SVER@
  Py_GetArgcArgv@Base @SVER@
@@ -1365,6 +1366,9 @@
  _PyObject_SetAttrId@Base @SVER@
  _PyParser_TokenNames@Base @SVER@
  _PyPreConfig_InitCompatConfig@Base @SVER@
+ _PyRun_AnyFileObject@Base @SVER@
+ _PyRun_InteractiveLoopObject@Base @SVER@
+ _PyRun_SimpleFileObject@Base @SVER@
  _PyRuntime@Base @SVER@
  _PyRuntimeState_Fini@Base @SVER@
  _PyRuntimeState_Init@Base @SVER@
@@ -1530,6 +1534,7 @@
  _Py_FatalErrorFormat@Base @SVER@
  _Py_FatalErrorFunc@Base @SVER@
  _Py_FatalError_TstateNULL@Base @SVER@
+ _Py_FdIsInteractive@Base @SVER@
  _Py_FreeCharPArray@Base @SVER@
  _Py_GetAllocatedBlocks@Base @SVER@
  _Py_GetConfig@Base @SVER@
@@ -1560,7 +1565,6 @@
  _Py_PackageContext@Base @SVER@
  _Py_PreInitializeFromConfig@Base @SVER@
  _Py_PreInitializeFromPyArgv@Base @SVER@
- _Py_PyAtExit@Base @SVER@
  _Py_ResetForceASCII@Base @SVER@
  _Py_RestoreSignals@Base @SVER@
  _Py_SetLocaleFromEnv@Base @SVER@
@@ -1600,7 +1604,6 @@
  (arch=!m68k)_Py_dg_stdnan@Base @SVER@
  (arch=!m68k)_Py_dg_strtod@Base @SVER@
  _Py_dup@Base @SVER@
- _Py_fopen@Base @SVER@
  _Py_fopen_obj@Base @SVER@
  _Py_fstat@Base @SVER@
  _Py_fstat_noraise@Base @SVER@

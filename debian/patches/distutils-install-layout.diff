@@ -50,7 +50,7 @@
  
 --- a/Lib/distutils/command/install.py
 +++ b/Lib/distutils/command/install.py
-@@ -35,6 +35,20 @@ INSTALL_SCHEMES = {
+@@ -36,6 +36,20 @@ INSTALL_SCHEMES = {
          'scripts': '$base/bin',
          'data'   : '$base',
          },
@@ -71,7 +71,7 @@
      'unix_home': {
          'purelib': '$base/lib/python',
          'platlib': '$base/$platlibdir/python',
-@@ -131,6 +145,9 @@ class install(Command):
+@@ -132,6 +146,9 @@ class install(Command):
  
          ('record=', None,
           "filename in which to record list of installed files"),
@@ -81,7 +81,7 @@
          ]
  
      boolean_options = ['compile', 'force', 'skip-build']
-@@ -151,6 +168,7 @@ class install(Command):
+@@ -152,6 +169,7 @@ class install(Command):
          self.exec_prefix = None
          self.home = None
          self.user = 0
@@ -89,9 +89,9 @@
  
          # These select only the installation base; it's up to the user to
          # specify the installation scheme (currently, that means supplying
-@@ -172,6 +190,9 @@ class install(Command):
-         self.install_userbase = USER_BASE
-         self.install_usersite = USER_SITE
+@@ -174,6 +192,9 @@ class install(Command):
+             self.install_userbase = USER_BASE
+             self.install_usersite = USER_SITE
  
 +        # enable custom installation, known values: deb
 +        self.install_layout = None
@@ -99,7 +99,7 @@
          self.compile = None
          self.optimize = None
  
-@@ -414,6 +435,7 @@ class install(Command):
+@@ -417,6 +438,7 @@ class install(Command):
              self.install_base = self.install_platbase = self.home
              self.select_scheme("unix_home")
          else:
@@ -107,7 +107,7 @@
              if self.prefix is None:
                  if self.exec_prefix is not None:
                      raise DistutilsOptionError(
-@@ -428,7 +450,26 @@ class install(Command):
+@@ -431,7 +453,26 @@ class install(Command):
  
              self.install_base = self.prefix
              self.install_platbase = self.exec_prefix
@@ -180,7 +180,7 @@
  If a file named "pyvenv.cfg" exists one directory above sys.executable,
  sys.prefix and sys.exec_prefix are set to that directory and
  it is also checked for site-packages (sys.base_prefix and
-@@ -350,10 +356,21 @@ def getsitepackages(prefixes=None):
+@@ -364,10 +370,21 @@ def getsitepackages(prefixes=None):
              libdirs.append("lib")
  
          if os.sep == '/':
@@ -206,7 +206,7 @@
              sitepackages.append(prefix)
 --- a/Lib/test/test_site.py
 +++ b/Lib/test/test_site.py
-@@ -277,10 +277,10 @@ class HelperFunctionsTests(unittest.Test
+@@ -281,10 +281,10 @@ class HelperFunctionsTests(unittest.Test
          if os.sep == '/':
              # OS X, Linux, FreeBSD, etc
              if sys.platlibdir != "lib":
@@ -233,7 +233,7 @@
          self.assertEqual(contents, sorted(wanted))
 --- a/Lib/distutils/tests/test_install.py
 +++ b/Lib/distutils/tests/test_install.py
-@@ -194,7 +194,7 @@ class InstallTestCase(support.TempdirMan
+@@ -196,7 +196,7 @@ class InstallTestCase(support.TempdirMan
          found = [os.path.basename(line) for line in content.splitlines()]
          expected = ['hello.py', 'hello.%s.pyc' % sys.implementation.cache_tag,
                      'sayhi',
@@ -242,7 +242,7 @@
          self.assertEqual(found, expected)
  
      def test_record_extensions(self):
-@@ -227,7 +227,7 @@ class InstallTestCase(support.TempdirMan
+@@ -229,7 +229,7 @@ class InstallTestCase(support.TempdirMan
  
          found = [os.path.basename(line) for line in content.splitlines()]
          expected = [_make_ext_name('xx'),

@@ -1,6 +1,6 @@
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
-@@ -343,9 +343,8 @@ def get_makefile_filename():
+@@ -355,9 +355,8 @@ def get_makefile_filename():
  
  def _get_sysconfigdata_name():
      return os.environ.get('_PYTHON_SYSCONFIGDATA_NAME',
@@ -13,7 +13,7 @@
  
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -1510,8 +1510,10 @@ libinstall:	build_all $(srcdir)/Modules/
+@@ -1553,8 +1553,10 @@ libinstall:	build_all $(srcdir)/Modules/
  			esac; \
  		done; \
  	done
@@ -26,7 +26,7 @@
  	$(INSTALL_DATA) $(srcdir)/LICENSE $(DESTDIR)$(LIBDEST)/LICENSE.txt
  	if test -d $(DESTDIR)$(LIBDEST)/distutils/tests; then \
  		$(INSTALL_DATA) $(srcdir)/Modules/xxmodule.c \
-@@ -1666,6 +1668,7 @@ sharedinstall: sharedmods
+@@ -1709,6 +1711,7 @@ sharedinstall: sharedmods
  		--install-scripts=$(BINDIR) \
  		--install-platlib=$(DESTSHARED) \
  		--root=$(DESTDIR)/
