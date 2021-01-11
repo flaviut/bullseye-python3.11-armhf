@@ -375,9 +375,7 @@ common_configure_args = \
 		--without-ensurepip \
 		--with-system-expat \
 		--with-dtrace \
-
-# FIXME: requires mpdec 2.5.0
-#		--with-system-libmpdec \
+		--with-system-libmpdec \
 
 ifneq (,$(filter $(DEB_HOST_ARCH), avr32 or1k))
   common_configure_args += --without-ffi

@@ -1,3 +1,9 @@
+python3.10 (3.10.0~a4-2) UNRELEASED; urgency=medium
+
+  * Configure again --with-system-libmpdec.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 11 Jan 2021 11:15:34 +0100
+
 python3.10 (3.10.0~a4-1) experimental; urgency=medium
 
   * Python 3.10.0 alpha 4 snapshot.
