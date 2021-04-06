@@ -59,6 +59,7 @@ debian/python3.10-dbg
 debian/python3.10-dev
 debian/python3.10-doc
 debian/python3.10-examples
+debian/python3.10-full
 debian/python3.10-minimal
 debian/python3.10
 debian/test_results
