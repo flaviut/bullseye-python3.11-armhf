@@ -4,9 +4,9 @@
 +import glob
  import os
  import os.path
- import sys
-@@ -6,20 +7,15 @@ import tempfile
- import subprocess
+ import runpy
+@@ -7,20 +8,15 @@ import sysconfig
+ import tempfile
  from importlib import resources
  
 -from . import _bundled
@@ -16,19 +16,19 @@
  __all__ = ["version", "bootstrap"]
  
  
--_SETUPTOOLS_VERSION = "47.1.0"
+-_SETUPTOOLS_VERSION = "52.0.0"
 -
--_PIP_VERSION = "20.2.3"
+-_PIP_VERSION = "21.0.1"
 -
  _PROJECTS = [
 -    ("setuptools", _SETUPTOOLS_VERSION, "py3"),
--    ("pip", _PIP_VERSION, "py2.py3"),
+-    ("pip", _PIP_VERSION, "py3"),
 +    "setuptools",
 +    "pip",
 +    "pkg_resources",
  ]
  
- 
+ def _run_pip(args, additional_paths=None):
 @@ -42,7 +38,9 @@ def version():
      """
      Returns a string specifying the bundled version of pip.

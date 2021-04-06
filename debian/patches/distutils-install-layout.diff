@@ -206,7 +206,7 @@
              sitepackages.append(prefix)
 --- a/Lib/test/test_site.py
 +++ b/Lib/test/test_site.py
-@@ -281,10 +281,10 @@ class HelperFunctionsTests(unittest.Test
+@@ -281,16 +281,16 @@ class HelperFunctionsTests(unittest.Test
          if os.sep == '/':
              # OS X, Linux, FreeBSD, etc
              if sys.platlibdir != "lib":
@@ -219,7 +219,15 @@
 +                                      'dist-packages')
                  self.assertEqual(dirs[0], wanted)
              else:
-                 self.assertEqual(len(dirs), 1)
+-                self.assertEqual(len(dirs), 1)
++                self.assertEqual(len(dirs), 3)
+             wanted = os.path.join('xoxo', 'lib',
+                                   'python%d.%d' % sys.version_info[:2],
+-                                  'site-packages')
++                                  'dist-packages')
+             self.assertEqual(dirs[-1], wanted)
+         else:
+             # other platforms
 --- a/Lib/distutils/tests/test_bdist_dumb.py
 +++ b/Lib/distutils/tests/test_bdist_dumb.py
 @@ -85,7 +85,7 @@ class BuildDumbTestCase(support.TempdirM

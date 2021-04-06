@@ -1,5 +1,6 @@
 Tests: testsuite
 Depends: build-essential,
+  ca-certificates,
   locales-all,
   python3.10-dev,
   libpython3.10-testsuite:native,
@@ -9,10 +10,11 @@ Depends: build-essential,
   idle-python3.10,
   systemtap-sdt-dev,
 # need to turn off apport
-Restrictions: needs-root
+Restrictions: needs-root, allow-stderr
 
 Tests: testsuite-dbg
 Depends: build-essential,
+  ca-certificates,
   locales-all, python3.10-dev,
   python3.10-dbg,
   libpython3.10-testsuite:native,
@@ -23,21 +25,24 @@ Depends: build-essential,
   idle-python3.10,
   systemtap-sdt-dev,
 # need to turn off apport
-Restrictions: needs-root
+Restrictions: needs-root, allow-stderr
 
 Tests: failing-tests
 Depends: build-essential,
+  ca-certificates,
   locales-all,
   python3.10-dev,
   libpython3.10-testsuite:native,
   python3-gdbm (>= 3.9.0),
   python3-tk (>= 3.9.0),
   python3-distutils,
+  python3.9-venv,
 # need to turn off apport
-Restrictions: needs-root allow-stderr
+Restrictions: needs-root, allow-stderr
 
 Tests: failing-tests-dbg
 Depends: build-essential,
+  ca-certificates,
   locales-all,
   python3.10-dev,
   python3.10-dbg,
@@ -46,8 +51,9 @@ Depends: build-essential,
   python3-tk-dbg (>= 3.9.0),
   gdb,
   python3-distutils,
+  python3.9-venv,
 # need to turn off apport
-Restrictions: needs-root allow-stderr
+Restrictions: needs-root, allow-stderr
 
 Tests: module-install-local
 Depends: build-essential, python3.10-dev, python3-setuptools, shunit2

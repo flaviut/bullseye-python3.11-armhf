@@ -34,6 +34,7 @@ config.sub
 configure.ac
 install-sh
 m4
+netlify.toml
 pyconfig.h.in
 setup.py
 

@@ -224,7 +224,7 @@ endif
 
 sysconfig_substflags = \
 	-e 's,gcc-8,gcc,;s,g++-8,g++,' \
-	$(if $(with_lto),$(foreach i,-flto -fuse-linker-plugin -ffat-lto-objects,-e 's/$(i)//g')) \
+	$(if $(with_lto),$(foreach i,-flto=auto -flto -fuse-linker-plugin -ffat-lto-objects,-e 's/$(i)//g')) \
 	-e '/^OPT/s,-O3,-O2,' \
 	-e 's/-O3/-O2/g' \
 	-e 's/-fprofile-use *-fprofile-correction//g' \
@@ -368,6 +368,7 @@ stamps/stamp-build-shared-debug: stamps/stamp-configure-shared-debug
 
 common_configure_args = \
 		--prefix=/usr \
+		--libdir=/usr/lib/$(DEB_HOST_MULTIARCH) \
 		--enable-ipv6 \
 		--enable-loadable-sqlite-extensions \
 		--with-dbmliborder=bdb:gdbm \
@@ -840,8 +841,6 @@ endif
 	  mv $$i $(d)/$(scriptdir)/lib-dynload/$$d; \
 	done
 
-	mv $(d)/usr/lib/libpython*.a $(d)/usr/lib/$(DEB_HOST_MULTIARCH)/
-
 	mkdir -p $(d)/usr/lib/python3
 	mv $(d)/usr/lib/python$(VER)/site-packages \
 		$(d)/usr/lib/python3/dist-packages
@@ -1195,8 +1194,6 @@ endif
 	sed -i $(sysconfig_substflags) \
 		$(d)-dbg/$(scriptdir)/_sysconfigdata_d_$(DEB_HOST_MULTIARCH).py
 
-	mv $(d)-dbg/usr/lib/libpython*.a $(d)-dbg/usr/lib/$(DEB_HOST_MULTIARCH)/
-
 	for i in $(d)-dbg/$(scriptdir)/lib-dynload/*.so; do \
 	  case "$$i" in *$(DEB_HOST_MULTIARCH)*) continue; esac; \
 	  b=$$(basename $$i .cpython-$(EXT_VER)d.so); \
@@ -1365,6 +1362,10 @@ binary-indep: build-indep install stamps/stamp-control
 	gzip -9nv $(d_doc)/usr/share/doc/$(p_base)/html/$(PVER).devhelp
 	dh_link -p$(p_doc) \
 		/usr/share/doc/$(p_base)/html /usr/share/devhelp/books/$(PVER)
+
+	: # regenerate idlelib/help.html, see idlelib.help.copy_strip
+	sed 's/ *$$//' Doc/build/html/library/idle.html \
+		> $(d_idle)/usr/lib/python$(VER)/idlelib/help.html
 
 	for i in $(p_ltst); do \
 	  rm -rf debian/$$i/usr/share/doc/$$i; \

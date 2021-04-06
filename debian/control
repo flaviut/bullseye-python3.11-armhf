@@ -14,7 +14,7 @@ Build-Depends: debhelper (>= 11), dpkg-dev (>= 1.17.11),
   locales-all,
   libsqlite3-dev, libffi-dev (>= 3.0.5) [!or1k !avr32],
   libgpm2 [linux-any],
-  mime-support, netbase, bzip2, time, python3:any, python3.10:any <cross>,
+  media-types | mime-support, netbase, bzip2, time, python3:any, python3.10:any <cross>,
   net-tools, xvfb <!nocheck>, xauth <!nocheck>,
   systemtap-sdt-dev
 Build-Depends-Indep: python3-sphinx, python3-docs-theme, texinfo
@@ -29,7 +29,7 @@ Multi-Arch: allowed
 Priority: optional
 Depends: python3.10-minimal (= ${binary:Version}),
  libpython3.10-stdlib (= ${binary:Version}),
- mime-support,
+ media-types | mime-support,
  ${shlibs:Depends}, ${misc:Depends}
 Suggests: python3.10-venv, python3.10-doc, binutils
 Breaks: python3-all (<< 3.6.5~rc1-1),
@@ -126,7 +126,6 @@ Multi-Arch: allowed
 Depends: python3.10 (= ${binary:Version}),
   libpython3.10-dev (= ${binary:Version}),
   libpython3.10 (= ${binary:Version}),
-  libexpat1-dev, zlib1g-dev,
   ${shlibs:Depends}, ${misc:Depends}
 Recommends: libc6-dev | libc-dev
 Description: Header files and a static library for Python (v3.10)
@@ -141,7 +140,10 @@ Section: libdevel
 Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
-Depends: libpython3.10-stdlib (= ${binary:Version}), libpython3.10 (= ${binary:Version}), libexpat1-dev, ${shlibs:Depends}, ${misc:Depends}
+Depends: libpython3.10-stdlib (= ${binary:Version}),
+  libpython3.10 (= ${binary:Version}),
+  libexpat1-dev, zlib1g-dev,
+  ${shlibs:Depends}, ${misc:Depends}
 Recommends: libc6-dev | libc-dev
 Description: Header files and a static library for Python (v3.10)
  Header files, a static library and development tools for building

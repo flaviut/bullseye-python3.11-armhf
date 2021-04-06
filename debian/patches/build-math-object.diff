@@ -10,7 +10,7 @@
  MODLIBS=           _MODLIBS_
  
  # === Variables set by configure
-@@ -609,8 +610,9 @@ pybuilddir.txt: $(BUILDPYTHON)
+@@ -612,8 +613,9 @@ pybuilddir.txt: $(BUILDPYTHON)
  	fi
  
  # This is shared by the math and cmath modules

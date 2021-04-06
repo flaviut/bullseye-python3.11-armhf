@@ -29,24 +29,17 @@ TESTEXCLUSIONS="$TESTEXCLUSIONS test_lib2to3"
 # test_tcl: see https://bugs.python.org/issue34178
 TESTEXCLUSIONS="$TESTEXCLUSIONS test_tcl"
 
-# FIXME: Failing with OpenSSL 1.2 ...
-# ssl.SSLError: [SSL: CA_MD_TOO_WEAK] ca md too weak (_ssl.c:3401)
+# FIXME: flaky/slow test?
 if [ "$vendor" = Debian ]; then
-  TESTEXCLUSIONS="$TESTEXCLUSIONS test_asyncio test_ftplib test_httplib test_imaplib test_nntplib test_poplib test_ssl"
+  TESTEXCLUSIONS="$TESTEXCLUSIONS test_asyncio"
 fi
 
 # FIXME: testWithTimeoutTriggeredSend: timeout not raised by _sendfile_use_sendfile
 TESTEXCLUSIONS="$TESTEXCLUSIONS test_socket"
 
-# FIXME: issue 34806: some distutils tests fail recently
-TESTEXCLUSIONS="$TESTEXCLUSIONS test_distutils"
-
-# FIXME: test_site tests fail with 3.9
-TESTEXCLUSIONS="$TESTEXCLUSIONS test_site"
-
 # FIXME, failing on the Ubuntu autopkg testers
 if [ "$vendor" = Ubuntu ]; then
-  TESTEXCLUSIONS="$TESTEXCLUSIONS test_code_module test_platform test_site"
+  TESTEXCLUSIONS="$TESTEXCLUSIONS test_code_module"
 fi
 
 # test_ssl currently assumes that OpenSSL is compiled with SECURITY_LEVEL=1

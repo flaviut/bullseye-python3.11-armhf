@@ -1,6 +1,6 @@
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
-@@ -576,6 +576,12 @@ def get_config_vars(*args):
+@@ -588,6 +588,12 @@ def get_config_vars(*args):
              # the init-function.
              _CONFIG_VARS['userbase'] = _getuserbase()
  
@@ -27,7 +27,7 @@
          if python_build:
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -810,6 +810,7 @@ Modules/signalmodule.o: $(srcdir)/Module
+@@ -815,6 +815,7 @@ Modules/signalmodule.o: $(srcdir)/Module
  
  Python/dynload_shlib.o: $(srcdir)/Python/dynload_shlib.c Makefile
  	$(CC) -c $(PY_CORE_CFLAGS) \
@@ -35,12 +35,3 @@
  		-DSOABI='"$(SOABI)"' \
  		-o $@ $(srcdir)/Python/dynload_shlib.c
  
-@@ -1646,7 +1647,7 @@ inclinstall:
- LIBPL=		@LIBPL@
- 
- # pkgconfig directory
--LIBPC=		$(LIBDIR)/pkgconfig
-+LIBPC=		$(LIBDIR)/$(MULTIARCH)/pkgconfig
- 
- libainstall:	@DEF_MAKE_RULE@ python-config
- 	@for i in $(LIBDIR) $(LIBPL) $(LIBPC); \

@@ -1,3 +1,26 @@
+python3.10 (3.10.0~a7-1) experimental; urgency=medium
+
+  * Python 3.10.0 alpha 7 snapshot.
+  * Depend on media-types instead of mime-support. Addresses: #981016.
+  * Fix permissions and group for local directories. Addresses: #962422.
+  * Revert the fix for issue 42856 for now, need to update patches, to
+    not require particular wheel versions.
+  * Update symbols files.
+  * Move zlib1g-dev dependency to libpython3.9-dev. Addresses: #984580.
+  * Configure with --libdir=/usr/lib/$(DEB_HOST_MULTIARCH), recording the
+    correct LIBDIR in _sysconfigdata.  Also adjust DESTSHARED to install
+    lib-dynload into the same location as before the configure change.
+    See issue #43229.
+  * Fix flags substitutions for _sysconfigdata.
+  * Autopkg tests:
+    - Run testsuite{,-dbg} autopkg tests with allow-stderr. Closes: #983305.
+    - Run again in testsuite instead of failing-tests: test_ftplib,
+      test_httplib test_imaplib test_nntplib test_poplib test_ssl.
+    - Run test_distutils and test_site tests again.
+  * Build idlelib/help.html from source, don't ship the pre-generated file.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 06 Apr 2021 14:56:07 +0200
+
 python3.10 (3.10.0~a4-2) experimental; urgency=medium
 
   * Configure again --with-system-libmpdec.

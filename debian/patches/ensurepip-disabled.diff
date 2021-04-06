@@ -2,9 +2,9 @@
 
 --- a/Lib/ensurepip/__init__.py
 +++ b/Lib/ensurepip/__init__.py
-@@ -11,6 +11,34 @@ from importlib import resources
+@@ -9,6 +9,34 @@ import tempfile
+ from importlib import resources
  
- __all__ = ["version", "bootstrap"]
  
 +def _ensurepip_is_disabled_in_debian_for_system():
 +    # Detect if ensurepip is being executed inside of a python-virtualenv
@@ -35,8 +35,8 @@
 +    sys.exit(1)
 +
  
- _PROJECTS = [
-     "setuptools",
+ __all__ = ["version", "bootstrap"]
+ 
 @@ -78,6 +106,11 @@ def _bootstrap(*, root=None, upgrade=Fal
  
      Note that calling this function will alter both sys.path and os.environ.

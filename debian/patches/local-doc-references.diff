@@ -5,7 +5,7 @@
  
  {% block extrahead %}
 -    <link rel="canonical" href="https://docs.python.org/3/{{pagename}}.html" />
-+    <link rel="canonical" href="file:///usr/share/doc/python3.8/html/{{pagename}}.html" />
++    <link rel="canonical" href="file:///usr/share/doc/python3.10/html/{{pagename}}.html" />
      {% if builder != "htmlhelp" %}
        {% if pagename == 'whatsnew/changelog' and not embedded %}
        <script type="text/javascript" src="{{ pathto('_static/changelog_search.js', 1) }}"></script>{% endif %}
@@ -16,7 +16,7 @@
      <link rel="next" title="Other Graphical User Interface Packages" href="othergui.html" />
      <link rel="prev" title="tkinter.tix — Extension widgets for Tk" href="tkinter.tix.html" />
 -    <link rel="canonical" href="https://docs.python.org/3/library/idle.html" />
-+    <link rel="canonical" href="file:///usr/share/doc/python3.8/html/library/idle.html" />
++    <link rel="canonical" href="file:///usr/share/doc/python3.10/html/library/idle.html" />
  
  
  

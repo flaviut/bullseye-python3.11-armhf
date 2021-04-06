@@ -150,12 +150,12 @@
  import errno as _errno
  from random import Random as _Random
  import sys as _sys
-@@ -806,7 +945,7 @@ class TemporaryDirectory(object):
-             else:
-                 raise
+@@ -825,7 +964,7 @@ class TemporaryDirectory:
+                 if not ignore_errors:
+                     raise
  
 -        _shutil.rmtree(name, onerror=onerror)
 +        _rmtree(name, onerror=onerror)
  
      @classmethod
-     def _cleanup(cls, name, warn_message):
+     def _cleanup(cls, name, warn_message, ignore_errors=False):
