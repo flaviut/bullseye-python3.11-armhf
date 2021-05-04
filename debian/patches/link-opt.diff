@@ -1,9 +1,7 @@
 # DP: Call the linker with -O1 -Bsymbolic-functions
 
-Index: python3.10-3.10.0~b1/configure.ac
-===================================================================
---- python3.10-3.10.0~b1.orig/configure.ac
-+++ python3.10-3.10.0~b1/configure.ac
+--- a/configure.ac
++++ b/configure.ac
 @@ -2660,8 +2660,8 @@ then
  		fi
  		;;

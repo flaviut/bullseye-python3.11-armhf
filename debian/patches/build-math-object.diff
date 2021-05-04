@@ -1,7 +1,5 @@
-Index: python3.10-3.10.0~b1/Makefile.pre.in
-===================================================================
---- python3.10-3.10.0~b1.orig/Makefile.pre.in
-+++ python3.10-3.10.0~b1/Makefile.pre.in
+--- a/Makefile.pre.in
++++ b/Makefile.pre.in
 @@ -22,7 +22,8 @@
  
  MODBUILT_NAMES=    _MODBUILT_NAMES_

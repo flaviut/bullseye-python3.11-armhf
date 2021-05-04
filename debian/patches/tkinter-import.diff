@@ -1,9 +1,7 @@
 # DP: suggest installation of python-tk package on failing _tkinter import
 
-Index: python3.10-3.10.0~b1/Lib/tkinter/__init__.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/tkinter/__init__.py
-+++ python3.10-3.10.0~b1/Lib/tkinter/__init__.py
+--- a/Lib/tkinter/__init__.py
++++ b/Lib/tkinter/__init__.py
 @@ -34,7 +34,10 @@ import enum
  import sys
  import types

@@ -1,9 +1,7 @@
 # DP: pydoc: use the pager command if available.
 
-Index: python3.10-3.10.0~b1/Lib/pydoc.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/pydoc.py
-+++ python3.10-3.10.0~b1/Lib/pydoc.py
+--- a/Lib/pydoc.py
++++ b/Lib/pydoc.py
 @@ -1578,6 +1578,8 @@ def getpager():
          return plainpager
      if sys.platform == 'win32':

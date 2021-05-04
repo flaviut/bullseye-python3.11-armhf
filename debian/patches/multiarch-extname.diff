@@ -2,10 +2,8 @@
  
 this patch can be dropped for python3.5 final, if the upstream chage is kept.
 
-Index: python3.10-3.10.0~b1/Lib/distutils/dir_util.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/distutils/dir_util.py
-+++ python3.10-3.10.0~b1/Lib/distutils/dir_util.py
+--- a/Lib/distutils/dir_util.py
++++ b/Lib/distutils/dir_util.py
 @@ -96,6 +96,9 @@ def create_tree(base_dir, files, mode=0o
      for dir in sorted(need_dir):
          mkpath(dir, mode, verbose=verbose, dry_run=dry_run)
@@ -40,10 +38,8 @@ Index: python3.10-3.10.0~b1/Lib/distutils/dir_util.py
  
          if n.startswith('.nfs'):
              # skip NFS rename files
-Index: python3.10-3.10.0~b1/Lib/distutils/command/install_lib.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/distutils/command/install_lib.py
-+++ python3.10-3.10.0~b1/Lib/distutils/command/install_lib.py
+--- a/Lib/distutils/command/install_lib.py
++++ b/Lib/distutils/command/install_lib.py
 @@ -56,6 +56,7 @@ class install_lib(Command):
          self.compile = None
          self.optimize = None
@@ -69,10 +65,8 @@ Index: python3.10-3.10.0~b1/Lib/distutils/command/install_lib.py
              outfiles = self.copy_tree(self.build_dir, self.install_dir)
          else:
              self.warn("'%s' does not exist -- no Python modules to install" %
-Index: python3.10-3.10.0~b1/Lib/distutils/command/install.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/distutils/command/install.py
-+++ python3.10-3.10.0~b1/Lib/distutils/command/install.py
+--- a/Lib/distutils/command/install.py
++++ b/Lib/distutils/command/install.py
 @@ -211,6 +211,7 @@ class install(Command):
  
          # enable custom installation, known values: deb

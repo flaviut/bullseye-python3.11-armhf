@@ -2,10 +2,8 @@
 # DP: the python build, when CFLAGS, CPPFLAGS, LDSHARED) are not set
 # DP: in the environment.
 
-Index: python3.10-3.10.0~b1/Lib/distutils/sysconfig.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/distutils/sysconfig.py
-+++ python3.10-3.10.0~b1/Lib/distutils/sysconfig.py
+--- a/Lib/distutils/sysconfig.py
++++ b/Lib/distutils/sysconfig.py
 @@ -113,9 +113,11 @@ def customize_compiler(compiler):
                  _osx_support.customize_compiler(_config_vars)
                  _config_vars['CUSTOMIZED_OSX_COMPILER'] = 'True'
@@ -52,10 +50,8 @@ Index: python3.10-3.10.0~b1/Lib/distutils/sysconfig.py
              linker_exe=cc,
              archiver=archiver)
  
-Index: python3.10-3.10.0~b1/Lib/distutils/tests/test_sysconfig.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/distutils/tests/test_sysconfig.py
-+++ python3.10-3.10.0~b1/Lib/distutils/tests/test_sysconfig.py
+--- a/Lib/distutils/tests/test_sysconfig.py
++++ b/Lib/distutils/tests/test_sysconfig.py
 @@ -156,18 +156,18 @@ class SysconfigTestCase(support.EnvironG
          comp = self.customize_compiler()
          self.assertEqual(comp.exes['archiver'],

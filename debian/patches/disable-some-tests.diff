@@ -1,9 +1,7 @@
 # DP: Disable some failing tests we are not interested in
 
-Index: python3.10-3.10.0~b1/Lib/distutils/tests/test_build_ext.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/distutils/tests/test_build_ext.py
-+++ python3.10-3.10.0~b1/Lib/distutils/tests/test_build_ext.py
+--- a/Lib/distutils/tests/test_build_ext.py
++++ b/Lib/distutils/tests/test_build_ext.py
 @@ -115,6 +115,7 @@ class BuildExtTestCase(TempdirManager,
          """)
          assert_python_ok('-c', code)

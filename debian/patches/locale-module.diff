@@ -2,10 +2,8 @@
 # DP:     - Don't map 'utf8', 'utf-8' to 'utf', which is not a known encoding
 # DP:       for glibc.
 
-Index: python3.10-3.10.0~b1/Lib/locale.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/locale.py
-+++ python3.10-3.10.0~b1/Lib/locale.py
+--- a/Lib/locale.py
++++ b/Lib/locale.py
 @@ -1415,8 +1415,8 @@ locale_alias = {
      'ug_cn':                                'ug_CN.UTF-8',
      'uk':                                   'uk_UA.KOI8-U',

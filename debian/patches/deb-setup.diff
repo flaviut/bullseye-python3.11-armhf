@@ -1,9 +1,7 @@
 # DP: Don't include /usr/local/include and /usr/local/lib as gcc search paths
 
-Index: python3.10-3.10.0~b1/setup.py
-===================================================================
---- python3.10-3.10.0~b1.orig/setup.py
-+++ python3.10-3.10.0~b1/setup.py
+--- a/setup.py
++++ b/setup.py
 @@ -454,8 +454,10 @@ class PyBuildExt(build_ext):
          # unfortunately, distutils doesn't let us provide separate C and C++
          # compilers

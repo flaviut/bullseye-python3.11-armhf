@@ -1,7 +1,5 @@
-Index: python3.10-3.10.0~b1/Lib/sysconfig.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/sysconfig.py
-+++ python3.10-3.10.0~b1/Lib/sysconfig.py
+--- a/Lib/sysconfig.py
++++ b/Lib/sysconfig.py
 @@ -391,7 +391,7 @@ def _get_sysconfigdata_name():
      multiarch = getattr(sys.implementation, '_multiarch', '')
      return os.environ.get(
@@ -11,10 +9,8 @@ Index: python3.10-3.10.0~b1/Lib/sysconfig.py
      )
  
  
-Index: python3.10-3.10.0~b1/Makefile.pre.in
-===================================================================
---- python3.10-3.10.0~b1.orig/Makefile.pre.in
-+++ python3.10-3.10.0~b1/Makefile.pre.in
+--- a/Makefile.pre.in
++++ b/Makefile.pre.in
 @@ -1600,8 +1600,10 @@ libinstall:	build_all $(srcdir)/Modules/
  			esac; \
  		done; \
@@ -36,10 +32,8 @@ Index: python3.10-3.10.0~b1/Makefile.pre.in
  	-rm $(DESTDIR)$(DESTSHARED)/_sysconfigdata_$(ABIFLAGS)_$(MACHDEP)_$(MULTIARCH).py
  	-rm -r $(DESTDIR)$(DESTSHARED)/__pycache__
  
-Index: python3.10-3.10.0~b1/configure.ac
-===================================================================
---- python3.10-3.10.0~b1.orig/configure.ac
-+++ python3.10-3.10.0~b1/configure.ac
+--- a/configure.ac
++++ b/configure.ac
 @@ -82,7 +82,7 @@ if test "$cross_compiling" = yes; then
  	    AC_MSG_ERROR([python$PACKAGE_VERSION interpreter not found])
  	fi

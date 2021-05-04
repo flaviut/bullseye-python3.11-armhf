@@ -1,9 +1,7 @@
 # DP: adjust locations of directories to debian policy
 
-Index: python3.10-3.10.0~b1/Lib/pydoc.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/pydoc.py
-+++ python3.10-3.10.0~b1/Lib/pydoc.py
+--- a/Lib/pydoc.py
++++ b/Lib/pydoc.py
 @@ -31,6 +31,10 @@ to a file named "<name>.html".
  
  Module docs for core modules are assumed to be in
@@ -15,10 +13,8 @@ Index: python3.10-3.10.0~b1/Lib/pydoc.py
      https://docs.python.org/X.Y/library/
  
  This can be overridden by setting the PYTHONDOCS environment variable
-Index: python3.10-3.10.0~b1/Misc/python.man
-===================================================================
---- python3.10-3.10.0~b1.orig/Misc/python.man
-+++ python3.10-3.10.0~b1/Misc/python.man
+--- a/Misc/python.man
++++ b/Misc/python.man
 @@ -377,7 +377,7 @@ exception).  Error messages are written
  These are subject to difference depending on local installation
  conventions; ${prefix} and ${exec_prefix} are installation-dependent

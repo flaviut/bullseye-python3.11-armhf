@@ -1,9 +1,7 @@
 # DP: Build getbuildinfo.o with DATE/TIME values when defined
 
-Index: python3.10-3.10.0~b1/Makefile.pre.in
-===================================================================
---- python3.10-3.10.0~b1.orig/Makefile.pre.in
-+++ python3.10-3.10.0~b1/Makefile.pre.in
+--- a/Makefile.pre.in
++++ b/Makefile.pre.in
 @@ -789,6 +789,8 @@ Modules/getbuildinfo.o: $(PARSER_OBJS) \
  	      -DGITVERSION="\"`LC_ALL=C $(GITVERSION)`\"" \
  	      -DGITTAG="\"`LC_ALL=C $(GITTAG)`\"" \

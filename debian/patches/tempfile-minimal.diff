@@ -1,9 +1,7 @@
 # DP: Avoid shutil import when it is not available.
 
-Index: python3.10-3.10.0~b1/Lib/tempfile.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/tempfile.py
-+++ python3.10-3.10.0~b1/Lib/tempfile.py
+--- a/Lib/tempfile.py
++++ b/Lib/tempfile.py
 @@ -40,7 +40,146 @@ import functools as _functools
  import warnings as _warnings
  import io as _io

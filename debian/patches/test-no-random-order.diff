@@ -1,9 +1,7 @@
 # DP: Don't run the test suite in random order.
 
-Index: python3.10-3.10.0~b1/Tools/scripts/run_tests.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Tools/scripts/run_tests.py
-+++ python3.10-3.10.0~b1/Tools/scripts/run_tests.py
+--- a/Tools/scripts/run_tests.py
++++ b/Tools/scripts/run_tests.py
 @@ -32,7 +32,6 @@ def main(regrtest_args):
      args.extend(test.support.args_from_interpreter_flags())
  

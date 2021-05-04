@@ -1,7 +1,5 @@
-Index: python3.10-3.10.0~b1/Lib/ctypes/util.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/ctypes/util.py
-+++ python3.10-3.10.0~b1/Lib/ctypes/util.py
+--- a/Lib/ctypes/util.py
++++ b/Lib/ctypes/util.py
 @@ -269,16 +269,27 @@ elif os.name == "posix":
  
          def _findSoname_ldconfig(name):

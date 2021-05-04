@@ -1,7 +1,5 @@
-Index: python3.10-3.10.0~b1/Lib/sysconfig.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/sysconfig.py
-+++ python3.10-3.10.0~b1/Lib/sysconfig.py
+--- a/Lib/sysconfig.py
++++ b/Lib/sysconfig.py
 @@ -611,6 +611,12 @@ def get_config_vars(*args):
              # the init-function.
              _CONFIG_VARS['userbase'] = _getuserbase()
@@ -15,10 +13,8 @@ Index: python3.10-3.10.0~b1/Lib/sysconfig.py
          # Always convert srcdir to an absolute path
          srcdir = _CONFIG_VARS.get('srcdir', _PROJECT_BASE)
          if os.name == 'posix':
-Index: python3.10-3.10.0~b1/Lib/distutils/sysconfig.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/distutils/sysconfig.py
-+++ python3.10-3.10.0~b1/Lib/distutils/sysconfig.py
+--- a/Lib/distutils/sysconfig.py
++++ b/Lib/distutils/sysconfig.py
 @@ -200,6 +200,9 @@ def get_python_inc(plat_specific=0, pref
                  incdir = os.path.join(get_config_var('srcdir'), 'Include')
                  return os.path.normpath(incdir)
@@ -29,10 +25,8 @@ Index: python3.10-3.10.0~b1/Lib/distutils/sysconfig.py
          return os.path.join(prefix, "include", python_dir)
      elif os.name == "nt":
          if python_build:
-Index: python3.10-3.10.0~b1/Makefile.pre.in
-===================================================================
---- python3.10-3.10.0~b1.orig/Makefile.pre.in
-+++ python3.10-3.10.0~b1/Makefile.pre.in
+--- a/Makefile.pre.in
++++ b/Makefile.pre.in
 @@ -817,6 +817,7 @@ Modules/signalmodule.o: $(srcdir)/Module
  
  Python/dynload_shlib.o: $(srcdir)/Python/dynload_shlib.c Makefile

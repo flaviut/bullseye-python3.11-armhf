@@ -1518,9 +1518,7 @@ unpatch:
 
 update-patches: $(patchdir)/series
 	export QUILT_PATCHES=$(patchdir); \
-	export QUILT_REFRESH_ARGS="--no-timestamps --no-index -pab"; \
-	export QUILT_DIFF_ARGS="--no-timestamps --no-index -pab"; \
-	while quilt push; do quilt refresh; done
+	while quilt push; do quilt refresh -pab --no-timestamps --no-index; done
 
 binary: binary-indep binary-arch
 

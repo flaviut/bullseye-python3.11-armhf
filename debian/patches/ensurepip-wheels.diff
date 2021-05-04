@@ -1,7 +1,5 @@
-Index: python3.10-3.10.0~b1/Lib/ensurepip/__init__.py
-===================================================================
---- python3.10-3.10.0~b1.orig/Lib/ensurepip/__init__.py
-+++ python3.10-3.10.0~b1/Lib/ensurepip/__init__.py
+--- a/Lib/ensurepip/__init__.py
++++ b/Lib/ensurepip/__init__.py
 @@ -1,3 +1,4 @@
 +import glob
  import os

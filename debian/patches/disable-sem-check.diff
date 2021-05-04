@@ -1,9 +1,7 @@
 # DP: Assume working semaphores, don't rely on running kernel for the check.
 
-Index: python3.10-3.10.0~b1/configure.ac
-===================================================================
---- python3.10-3.10.0~b1.orig/configure.ac
-+++ python3.10-3.10.0~b1/configure.ac
+--- a/configure.ac
++++ b/configure.ac
 @@ -4635,8 +4635,13 @@ int main(void) {
  AC_MSG_RESULT($ac_cv_posix_semaphores_enabled)
  if test $ac_cv_posix_semaphores_enabled = no

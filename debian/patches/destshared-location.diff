@@ -1,10 +1,8 @@
 # DP: Keep the lib-dynload dir in the same place when configuring
 # DP: with --libdir=/usr/bin/$(DEB_HOST_MULTIARCH)
 
-Index: python3.10-3.10.0~b1/Makefile.pre.in
-===================================================================
---- python3.10-3.10.0~b1.orig/Makefile.pre.in
-+++ python3.10-3.10.0~b1/Makefile.pre.in
+--- a/Makefile.pre.in
++++ b/Makefile.pre.in
 @@ -160,7 +160,7 @@ EXT_SUFFIX=	@EXT_SUFFIX@
  LDSHARED=	@LDSHARED@ $(PY_LDFLAGS)
  BLDSHARED=	@BLDSHARED@ $(PY_CORE_LDFLAGS)
