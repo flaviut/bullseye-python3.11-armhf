@@ -1,5 +1,7 @@
---- a/Doc/conf.py
-+++ b/Doc/conf.py
+Index: python3.10-3.10.0~b1/Doc/conf.py
+===================================================================
+--- python3.10-3.10.0~b1.orig/Doc/conf.py
++++ python3.10-3.10.0~b1/Doc/conf.py
 @@ -61,6 +61,10 @@ smartquotes_excludes = {
  # Avoid a warning with Sphinx >= 2.0
  master_doc = 'contents'
@@ -11,8 +13,10 @@
  # Options for HTML output
  # -----------------------
  
---- a/Doc/Makefile
-+++ b/Doc/Makefile
+Index: python3.10-3.10.0~b1/Doc/Makefile
+===================================================================
+--- python3.10-3.10.0~b1.orig/Doc/Makefile
++++ python3.10-3.10.0~b1/Doc/Makefile
 @@ -11,7 +11,7 @@ BLURB        = PATH=$(VENVDIR)/bin:$$PAT
  PAPER        =
  SOURCES      =

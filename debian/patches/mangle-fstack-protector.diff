@@ -1,8 +1,10 @@
 # DP: When using GCC versions older than 4.9, automagically mangle
 # DP: -fstack-protector-strong to -fstack-protector
 
---- a/Lib/distutils/sysconfig.py
-+++ b/Lib/distutils/sysconfig.py
+Index: python3.10-3.10.0~b1/Lib/distutils/sysconfig.py
+===================================================================
+--- python3.10-3.10.0~b1.orig/Lib/distutils/sysconfig.py
++++ python3.10-3.10.0~b1/Lib/distutils/sysconfig.py
 @@ -14,6 +14,7 @@ import os
  import re
  import sys

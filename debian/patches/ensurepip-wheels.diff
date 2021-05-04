@@ -1,5 +1,7 @@
---- a/Lib/ensurepip/__init__.py
-+++ b/Lib/ensurepip/__init__.py
+Index: python3.10-3.10.0~b1/Lib/ensurepip/__init__.py
+===================================================================
+--- python3.10-3.10.0~b1.orig/Lib/ensurepip/__init__.py
++++ python3.10-3.10.0~b1/Lib/ensurepip/__init__.py
 @@ -1,3 +1,4 @@
 +import glob
  import os
@@ -29,7 +31,7 @@
  ]
  
  def _run_pip(args, additional_paths=None):
-@@ -42,7 +38,9 @@ def version():
+@@ -43,7 +39,9 @@ def version():
      """
      Returns a string specifying the bundled version of pip.
      """
@@ -40,7 +42,7 @@
  
  def _disable_pip_configuration_settings():
      # We deliberately ignore all pip environment variables
-@@ -100,20 +98,44 @@ def _bootstrap(*, root=None, upgrade=Fal
+@@ -101,20 +99,44 @@ def _bootstrap(*, root=None, upgrade=Fal
          # omit pip and easy_install
          os.environ["ENSUREPIP_OPTIONS"] = "install"
  
@@ -95,7 +97,7 @@
  
          # Construct the arguments to be passed to the pip command
          args = ["install", "--no-cache-dir", "--no-index", "--find-links", tmpdir]
-@@ -126,7 +148,7 @@ def _bootstrap(*, root=None, upgrade=Fal
+@@ -127,7 +149,7 @@ def _bootstrap(*, root=None, upgrade=Fal
          if verbosity:
              args += ["-" + "v" * verbosity]
  
@@ -104,7 +106,7 @@
  
  def _uninstall_helper(*, verbosity=0):
      """Helper to support a clean default uninstall process on Windows
-@@ -140,7 +162,8 @@ def _uninstall_helper(*, verbosity=0):
+@@ -141,7 +163,8 @@ def _uninstall_helper(*, verbosity=0):
          return
  
      # If the pip version doesn't match the bundled one, leave it alone
@@ -114,7 +116,7 @@
          msg = ("ensurepip will only uninstall a matching version "
                 "({!r} installed, {!r} bundled)")
          print(msg.format(pip.__version__, _PIP_VERSION), file=sys.stderr)
-@@ -153,7 +176,7 @@ def _uninstall_helper(*, verbosity=0):
+@@ -154,7 +177,7 @@ def _uninstall_helper(*, verbosity=0):
      if verbosity:
          args += ["-" + "v" * verbosity]
  

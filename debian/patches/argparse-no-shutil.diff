@@ -1,5 +1,7 @@
---- a/Lib/argparse.py
-+++ b/Lib/argparse.py
+Index: python3.10-3.10.0~b1/Lib/argparse.py
+===================================================================
+--- python3.10-3.10.0~b1.orig/Lib/argparse.py
++++ python3.10-3.10.0~b1/Lib/argparse.py
 @@ -175,9 +175,12 @@ class HelpFormatter(object):
  
          # default setting for width

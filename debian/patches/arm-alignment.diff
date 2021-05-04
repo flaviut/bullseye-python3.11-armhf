@@ -1,7 +1,9 @@
 Author: Dave Jones <dave.jones@canonical.com>
 Description: Use aligned access for _sha3 module on ARM.
---- a/Modules/_sha3/sha3module.c
-+++ b/Modules/_sha3/sha3module.c
+Index: python3.10-3.10.0~b1/Modules/_sha3/sha3module.c
+===================================================================
+--- python3.10-3.10.0~b1.orig/Modules/_sha3/sha3module.c
++++ python3.10-3.10.0~b1/Modules/_sha3/sha3module.c
 @@ -64,6 +64,12 @@
  #define PLATFORM_BYTE_ORDER IS_BIG_ENDIAN
  #endif

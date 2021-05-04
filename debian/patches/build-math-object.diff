@@ -1,5 +1,7 @@
---- a/Makefile.pre.in
-+++ b/Makefile.pre.in
+Index: python3.10-3.10.0~b1/Makefile.pre.in
+===================================================================
+--- python3.10-3.10.0~b1.orig/Makefile.pre.in
++++ python3.10-3.10.0~b1/Makefile.pre.in
 @@ -22,7 +22,8 @@
  
  MODBUILT_NAMES=    _MODBUILT_NAMES_
@@ -10,7 +12,7 @@
  MODLIBS=           _MODLIBS_
  
  # === Variables set by configure
-@@ -612,8 +613,9 @@ pybuilddir.txt: $(BUILDPYTHON)
+@@ -617,8 +618,9 @@ pybuilddir.txt: $(BUILDPYTHON)
  	fi
  
  # This is shared by the math and cmath modules

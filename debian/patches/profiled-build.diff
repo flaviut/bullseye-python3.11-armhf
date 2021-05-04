@@ -1,8 +1,10 @@
 # DP: Ignore errors in the profile task.
 
---- a/Makefile.pre.in
-+++ b/Makefile.pre.in
-@@ -515,6 +515,16 @@ build_all_generate_profile:
+Index: python3.10-3.10.0~b1/Makefile.pre.in
+===================================================================
+--- python3.10-3.10.0~b1.orig/Makefile.pre.in
++++ python3.10-3.10.0~b1/Makefile.pre.in
+@@ -520,6 +520,16 @@ build_all_generate_profile:
  run_profile_task:
  	@ # FIXME: can't run for a cross build
  	$(LLVM_PROF_FILE) $(RUNSHARED) ./$(BUILDPYTHON) $(PROFILE_TASK) || true

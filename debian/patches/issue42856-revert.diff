@@ -1,5 +1,7 @@
---- a/Doc/library/ensurepip.rst
-+++ b/Doc/library/ensurepip.rst
+Index: python3.10-3.10.0~b1/Doc/library/ensurepip.rst
+===================================================================
+--- python3.10-3.10.0~b1.orig/Doc/library/ensurepip.rst
++++ python3.10-3.10.0~b1/Doc/library/ensurepip.rst
 @@ -48,7 +48,7 @@ The simplest possible invocation is::
  
  This invocation will install ``pip`` if it is not already installed,
@@ -27,8 +29,10 @@
  
     *user* indicates whether to use the user scheme rather than installing
     globally.
---- a/Doc/whatsnew/3.10.rst
-+++ b/Doc/whatsnew/3.10.rst
+Index: python3.10-3.10.0~b1/Doc/whatsnew/3.10.rst
+===================================================================
+--- python3.10-3.10.0~b1.orig/Doc/whatsnew/3.10.rst
++++ python3.10-3.10.0~b1/Doc/whatsnew/3.10.rst
 @@ -1712,6 +1712,8 @@ Build Changes
  
    (Contributed by Victor Stinner in :issue:`42856`.)
@@ -38,8 +42,10 @@
  * Add a new :option:`configure --without-static-libpython option
    <--without-static-libpython>` to not build the ``libpythonMAJOR.MINOR.a``
    static library and not install the ``python.o`` object file.
---- a/Lib/ensurepip/__init__.py
-+++ b/Lib/ensurepip/__init__.py
+Index: python3.10-3.10.0~b1/Lib/ensurepip/__init__.py
+===================================================================
+--- python3.10-3.10.0~b1.orig/Lib/ensurepip/__init__.py
++++ python3.10-3.10.0~b1/Lib/ensurepip/__init__.py
 @@ -1,83 +1,28 @@
 -import collections
  import os
@@ -211,8 +217,10 @@
  
  
  def _main(argv=None):
---- a/Lib/test/test_ensurepip.py
-+++ b/Lib/test/test_ensurepip.py
+Index: python3.10-3.10.0~b1/Lib/test/test_ensurepip.py
+===================================================================
+--- python3.10-3.10.0~b1.orig/Lib/test/test_ensurepip.py
++++ python3.10-3.10.0~b1/Lib/test/test_ensurepip.py
 @@ -1,68 +1,19 @@
 -import contextlib
 +import unittest
@@ -316,8 +324,10 @@
  
  class TestBootstrappingMainFunction(EnsurepipMixin, unittest.TestCase):
  
---- a/Makefile.pre.in
-+++ b/Makefile.pre.in
+Index: python3.10-3.10.0~b1/Makefile.pre.in
+===================================================================
+--- python3.10-3.10.0~b1.orig/Makefile.pre.in
++++ python3.10-3.10.0~b1/Makefile.pre.in
 @@ -146,8 +146,6 @@ CONFINCLUDEDIR=	$(exec_prefix)/include
  PLATLIBDIR=	@PLATLIBDIR@
  SCRIPTDIR=	$(prefix)/$(PLATLIBDIR)
@@ -327,8 +337,10 @@
  
  # Detailed destination directories
  BINLIBDEST=	@BINLIBDEST@
---- a/configure.ac
-+++ b/configure.ac
+Index: python3.10-3.10.0~b1/configure.ac
+===================================================================
+--- python3.10-3.10.0~b1.orig/configure.ac
++++ python3.10-3.10.0~b1/configure.ac
 @@ -4860,22 +4860,6 @@ else
  fi
  AC_SUBST(LIBPL)
@@ -352,8 +364,10 @@
  # Check whether right shifting a negative integer extends the sign bit
  # or fills with zeros (like the Cray J90, according to Tim Peters).
  AC_MSG_CHECKING(whether right shift extends the sign bit)
---- a/Misc/NEWS
-+++ b/Misc/NEWS
+Index: python3.10-3.10.0~b1/Misc/NEWS
+===================================================================
+--- python3.10-3.10.0~b1.orig/Misc/NEWS
++++ python3.10-3.10.0~b1/Misc/NEWS
 @@ -1586,6 +1586,8 @@ Build
    ``/usr/share/python-wheels/`` directory and don't install the
    ``ensurepip._bundled`` package.

@@ -1,7 +1,9 @@
 # DP: argparse.py: Make the gettext import conditional
 
---- a/Lib/argparse.py
-+++ b/Lib/argparse.py
+Index: python3.10-3.10.0~b1/Lib/argparse.py
+===================================================================
+--- python3.10-3.10.0~b1.orig/Lib/argparse.py
++++ python3.10-3.10.0~b1/Lib/argparse.py
 @@ -89,7 +89,16 @@ import os as _os
  import re as _re
  import sys as _sys

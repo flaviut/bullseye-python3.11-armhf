@@ -1,8 +1,10 @@
 # DP: Assume working semaphores, don't rely on running kernel for the check.
 
---- a/configure.ac
-+++ b/configure.ac
-@@ -4634,8 +4634,13 @@ int main(void) {
+Index: python3.10-3.10.0~b1/configure.ac
+===================================================================
+--- python3.10-3.10.0~b1.orig/configure.ac
++++ python3.10-3.10.0~b1/configure.ac
+@@ -4635,8 +4635,13 @@ int main(void) {
  AC_MSG_RESULT($ac_cv_posix_semaphores_enabled)
  if test $ac_cv_posix_semaphores_enabled = no
  then
@@ -18,7 +20,7 @@
  fi
  
  # Multiprocessing check for broken sem_getvalue
-@@ -4670,8 +4675,13 @@ int main(void){
+@@ -4671,8 +4676,13 @@ int main(void){
  AC_MSG_RESULT($ac_cv_broken_sem_getvalue)
  if test $ac_cv_broken_sem_getvalue = yes
  then
