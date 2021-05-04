@@ -1,7 +1,7 @@
 python3.10 (3.10.0~b1-1) experimental; urgency=medium
 
   * Python 3.10.0 beta 1 snapshot.
-  * Refresh patches.
+  * Drop the unused build dependency on libdb-dev.
 
  -- Matthias Klose <doko@debian.org>  Tue, 04 May 2021 06:21:11 +0200
 

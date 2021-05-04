@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 11), @bd_dpkgdev@
   lsb-release, sharutils,
   libreadline-dev, libncursesw5-dev (>= 5.3), @bd_gcc@
   zlib1g-dev, libbz2-dev, liblzma-dev,
-  libgdbm-dev, libdb-dev,
+  libgdbm-dev,
   tk-dev, blt-dev (>= 2.4z), libssl-dev,
   libexpat1-dev, libmpdec-dev (>= 2.5.1~),
   libbluetooth-dev [linux-any] <!pkg.@PVER@.nobluetooth>,
