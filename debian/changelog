@@ -1,8 +1,15 @@
-python3.10 (3.10.0~a7-2) UNRELEASED; urgency=medium
+python3.10 (3.10.0~b1-1) experimental; urgency=medium
+
+  * Python 3.10.0 beta 1 snapshot.
+  * Refresh patches.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 04 May 2021 06:21:11 +0200
+
+python3.10 (3.10.0~a7-3) experimental; urgency=medium
 
   * Build a python3.10-full package.
 
- -- Matthias Klose <doko@debian.org>  Tue, 06 Apr 2021 14:59:48 +0200
+ -- Matthias Klose <doko@debian.org>  Tue, 06 Apr 2021 17:05:58 +0200
 
 python3.10 (3.10.0~a7-1) experimental; urgency=medium
 

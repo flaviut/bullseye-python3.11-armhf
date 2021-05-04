@@ -3,15 +3,15 @@
 
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
-@@ -13,6 +13,7 @@ import _imp
- import os
+@@ -14,6 +14,7 @@ import os
  import re
  import sys
+ import warnings
 +import fnmatch
  
- from .errors import DistutilsPlatformError
+ from functools import partial
  
-@@ -220,6 +221,10 @@ def customize_compiler(compiler):
+@@ -130,6 +131,10 @@ def customize_compiler(compiler):
              cc = newcc
          if 'CXX' in os.environ:
              cxx = os.environ['CXX']

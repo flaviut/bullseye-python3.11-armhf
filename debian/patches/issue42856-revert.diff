@@ -29,15 +29,15 @@
     globally.
 --- a/Doc/whatsnew/3.10.rst
 +++ b/Doc/whatsnew/3.10.rst
-@@ -1117,6 +1117,8 @@ Build Changes
+@@ -1712,6 +1712,8 @@ Build Changes
  
    (Contributed by Victor Stinner in :issue:`42856`.)
  
 +  NOTE: Reverted for now for the Debian/Ubuntu packages.
 +
- * Add a new configure ``--without-static-libpython`` option to not build the
-   ``libpythonMAJOR.MINOR.a`` static library and not install the ``python.o``
-   object file.
+ * Add a new :option:`configure --without-static-libpython option
+   <--without-static-libpython>` to not build the ``libpythonMAJOR.MINOR.a``
+   static library and not install the ``python.o`` object file.
 --- a/Lib/ensurepip/__init__.py
 +++ b/Lib/ensurepip/__init__.py
 @@ -1,83 +1,28 @@
@@ -59,9 +59,9 @@
 -_PACKAGE_NAMES = ('setuptools', 'pip')
 +
 +
- _SETUPTOOLS_VERSION = "52.0.0"
+ _SETUPTOOLS_VERSION = "56.0.0"
 +
- _PIP_VERSION = "21.0.1"
+ _PIP_VERSION = "21.1.1"
 +
  _PROJECTS = [
      ("setuptools", _SETUPTOOLS_VERSION, "py3"),
@@ -131,7 +131,7 @@
  def _run_pip(args, additional_paths=None):
      # Run the bootstraping in a subprocess to avoid leaking any state that happens
      # after pip has executed. Particulary, this avoids the case when pip holds onto
-@@ -97,8 +42,7 @@ def version():
+@@ -98,8 +43,7 @@ def version():
      """
      Returns a string specifying the bundled version of pip.
      """
@@ -141,7 +141,7 @@
  
  def _disable_pip_configuration_settings():
      # We deliberately ignore all pip environment variables
-@@ -160,23 +104,16 @@ def _bootstrap(*, root=None, upgrade=Fal
+@@ -161,23 +105,16 @@ def _bootstrap(*, root=None, upgrade=Fal
          # Put our bundled wheels into a temporary directory and construct the
          # additional paths that need added to sys.path
          additional_paths = []
@@ -173,7 +173,7 @@
  
          # Construct the arguments to be passed to the pip command
          args = ["install", "--no-cache-dir", "--no-index", "--find-links", tmpdir]
-@@ -189,7 +126,7 @@ def _bootstrap(*, root=None, upgrade=Fal
+@@ -190,7 +127,7 @@ def _bootstrap(*, root=None, upgrade=Fal
          if verbosity:
              args += ["-" + "v" * verbosity]
  
@@ -182,7 +182,7 @@
  
  def _uninstall_helper(*, verbosity=0):
      """Helper to support a clean default uninstall process on Windows
-@@ -202,14 +139,11 @@ def _uninstall_helper(*, verbosity=0):
+@@ -203,14 +140,11 @@ def _uninstall_helper(*, verbosity=0):
      except ImportError:
          return
  
@@ -202,7 +202,7 @@
          return
  
      _disable_pip_configuration_settings()
-@@ -219,7 +153,7 @@ def _uninstall_helper(*, verbosity=0):
+@@ -220,7 +154,7 @@ def _uninstall_helper(*, verbosity=0):
      if verbosity:
          args += ["-" + "v" * verbosity]
  
@@ -329,7 +329,7 @@
  BINLIBDEST=	@BINLIBDEST@
 --- a/configure.ac
 +++ b/configure.ac
-@@ -4843,22 +4843,6 @@ else
+@@ -4860,22 +4860,6 @@ else
  fi
  AC_SUBST(LIBPL)
  
@@ -354,7 +354,7 @@
  AC_MSG_CHECKING(whether right shift extends the sign bit)
 --- a/Misc/NEWS
 +++ b/Misc/NEWS
-@@ -458,6 +458,8 @@ Build
+@@ -1586,6 +1586,8 @@ Build
    ``/usr/share/python-wheels/`` directory and don't install the
    ``ensurepip._bundled`` package.
  
