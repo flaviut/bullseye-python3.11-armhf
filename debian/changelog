@@ -1,8 +1,9 @@
 python3.10 (3.10.0~b1-2) UNRELEASED; urgency=medium
 
+  * Add the headers key to the added Debian INSTALL_SCHEMES.
   * Refresh patches.
 
- -- Matthias Klose <doko@debian.org>  Tue, 04 May 2021 07:54:38 +0200
+ -- Matthias Klose <doko@debian.org>  Tue, 04 May 2021 12:09:10 +0200
 
 python3.10 (3.10.0~b1-1) experimental; urgency=medium
 

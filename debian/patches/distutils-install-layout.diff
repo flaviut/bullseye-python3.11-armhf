@@ -50,9 +50,9 @@
  
 --- a/Lib/distutils/command/install.py
 +++ b/Lib/distutils/command/install.py
-@@ -58,6 +58,28 @@ for main_key in INSTALL_SCHEMES:
-             value = value.replace("/lib/", "/$platlibdir/")
-         INSTALL_SCHEMES[main_key][key] = value
+@@ -35,6 +35,30 @@ SCHEME_KEYS = ('purelib', 'platlib', 'he
+ # of this information should switch to using sysconfig directly.
+ INSTALL_SCHEMES = {"unix_prefix": {}, "unix_home": {}, "nt": {}}
  
 +# add the Debian install schemes here until they are added to sysconfig
 +INSTALL_SCHEMES['unix_local'] = {
@@ -61,6 +61,7 @@
 +    'purelib': '{base}/lib/python{py_version_short}/dist-packages',
 +    'platlib': '{platbase}/{platlibdir}/python{py_version_short}/dist-packages',
 +    'include': '{installed_base}/include/python{py_version_short}{abiflags}',
++    'headers': '{installed_base}/include/python{py_version_short}{abiflags}',
 +    'platinclude': '{installed_platbase}/include/python{py_version_short}{abiflags}',
 +    'scripts': '{base}/bin',
 +    'data': '{base}',
@@ -71,15 +72,16 @@
 +    'purelib': '{base}/lib/python3/dist-packages',
 +    'platlib': '{platbase}/{platlibdir}/python3/dist-packages',
 +    'include': '{installed_base}/include/python{py_version_short}{abiflags}',
++    'headers': '{installed_base}/include/python{py_version_short}{abiflags}',
 +    'platinclude': '{installed_platbase}/include/python{py_version_short}{abiflags}',
 +    'scripts': '{base}/bin',
 +    'data': '{base}',
 +}
 +
- # The following part of INSTALL_SCHEMES has a different definition
- # than the one in sysconfig, but because both depend on the site module,
- # the outcomes should be the same.
-@@ -141,6 +163,9 @@ class install(Command):
+ # Copy from sysconfig._INSTALL_SCHEMES
+ for key in SCHEME_KEYS:
+     sys_key = key
+@@ -141,6 +165,9 @@ class install(Command):
  
          ('record=', None,
           "filename in which to record list of installed files"),
@@ -89,7 +91,7 @@
          ]
  
      boolean_options = ['compile', 'force', 'skip-build']
-@@ -161,6 +186,7 @@ class install(Command):
+@@ -161,6 +188,7 @@ class install(Command):
          self.exec_prefix = None
          self.home = None
          self.user = 0
@@ -97,7 +99,7 @@
  
          # These select only the installation base; it's up to the user to
          # specify the installation scheme (currently, that means supplying
-@@ -183,6 +209,9 @@ class install(Command):
+@@ -183,6 +211,9 @@ class install(Command):
              self.install_userbase = USER_BASE
              self.install_usersite = USER_SITE
  
@@ -107,7 +109,7 @@
          self.compile = None
          self.optimize = None
  
-@@ -426,6 +455,7 @@ class install(Command):
+@@ -426,6 +457,7 @@ class install(Command):
              self.install_base = self.install_platbase = self.home
              self.select_scheme("unix_home")
          else:
@@ -115,7 +117,7 @@
              if self.prefix is None:
                  if self.exec_prefix is not None:
                      raise DistutilsOptionError(
-@@ -440,7 +470,26 @@ class install(Command):
+@@ -440,7 +472,26 @@ class install(Command):
  
              self.install_base = self.prefix
              self.install_platbase = self.exec_prefix
