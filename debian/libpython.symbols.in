@@ -188,6 +188,7 @@
  PyErr_PrintEx@Base @SVER@
  PyErr_ProgramText@Base @SVER@
  PyErr_ProgramTextObject@Base @SVER@
+ PyErr_RangedSyntaxLocationObject@Base @SVER@
  PyErr_ResourceWarning@Base @SVER@
  PyErr_Restore@Base @SVER@
  PyErr_SetExcInfo@Base @SVER@
@@ -352,6 +353,9 @@
  PyFunction_SetKwDefaults@Base @SVER@
  PyFunction_Type@Base @SVER@
  PyGC_Collect@Base @SVER@
+ PyGC_Disable@Base @SVER@
+ PyGC_Enable@Base @SVER@
+ PyGC_IsEnabled@Base @SVER@
  PyGILState_Check@Base @SVER@
  PyGILState_Ensure@Base @SVER@
  PyGILState_GetThisThreadState@Base @SVER@
@@ -1049,7 +1053,11 @@
  Py_InitializeFromConfig@Base @SVER@
  Py_InspectFlag@Base @SVER@
  Py_InteractiveFlag@Base @SVER@
+ Py_Is@Base @SVER@
+ Py_IsFalse@Base @SVER@
  Py_IsInitialized@Base @SVER@
+ Py_IsNone@Base @SVER@
+ Py_IsTrue@Base @SVER@
  Py_IsolatedFlag@Base @SVER@
  Py_LeaveRecursiveCall@Base @SVER@
  Py_Main@Base @SVER@
@@ -1368,6 +1376,7 @@
  _PySlice_GetLongIndices@Base @SVER@
  _PyStack_AsDict@Base @SVER@
  _PyState_AddModule@Base @SVER@
+ _PyStructSequence_InitType@Base @SVER@
  _PySys_GetObjectId@Base @SVER@
  _PySys_GetSizeOf@Base @SVER@
  _PySys_SetObjectId@Base @SVER@
@@ -1560,6 +1569,7 @@
  _Py_SourceAsString@Base @SVER@
  _Py_SwappedOp@Base @SVER@
  _Py_TrueStruct@Base @SVER@
+ _Py_UTF8_Edit_Cost@Base @SVER@
  _Py_Uid_Converter@Base @SVER@
  _Py_UnhandledKeyboardInterrupt@Base @SVER@
  _Py_Union@Base @SVER@
