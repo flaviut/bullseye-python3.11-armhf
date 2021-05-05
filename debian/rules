@@ -1043,7 +1043,7 @@ endif
 		$(scriptdir)/test/{ann_module,ann_module2,ann_module3}.py \
 		$(scriptdir)/test/{regrtest,test_support,__init__,__main__}.py
 
-	: # The complete testsuite into $(p_lbase)
+	: # The complete testsuite into $(p_ltst)
 	$(dh_compat2) dh_movefiles -p$(p_ltst) --sourcedir=$(d) \
 		$(scriptdir)/test \
 		$(scriptdir)/ctypes/test \
@@ -1075,6 +1075,9 @@ endif
 		$(d)/usr/bin/2to3-$(VER) \
 		$(d)/usr/share/man/man1/2to3-$(VER).1 \
 		$(d)/usr/lib/python$(VER)/lib2to3
+
+	: # don't include the ndbm module, relies on _dbm
+	rm -f $(d)/usr/lib/python$(VER)/dbm/ndbm.py
 
 	: # Move the demos and tools into $(p_exam)'s doc directory
 	dh_installdirs -p$(p_exam) \
