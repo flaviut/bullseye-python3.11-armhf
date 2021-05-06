@@ -3,12 +3,14 @@ python3.10 (3.10.0~b1-2) UNRELEASED; urgency=medium
   * Add the headers key to the added Debian INSTALL_SCHEMES.
   * Use libeditreadline-dev instead of libedit-dev as a build dependency.
   * Refresh patches.
-  * Don't ship the dbm/ndbm module anymore (depending on _dbm).  With dropping
-    the libdb-dev build dependency, the _dbm extension isn't built anymore.
-    _dbm could be built using libgdbm-compat-dev, however having a different
-    format for the on-disk databases.
+  * When building 3.10 for releases newer than Debian 11 (bullseye) or
+    Ubuntu 21.04 (hirsute), build the _dbm extension using gdbm, and
+    include it in the python3-gdbm package.
+    Raise an ImportError when trying to import the _dbm module, if the
+    python3-gdbm package is not installed.
+  * Call python with -S when checking the minimal set of modules.
 
- -- Matthias Klose <doko@debian.org>  Tue, 04 May 2021 12:09:10 +0200
+ -- Matthias Klose <doko@debian.org>  Thu, 06 May 2021 11:07:08 +0200
 
 python3.10 (3.10.0~b1-1) experimental; urgency=medium
 

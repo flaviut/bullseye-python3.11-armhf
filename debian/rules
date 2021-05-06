@@ -81,6 +81,16 @@ derivative      := $(shell \
 	elif dpkg-vendor --derives-from Debian; then echo Debian; \
 	else echo Unknown; fi)
 
+# FIXME: add bullseye when uploading to unstable, after bullseye is released
+ifneq (,$(filter $(distrelase), jessie stretch buster precise trusty xenial bionic focal groovy hirsute))
+  with_dbmmodule = yes
+  bd_dbm = libdb-dev
+  dbmliborder = bdb:gdbm
+else
+  bd_dbm = libgdbm-compat-dev
+  dbmliborder = gdbm:bdb
+endif
+
 VER=3.10
 SVER=3.10.0~a4
 NVER=3.11
@@ -373,7 +383,7 @@ common_configure_args = \
 		--libdir=/usr/lib/$(DEB_HOST_MULTIARCH) \
 		--enable-ipv6 \
 		--enable-loadable-sqlite-extensions \
-		--with-dbmliborder=bdb:gdbm \
+		--with-dbmliborder=$(dbmliborder) \
 		--with-computed-gotos \
 		--without-ensurepip \
 		--with-system-expat \
@@ -485,14 +495,14 @@ ifeq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
 	for m in $(MIN_MODS) $(MIN_PACKAGES) $(MIN_EXTS) $(MIN_BUILTINS); do \
 	  echo "import $$m"; \
 	done > $(buildd_static)/minmods.py
-	cd $(buildd_static) && ./python ../debian/pymindeps.py minmods.py \
+	cd $(buildd_static) && ./python -S ../debian/pymindeps.py minmods.py \
 	  > mindeps.txt
 	-if [ -x /usr/bin/dot ]; then \
-	  cd $(buildd_static) && ./python ../debian/depgraph.py \
+	  cd $(buildd_static) && ./python -S ../debian/depgraph.py \
 	    < mindeps.txt > mindeps.dot; \
 	  dot -Tpng -o mindeps.png mindeps.dot; \
 	else true; fi
-	cd $(buildd_static) && ./python ../debian/mincheck.py \
+	cd $(buildd_static) && ./python -S ../debian/mincheck.py \
 		minmods.py mindeps.txt
 endif
 	touch stamps/stamp-mincheck
@@ -737,6 +747,7 @@ control-file:
 	    -e "s/@MINPRIO@/$(PY_MINPRIO)/g" \
 	    -e "s/@bd_qual@/$(bd_qual)/g" \
 	    -e "s/@bd_gcc@/$(bd_gcc)/g" \
+	    -e "s/@bd_dbm@/$(bd_dbm)/g" \
 	    -e "s/@bd_dpkgdev@/$(bd_dpkgdev)/g" \
 		debian/control.in \
 		$(if $(with_udeb),debian/control.udeb) \
@@ -1076,9 +1087,6 @@ endif
 		$(d)/usr/share/man/man1/2to3-$(VER).1 \
 		$(d)/usr/lib/python$(VER)/lib2to3
 
-	: # don't include the ndbm module, relies on _dbm
-	rm -f $(d)/usr/lib/python$(VER)/dbm/ndbm.py
-
 	: # Move the demos and tools into $(p_exam)'s doc directory
 	dh_installdirs -p$(p_exam) \
 		usr/share/doc/python$(VER)/examples
@@ -1245,12 +1253,16 @@ endif
 	ln -sf python$(VER)d $(d_dbg)/usr/bin/$(PVER)-dbg
 
 ifneq ($(with_tk),yes)
+	rm -f $(d_lbase)/$(scriptdir)/lib-dynload/_tkinter*.so
 	rm -f $(d_ldbg)/$(scriptdir)/lib-dynload/_tkinter*.so
-	rm -f $(d_ldbg)/usr/lib/debug/$(scriptdir)/lib-dynload/_tkinter*.so
 endif
 ifneq ($(with_gdbm),yes)
+	rm -f $(d_lbase)/$(scriptdir)/lib-dynload/_gdbm*.so
 	rm -f $(d_ldbg)/$(scriptdir)/lib-dynload/_gdbm*.so
-	rm -f $(d_ldbg)/usr/lib/debug/$(scriptdir)/lib-dynload/_gdbm*.so
+endif
+ifneq ($(with_dbmmodule),yes)
+	rm -f $(d_lbase)/$(scriptdir)/lib-dynload/_dbm*.so
+	rm -f $(d_ldbg)/$(scriptdir)/lib-dynload/_dbm*.so
 endif
 
 	cp -a $(d)-dbg/$(scriptdir)/config-$(VER)d-$(DEB_HOST_MULTIARCH) \
@@ -1422,12 +1434,6 @@ binary-arch: build-arch install
 	  ln -s $(p_lbase) debian/$$i/usr/share/doc/$$i; \
 	done
 	-find debian ! -perm -200 -print -exec chmod +w {} \;
-ifneq ($(with_tk),yes)
-	rm -f $(d_lbase)/$(scriptdir)/lib-dynload/_tkinter*.so
-endif
-ifneq ($(with_gdbm),yes)
-	rm -f $(d_lbase)/$(scriptdir)/lib-dynload/_gdbm*.so
-endif
 
 	find $(d_ldbg) $(d_ldev) -name '*.a' ! -type l \
 		| xargs -n 1 $(DEB_HOST_GNU_TYPE)-objcopy -p --remove-section=.gnu.lto_.*
