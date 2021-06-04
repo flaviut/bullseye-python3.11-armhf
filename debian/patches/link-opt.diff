@@ -2,7 +2,7 @@
 
 --- a/configure.ac
 +++ b/configure.ac
-@@ -2660,8 +2660,8 @@ then
+@@ -2663,8 +2663,8 @@ then
  		fi
  		;;
  	Linux*|GNU*|QNX*|VxWorks*)
@@ -13,7 +13,7 @@
  	FreeBSD*)
  		if [[ "`$CC -dM -E - </dev/null | grep __ELF__`" != "" ]]
  		then
-@@ -2754,7 +2754,7 @@ then
+@@ -2757,7 +2757,7 @@ then
  	    LINKFORSHARED="-Wl,-E -Wl,+s";;
  #	    LINKFORSHARED="-Wl,-E -Wl,+s -Wl,+b\$(BINLIBDEST)/lib-dynload";;
  	Linux-android*) LINKFORSHARED="-pie -Xlinker -export-dynamic";;

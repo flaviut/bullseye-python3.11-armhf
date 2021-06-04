@@ -1,3 +1,16 @@
+python3.10 (3.10.0~b2-1) experimental; urgency=medium
+
+  * Python 3.10.0 beta 2 snapshot.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 04 Jun 2021 10:45:30 +0200
+
+python3.10 (3.10.0~b1-3) experimental; urgency=medium
+
+  * Try to detect whether python3-venv is missing (Stefano Rivera).
+    Closes: #977887.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 11 May 2021 08:19:33 +0200
+
 python3.10 (3.10.0~b1-2) experimental; urgency=medium
 
   * Add the headers key to the added Debian INSTALL_SCHEMES.

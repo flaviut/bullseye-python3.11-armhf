@@ -80,8 +80,8 @@
 +
  # Copy from sysconfig._INSTALL_SCHEMES
  for key in SCHEME_KEYS:
-     sys_key = key
-@@ -141,6 +165,9 @@ class install(Command):
+     for distutils_scheme_name, sys_scheme_name in (
+@@ -148,6 +172,9 @@ class install(Command):
  
          ('record=', None,
           "filename in which to record list of installed files"),
@@ -91,7 +91,7 @@
          ]
  
      boolean_options = ['compile', 'force', 'skip-build']
-@@ -161,6 +188,7 @@ class install(Command):
+@@ -168,6 +195,7 @@ class install(Command):
          self.exec_prefix = None
          self.home = None
          self.user = 0
@@ -99,7 +99,7 @@
  
          # These select only the installation base; it's up to the user to
          # specify the installation scheme (currently, that means supplying
-@@ -183,6 +211,9 @@ class install(Command):
+@@ -190,6 +218,9 @@ class install(Command):
              self.install_userbase = USER_BASE
              self.install_usersite = USER_SITE
  
@@ -109,7 +109,7 @@
          self.compile = None
          self.optimize = None
  
-@@ -426,6 +457,7 @@ class install(Command):
+@@ -436,6 +467,7 @@ class install(Command):
              self.install_base = self.install_platbase = self.home
              self.select_scheme("unix_home")
          else:
@@ -117,7 +117,7 @@
              if self.prefix is None:
                  if self.exec_prefix is not None:
                      raise DistutilsOptionError(
-@@ -440,7 +472,26 @@ class install(Command):
+@@ -450,7 +482,26 @@ class install(Command):
  
              self.install_base = self.prefix
              self.install_platbase = self.exec_prefix
@@ -216,7 +216,7 @@
              sitepackages.append(prefix)
 --- a/Lib/test/test_site.py
 +++ b/Lib/test/test_site.py
-@@ -282,16 +282,16 @@ class HelperFunctionsTests(unittest.Test
+@@ -284,16 +284,16 @@ class HelperFunctionsTests(unittest.Test
          if os.sep == '/':
              # OS X, Linux, FreeBSD, etc
              if sys.platlibdir != "lib":

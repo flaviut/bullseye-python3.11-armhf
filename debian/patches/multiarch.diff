@@ -1,6 +1,6 @@
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
-@@ -611,6 +611,12 @@ def get_config_vars(*args):
+@@ -623,6 +623,12 @@ def get_config_vars(*args):
              # the init-function.
              _CONFIG_VARS['userbase'] = _getuserbase()
  
@@ -27,7 +27,7 @@
          if python_build:
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -817,6 +817,7 @@ Modules/signalmodule.o: $(srcdir)/Module
+@@ -824,6 +824,7 @@ Modules/signalmodule.o: $(srcdir)/Module
  
  Python/dynload_shlib.o: $(srcdir)/Python/dynload_shlib.c Makefile
  	$(CC) -c $(PY_CORE_CFLAGS) \

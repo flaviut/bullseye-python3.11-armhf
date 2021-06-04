@@ -29,7 +29,7 @@
     globally.
 --- a/Doc/whatsnew/3.10.rst
 +++ b/Doc/whatsnew/3.10.rst
-@@ -1712,6 +1712,8 @@ Build Changes
+@@ -1763,6 +1763,8 @@ Build Changes
  
    (Contributed by Victor Stinner in :issue:`42856`.)
  
@@ -329,7 +329,7 @@
  BINLIBDEST=	@BINLIBDEST@
 --- a/configure.ac
 +++ b/configure.ac
-@@ -4860,22 +4860,6 @@ else
+@@ -4863,22 +4863,6 @@ else
  fi
  AC_SUBST(LIBPL)
  
@@ -354,7 +354,7 @@
  AC_MSG_CHECKING(whether right shift extends the sign bit)
 --- a/Misc/NEWS
 +++ b/Misc/NEWS
-@@ -1586,6 +1586,8 @@ Build
+@@ -1797,6 +1797,8 @@ Build
    ``/usr/share/python-wheels/`` directory and don't install the
    ``ensurepip._bundled`` package.
  
