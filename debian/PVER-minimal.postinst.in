@@ -28,7 +28,7 @@ case "$1" in
             chown root:$group $localsite 2> /dev/null || true
         fi
 
-	if which update-binfmts >/dev/null; then
+	if command -v update-binfmts >/dev/null; then
 	    update-binfmts --import @PVER@
 	fi
 
