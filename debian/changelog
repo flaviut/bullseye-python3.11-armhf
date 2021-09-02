@@ -2,6 +2,7 @@ python3.10 (3.10.0~rc1-1) unstable; urgency=medium
 
   * Python 3.10.0 release candidate 1.
   * Update symbols files.
+  * Fix CFLAGS in the python3.x-config scripts. Addresses: #992669.
 
  -- Matthias Klose <doko@debian.org>  Thu, 02 Sep 2021 13:49:53 +0200
 
