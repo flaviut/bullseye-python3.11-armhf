@@ -390,6 +390,7 @@ common_configure_args = \
 		--with-system-expat \
 		--with-dtrace \
 		--with-system-libmpdec \
+		MKDIR_P="/bin/mkdir -p" \
 
 ifneq (,$(filter $(DEB_HOST_ARCH), avr32 or1k))
   common_configure_args += --without-ffi

@@ -1,3 +1,9 @@
+python3.10 (3.10.0~rc1-2) UNRELEASED; urgency=medium
+
+  * Fix path to mkdir on a unified-/usr system. Addresses: #992775.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 02 Sep 2021 15:09:23 +0200
+
 python3.10 (3.10.0~rc1-1) unstable; urgency=medium
 
   * Python 3.10.0 release candidate 1.
