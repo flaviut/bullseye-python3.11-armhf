@@ -550,7 +550,7 @@ ifneq (,$(filter $(DEB_HOST_ARCH), sparc sparc64))
   TEST_EXCLUDES += test_gdb
 endif
 
-ifneq (,$(filter $(DEB_HOST_ARCH), riscv64))
+ifneq (,$(filter $(DEB_HOST_ARCH), alpha riscv64))
   TEST_EXCLUDES += test_concurrent_futures
 endif
 
