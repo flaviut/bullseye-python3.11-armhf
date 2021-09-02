@@ -1,3 +1,10 @@
+python3.10 (3.10.0~rc1-1) unstable; urgency=medium
+
+  * Python 3.10.0 release candidate 1.
+  * Update symbols files.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 02 Sep 2021 13:49:53 +0200
+
 python3.10 (3.10.0~b4-1) experimental; urgency=medium
 
   * Python 3.10.0 beta 4 snapshot.
