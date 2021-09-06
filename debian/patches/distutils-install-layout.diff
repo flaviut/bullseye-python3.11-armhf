@@ -196,10 +196,10 @@
          if os.sep == '/':
 +            if 'VIRTUAL_ENV' in os.environ or sys.base_prefix != sys.prefix:
 +                sitepackages.append(os.path.join(prefix, "lib",
-+                                                 "python" + sys.version[:3],
++                                                 "python%d.%d" % sys.version_info[:2],
 +                                                 "site-packages"))
 +            sitepackages.append(os.path.join(prefix, "local/lib",
-+                                             "python" + sys.version[:3],
++                                             "python%d.%d" % sys.version_info[:2],
 +                                             "dist-packages"))
 +            sitepackages.append(os.path.join(prefix, "lib",
 +                                             "python3",
@@ -209,7 +209,7 @@
                  path = os.path.join(prefix, libdir,
 -                                    "python%d.%d" % sys.version_info[:2],
 -                                    "site-packages")
-+                                    "python" + sys.version[:3],
++                                    "python%d.%d" % sys.version_info[:2],
 +                                    "dist-packages")
                  sitepackages.append(path)
          else:
