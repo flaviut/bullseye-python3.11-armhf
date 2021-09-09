@@ -1,6 +1,7 @@
 python3.10 (3.10.0~rc2-1) unstable; urgency=medium
 
   * Python 3.10.0 release candidate 2.
+  * Update symbols files.
 
  -- Matthias Klose <doko@debian.org>  Thu, 09 Sep 2021 11:19:38 +0200
 

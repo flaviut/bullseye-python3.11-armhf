@@ -6,8 +6,10 @@ configure
 stamps
 build
 build-*
+locales
 
 .azure-pipelines
+.editorconfig
 CODE_OF_CONDUCT.md
 Demo
 Doc
