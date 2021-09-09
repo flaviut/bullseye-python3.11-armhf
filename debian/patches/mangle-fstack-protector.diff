@@ -11,7 +11,7 @@
  
  from functools import partial
  
-@@ -130,6 +131,10 @@ def customize_compiler(compiler):
+@@ -233,6 +234,10 @@ def customize_compiler(compiler):
              cc = newcc
          if 'CXX' in os.environ:
              cxx = os.environ['CXX']
