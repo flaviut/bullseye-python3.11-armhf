@@ -1,5 +1,4 @@
 #git-updates.diff
-issue42856-revert.diff
 deb-setup.diff
 deb-locations.diff
 distutils-install-layout.diff
@@ -25,7 +24,6 @@ test-no-random-order.diff
 multiarch-extname.diff
 tempfile-minimal.diff
 disable-some-tests.diff
-ensurepip-wheels.diff
 ensurepip-disabled.diff
 mangle-fstack-protector.diff
 reproducible-buildinfo.diff

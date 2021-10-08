@@ -40,8 +40,8 @@ Forwarded: not-needed
 +
  
  __all__ = ["version", "bootstrap"]
- 
-@@ -79,6 +107,11 @@ def _bootstrap(*, root=None, upgrade=Fal
+ _PACKAGE_NAMES = ('setuptools', 'pip')
+@@ -137,6 +165,11 @@
  
      Note that calling this function will alter both sys.path and os.environ.
      """

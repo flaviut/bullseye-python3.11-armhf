@@ -394,6 +394,7 @@ common_configure_args = \
 		--with-system-expat \
 		--with-dtrace \
 		--with-system-libmpdec \
+		--with-wheel-pkg-dir=/usr/share/python-wheels/ \
 		MKDIR_P="/bin/mkdir -p" \
 
 ifneq (,$(filter $(DEB_HOST_ARCH), avr32 or1k))

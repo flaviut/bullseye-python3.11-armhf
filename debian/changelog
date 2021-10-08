@@ -3,6 +3,7 @@ python3.10 (3.10.0-1) unstable; urgency=medium
   * Python 3.10.0 release.
   * Update symbols files.
   * Annotate patches (Stefano Rivera).
+  * Use Python 3.10's native --with-wheel-pkg-dir= mechanism (Stefano Rivera).
 
  -- Matthias Klose <doko@debian.org>  Fri, 08 Oct 2021 14:10:19 +0200
 
