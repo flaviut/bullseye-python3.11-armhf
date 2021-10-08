@@ -1,3 +1,10 @@
+python3.10 (3.10.0-1) unstable; urgency=medium
+
+  * Python 3.10.0 release.
+  * Update symbols files.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 08 Oct 2021 14:10:19 +0200
+
 python3.10 (3.10.0~rc2-2) unstable; urgency=medium
 
   * More flags substitutions for LDFLAGS in _sysconfigdata.
