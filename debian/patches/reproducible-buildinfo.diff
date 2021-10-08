@@ -1,4 +1,8 @@
-# DP: Build getbuildinfo.o with DATE/TIME values when defined
+Description: Build reproduceable date and time into build info
+ Build information is encoded into getbuildinfo.o at build time.
+ Use the date and time from the debian changelog, to make this reproduceable.
+
+Forwarded: no
 
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in

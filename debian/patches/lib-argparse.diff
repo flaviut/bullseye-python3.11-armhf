@@ -1,4 +1,8 @@
-# DP: argparse.py: Make the gettext import conditional
+Description: Debian: Degrade argparse gracefully without gettext
+ python3.X-minimal includes argparse but not gettext. Use a fallback noop
+ gettext, if it can't be imported.
+
+Forwarded: not-needed
 
 --- a/Lib/argparse.py
 +++ b/Lib/argparse.py

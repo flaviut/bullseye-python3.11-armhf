@@ -1,6 +1,8 @@
-# DP: Make sure to rename extensions to a tag including the MULTIARCH name
- 
-this patch can be dropped for python3.5 final, if the upstream chage is kept.
+Description: Debian: Make sure to rename extensions to a tag including the MULTIARCH name
+ this patch can be dropped for python3.5 final, if the upstream chage is kept.
+ FIXME: so, can we drop it?
+
+Forwarded: not-needed
 
 --- a/Lib/distutils/dir_util.py
 +++ b/Lib/distutils/dir_util.py

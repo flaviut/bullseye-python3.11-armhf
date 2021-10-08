@@ -1,4 +1,9 @@
-# DP: Don't include /usr/local/include and /usr/local/lib as gcc search paths
+Description: C compiler flags:
+ 1. Don't duplicate /usr/local in gcc search paths.
+    FIXME: Not sure why.
+ 2. Respect CPPFLAGS
+
+Forwarded: no
 
 --- a/setup.py
 +++ b/setup.py

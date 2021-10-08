@@ -1,3 +1,9 @@
+Description: Debian: Degrade argparse gracefully without shutil
+ python3.X-minimal includes argparse but not shutil. Use a fixed terminal
+ width, if shutil can't be imported.
+
+Forwarded: not-needed
+
 --- a/Lib/argparse.py
 +++ b/Lib/argparse.py
 @@ -175,9 +175,12 @@ class HelpFormatter(object):

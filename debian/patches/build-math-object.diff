@@ -1,3 +1,9 @@
+Description: Arch: Don't build builtins like math.o with -fPIC
+ Fixes build failure on on Debian/kFreeBSD.
+ FIXME: Why? Remove noop sed from debian/rules?
+
+Forwarded: no
+
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
 @@ -22,7 +22,8 @@

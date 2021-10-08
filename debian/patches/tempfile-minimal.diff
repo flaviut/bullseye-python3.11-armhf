@@ -1,4 +1,8 @@
-# DP: Avoid shutil import when it is not available.
+Description: Debian: Degrade tempfile gracefully without shutil
+ python3.X-minimal includes tempfile but not shutil. Use a fallback racy
+ rmtree, if shutil can't be imported.
+
+Forwarded: not-needed
 
 --- a/Lib/tempfile.py
 +++ b/Lib/tempfile.py

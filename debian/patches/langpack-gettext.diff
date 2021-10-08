@@ -1,7 +1,11 @@
-# DP: Description: support alternative gettext tree in
-# DP: /usr/share/locale-langpack; if a file is present in both trees,
-# DP: prefer the newer one
-# DP: Upstream status: Ubuntu-Specific
+Description: Ubuntu: Support separate langpack packages
+ Support alternative gettext tree in /usr/share/locale-langpack; if a file is
+ present in both trees, prefer the newer one.
+ Ubuntu collates gettext from packages on the DVD into language packs, to
+ reduce disk-space on the image.
+ This is Ubuntu-Specific.
+
+Forwarded: not-needed
 
 --- a/Lib/gettext.py
 +++ b/Lib/gettext.py

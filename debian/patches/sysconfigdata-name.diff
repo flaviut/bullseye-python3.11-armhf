@@ -1,3 +1,10 @@
+Description: Don't encode the MACHDEP into the _sysconfigdata file name.
+ Unfortunately on KFreeBSD MACHDEP includes the kernel version, so you end up
+ with a changing MACHDEP.
+
+Bug-cpython: https://bugs.python.org/issue37561
+Forwarded: no
+
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
 @@ -403,7 +403,7 @@ def _get_sysconfigdata_name():

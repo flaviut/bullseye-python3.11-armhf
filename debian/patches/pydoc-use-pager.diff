@@ -1,4 +1,8 @@
-# DP: pydoc: use the pager command if available.
+Description: pydoc: use the pager command if available
+ Debian file pagers register the "pager" alternative, so if any pager is
+ available, /usr/bin/pager will exist, and point to the best pager available.
+
+Forwarded: no
 
 --- a/Lib/pydoc.py
 +++ b/Lib/pydoc.py

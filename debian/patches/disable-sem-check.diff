@@ -1,4 +1,8 @@
-# DP: Assume working semaphores, don't rely on running kernel for the check.
+Description: Debian: Don't autodetect whether semephores are present
+ Assume working semaphores, don't rely on running kernel for the check.
+ Build machine != Target machine.
+
+Forwarded: not-needed
 
 --- a/configure.ac
 +++ b/configure.ac

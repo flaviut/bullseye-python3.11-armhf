@@ -1,6 +1,9 @@
-# DP: Get CONFIGURE_CFLAGS, CONFIGURE_CPPFLAGS, CONFIGURE_LDFLAGS from
-# DP: the python build, when CFLAGS, CPPFLAGS, LDSHARED) are not set
-# DP: in the environment.
+Description: distutils: Use python's compiler arguments by default
+ Get CONFIGURE_CFLAGS, CONFIGURE_CPPFLAGS, CONFIGURE_LDFLAGS from
+ the python build, when CFLAGS, CPPFLAGS, LDSHARED) are not set
+ in the environment.
+
+Forwarded: no
 
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py

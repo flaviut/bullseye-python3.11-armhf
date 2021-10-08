@@ -1,4 +1,5 @@
-# DP: Disable some failing tests we are not interested in
+Description: Arch: Disable some failing tests we are not interested in
+Forwarded: no
 
 --- a/Lib/distutils/tests/test_build_ext.py
 +++ b/Lib/distutils/tests/test_build_ext.py

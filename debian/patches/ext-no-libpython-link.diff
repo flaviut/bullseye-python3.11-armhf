@@ -1,4 +1,7 @@
-# DP: Don't link extensions with the shared libpython library.
+Description: Don't link extensions with the shared libpython library
+ FIXME: Still needed since 3.8?
+
+Bug-cpython: https://bugs.python.org/issue21536
 
 --- a/Lib/distutils/command/build_ext.py
 +++ b/Lib/distutils/command/build_ext.py

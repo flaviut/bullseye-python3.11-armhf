@@ -1,3 +1,8 @@
+Description: Link the time module to librt
+ FIXME: Back-story?
+
+Forwarded: no
+
 Index: b/Modules/Setup.dist
 ===================================================================
 --- a/Modules/Setup.dist

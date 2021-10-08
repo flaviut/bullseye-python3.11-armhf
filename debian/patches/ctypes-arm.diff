@@ -1,3 +1,11 @@
+Description: Arch: Workaround the presence of hard-float in ldconfig -p output.
+ Also, handle the wide variety of ARM unames.
+
+Author: Loïc Minier
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/898172
+Bug-cpython: http://bugs.python.org/issue13508
+Forwarded: yes
+
 --- a/Lib/ctypes/util.py
 +++ b/Lib/ctypes/util.py
 @@ -269,16 +269,27 @@ elif os.name == "posix":

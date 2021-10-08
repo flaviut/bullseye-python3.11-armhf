@@ -1,4 +1,8 @@
-# DP: suggest installation of python-tk package on failing _tkinter import
+Description: Suggest installation of python3-tk package
+ We split Tk out into a separate binary package. Help users who try to import
+ it, without it installed.
+
+Forwarded: not-needed
 
 --- a/Lib/tkinter/__init__.py
 +++ b/Lib/tkinter/__init__.py

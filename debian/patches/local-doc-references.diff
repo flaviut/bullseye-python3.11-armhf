@@ -1,3 +1,7 @@
+Description: Debian: Reference the local path to the documentation
+
+Forwarded: not-needed
+
 --- a/Doc/tools/templates/layout.html
 +++ b/Doc/tools/templates/layout.html
 @@ -18,7 +18,7 @@

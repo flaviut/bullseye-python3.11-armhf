@@ -1,6 +1,16 @@
-# DP: distutils: Add an option --install-layout=deb, which
-# DP: - installs into $prefix/dist-packages instead of $prefix/site-packages.
-# DP: - doesn't encode the python version into the egg name.
+Description: Debian: Add a distutils option --install-layout=deb
+ This option:
+  - installs into $prefix/dist-packages instead of $prefix/site-packages.
+  - doesn't encode the python version into the egg name.
+ .
+ We install modules into dist-packages so that a local admin can build their
+ own cpython from source, and they won't see each others' installed modules.
+ This keeps Debian packaged applications working correctly, isolated from the
+ local cpython.
+ .
+ Customize site.py to import from Debian's dist-packages layout.
+
+Forwarded: not-needed
 
 --- a/Lib/distutils/command/install_egg_info.py
 +++ b/Lib/distutils/command/install_egg_info.py

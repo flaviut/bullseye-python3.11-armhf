@@ -1,4 +1,7 @@
-# DP: Call the linker with -O1 -Bsymbolic-functions
+Description: Call the linker with -O1 -Bsymbolic-functions
+ FIXME: Why? Why -O1?
+
+Forwarded: no
 
 --- a/configure.ac
 +++ b/configure.ac

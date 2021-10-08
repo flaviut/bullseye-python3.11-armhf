@@ -1,5 +1,9 @@
-# DP: When using GCC versions older than 4.9, automagically mangle
-# DP: -fstack-protector-strong to -fstack-protector
+Description: Support gcc < 4.9
+ When using GCC versions older than 4.9, automagically mangle
+ -fstack-protector-strong to -fstack-protector
+ FIXME: Still needed?
+
+Forwarded: no
 
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py

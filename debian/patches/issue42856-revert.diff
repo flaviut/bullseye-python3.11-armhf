@@ -1,3 +1,9 @@
+Description: Revert bpo-42856 (temporarily)
+ This rework of ensurepip breaks our patches, and we haven't rebased onto it,
+ yet.
+
+Forwarded: not-needed
+
 --- a/Doc/library/ensurepip.rst
 +++ b/Doc/library/ensurepip.rst
 @@ -48,7 +48,7 @@ The simplest possible invocation is::

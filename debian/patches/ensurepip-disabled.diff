@@ -1,4 +1,8 @@
-# DP: Disable ensurepip for the system installation, only enable it for virtual environments.
+Description: Disable ensurepip for the system installation
+ We have a python3-pip package, for users who want pip.
+ We just need ensurepip to seed pip in virtual environments.
+
+Forwarded: not-needed
 
 --- a/Lib/ensurepip/__init__.py
 +++ b/Lib/ensurepip/__init__.py

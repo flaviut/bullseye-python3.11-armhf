@@ -1,4 +1,9 @@
-# DP: Don't add standard library dirs to library_dirs and runtime_library_dirs.
+Description: distutils: Don't add standard library dirs to library_dirs and runtime_library_dirs.
+ On amd64, runtime paths pointing to /usr/lib64 aren't recognized by
+ dpkg-shlibdeps, and the packages containing these libraries aren't added to
+ ${shlibs:Depends}.
+
+Forwarded: no
 
 --- a/Lib/distutils/unixccompiler.py
 +++ b/Lib/distutils/unixccompiler.py

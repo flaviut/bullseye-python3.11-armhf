@@ -1,4 +1,6 @@
-# DP: updates from the 3.9 branch (until 2020-10-19).
+Description: Updates from the 3.9 branch (until 2020-10-19).
+ We pick the latest updates from the maintainance branch, and carry them in a
+ patch, rather than creating and uploading uploading a new .orig tarball.
 
 # git diff --no-renames 9cf6752276e6fcfd0c23fdb064ad27f448aaaf75 7c949020ef2520d7a7cbc978f0b34423e6c2a94c | filterdiff -x ?/.hgignore -x ?/.hgeol -x ?/.hgtags -x ?/.hgtouch -x ?/.gitignore -x ?/.gitattributes -x '?/.github/*' -x '?/.git*' -x ?/.codecov.yml -x ?/.travis.yml -x ?/configure --remove-timestamps
 

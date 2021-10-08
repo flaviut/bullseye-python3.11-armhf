@@ -1,4 +1,13 @@
-# DP: Add schemes 'deb_system' and 'posix_local', make the latter the default
+Description: Add debian's sysconfig install schemes
+ Add schemes 'deb_system' and 'posix_local', make the latter the default.
+ deb_system is used by Debian packaged python modules, it is manually selected
+ during the package build.
+ posix_local is used by sysadmins to install their own modules in /usr/local,
+ it is the default layout for Debian's python.
+ When inside a virtualenv, we make posix_prefix the default scheme, instead,
+ which is simpler and more standard outside Debian.
+
+Forwarded: not-needed
 
 Index: b/Lib/sysconfig.py
 ===================================================================

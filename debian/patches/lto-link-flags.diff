@@ -1,3 +1,8 @@
+Description: Enable Link Time Optimization
+ FIXME: Expand
+
+Forwarded: no
+
 Index: b/Makefile.pre.in
 ===================================================================
 --- a/Makefile.pre.in
