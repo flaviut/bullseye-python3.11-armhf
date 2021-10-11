@@ -176,9 +176,8 @@ DPKG_LDFLAGS = $(shell $(dpkg_buildflags) --get LDFLAGS)
 OPT_CFLAGS   := $(filter-out -O%,$(DPKG_CFLAGS)) # default is -O3
 DEBUG_CFLAGS := $(patsubst -O%,-Og,$(DPKG_CFLAGS))
 
-# on ia64, disable -O3 until gcc bug #85412 is fixed
 ifeq ($(DEB_HOST_ARCH),ia64)
-    EXTRA_OPT_CFLAGS += -O2
+    DPKG_CPPFLAGS += -DWITH_PYMALLOC_RADIX_TREE=0
 endif
 # see #972202, and https://gcc.gnu.org/PR97431
 ifneq (,$(filter $(DEB_HOST_ARCH), hppa sh4))
