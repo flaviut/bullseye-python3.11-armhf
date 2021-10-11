@@ -1,6 +1,7 @@
 python3.10 (3.10.0-2) unstable; urgency=medium
 
   * ensurepip: Install pkg_resources as well as setuptools (Stefano Rivera).
+  * Strip trailing '\n' from file names in py_compile (Graham Inggs).
 
  -- Matthias Klose <doko@debian.org>  Mon, 11 Oct 2021 07:33:59 +0200
 
