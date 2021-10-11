@@ -24,6 +24,7 @@ test-no-random-order.diff
 multiarch-extname.diff
 tempfile-minimal.diff
 disable-some-tests.diff
+ensurepip-pkg-resources.diff
 ensurepip-disabled.diff
 mangle-fstack-protector.diff
 reproducible-buildinfo.diff

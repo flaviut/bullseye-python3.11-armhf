@@ -1,0 +1,24 @@
+Description: ensurepip: Install pkg_resources as well as setuptools.
+ In Debian, pkg_resources is broken into its own binary package and wheel.
+ Ensure that virtualenvs get pkg_resources installed in them.
+
+Author: Stefano Rivera <stefanor@debian.org>
+Forwarded: not-needed
+
+--- a/Lib/ensurepip/__init__.py
++++ b/Lib/ensurepip/__init__.py
+@@ -10,12 +10,13 @@
+ 
+ 
+ __all__ = ["version", "bootstrap"]
+-_PACKAGE_NAMES = ('setuptools', 'pip')
++_PACKAGE_NAMES = ('setuptools', 'pip', 'pkg_resources')
+ _SETUPTOOLS_VERSION = "57.4.0"
+ _PIP_VERSION = "21.2.3"
+ _PROJECTS = [
+     ("setuptools", _SETUPTOOLS_VERSION, "py3"),
+     ("pip", _PIP_VERSION, "py3"),
++    ("pkg_resources", "0.0.0", "py3"),
+ ]
+ 
+ # Packages bundled in ensurepip._bundled have wheel_name set.
