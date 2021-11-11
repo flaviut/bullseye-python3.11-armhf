@@ -6,7 +6,7 @@ Forwarded: not-needed
 
 --- a/Lib/ensurepip/__init__.py
 +++ b/Lib/ensurepip/__init__.py
-@@ -8,6 +8,34 @@
+@@ -8,6 +8,34 @@ import tempfile
  from importlib import resources
  
  
@@ -41,7 +41,7 @@ Forwarded: not-needed
  
  __all__ = ["version", "bootstrap"]
  _PACKAGE_NAMES = ('setuptools', 'pip', 'pkg_resources')
-@@ -138,6 +166,11 @@
+@@ -138,6 +166,11 @@ def _bootstrap(*, root=None, upgrade=Fal
  
      Note that calling this function will alter both sys.path and os.environ.
      """
@@ -55,10 +55,10 @@ Forwarded: not-needed
  
 --- a/Lib/venv/__init__.py
 +++ b/Lib/venv/__init__.py
-@@ -295,7 +295,31 @@
+@@ -309,7 +309,31 @@ class EnvBuilder:
          # intended for the global Python environment
-         cmd = [context.env_exe, '-Im', 'ensurepip', '--upgrade',
-                                                     '--default-pip']
+         cmd = [context.env_exec_cmd, '-Im', 'ensurepip', '--upgrade',
+                                                          '--default-pip']
 -        subprocess.check_output(cmd, stderr=subprocess.STDOUT)
 +        # Debian 2015-09-18 barry@debian.org: <python>-venv is a separate
 +        # binary package which might not be installed.  In that case, the

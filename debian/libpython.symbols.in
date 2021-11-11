@@ -1459,7 +1459,9 @@
  _PyUnicode_AsUnicode@Base @SVER@
  _PyUnicode_CheckConsistency@Base @SVER@
  _PyUnicode_Copy@Base @SVER@
- _PyUnicode_DecodeUnicodeEscape@Base @SVER@
+ _PyUnicode_DecodeRawUnicodeEscapeStateful@Base @SVER@
+ _PyUnicode_DecodeUnicodeEscapeInternal@Base @SVER@
+ _PyUnicode_DecodeUnicodeEscapeStateful@Base @SVER@
  _PyUnicode_EQ@Base @SVER@
  _PyUnicode_EncodeCharmap@Base @SVER@
  _PyUnicode_EncodeUTF16@Base @SVER@
