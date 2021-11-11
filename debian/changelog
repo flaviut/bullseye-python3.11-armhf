@@ -1,3 +1,10 @@
+python3.10 (3.10.0-4) unstable; urgency=medium
+
+  * Revert the backport for issue #45235 (argparse does not preserve
+    namespace with subparser defaults).
+
+ -- Matthias Klose <doko@debian.org>  Thu, 11 Nov 2021 16:08:14 +0100
+
 python3.10 (3.10.0-3) unstable; urgency=medium
 
   * Update to the 3.10 branch 2020-10-17.
