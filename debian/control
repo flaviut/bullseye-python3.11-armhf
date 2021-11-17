@@ -7,7 +7,7 @@ Build-Depends: debhelper (>= 11), dpkg-dev (>= 1.17.11),
   lsb-release, sharutils,
   libeditreadline-dev | libreadline-dev, libncursesw5-dev (>= 5.3), 
   zlib1g-dev, libbz2-dev, liblzma-dev,
-  libgdbm-dev, libgdbm-compat-dev,
+  libgdbm-dev, libdb-dev,
   tk-dev, blt-dev (>= 2.4z), libssl-dev,
   libexpat1-dev, libmpdec-dev (>= 2.5.1~),
   libbluetooth-dev [linux-any] <!pkg.python3.10.nobluetooth>,
@@ -62,6 +62,8 @@ Multi-Arch: same
 Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
 Depends: libpython3.10-minimal (= ${binary:Version}), mime-support, ${shlibs:Depends}, ${misc:Depends}
+Breaks: python3-gdbm (<< 3.9.9-1~)
+Replaces: python3-gdbm (<< 3.9.9-1~)
 Description: Interactive high-level object-oriented language (standard library, version 3.10)
  Python is a high-level, interactive, object-oriented language. Its 3.10 version
  includes an extensive class library with lots of goodies for
@@ -222,6 +224,8 @@ Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: libpython3.10-stdlib (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Breaks: python3-gdbm-dbg (<< 3.9.9-1~)
+Replaces: python3-gdbm-dbg (<< 3.9.9-1~)
 Description: Debug Build of the Python Interpreter (version 3.10)
  The package holds two things:
  .

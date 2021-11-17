@@ -62,6 +62,8 @@ Multi-Arch: same
 Priority: @PRIO@
 Pre-Depends: ${misc:Pre-Depends}
 Depends: lib@PVER@-minimal (= ${binary:Version}), mime-support, ${shlibs:Depends}, ${misc:Depends}
+Breaks: python3-gdbm (<< 3.9.9-1~)
+Replaces: python3-gdbm (<< 3.9.9-1~)
 Description: Interactive high-level object-oriented language (standard library, version @VER@)
  Python is a high-level, interactive, object-oriented language. Its @VER@ version
  includes an extensive class library with lots of goodies for
@@ -222,6 +224,8 @@ Architecture: any
 Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: lib@PVER@-stdlib (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Breaks: python3-gdbm-dbg (<< 3.9.9-1~)
+Replaces: python3-gdbm-dbg (<< 3.9.9-1~)
 Description: Debug Build of the Python Interpreter (version @VER@)
  The package holds two things:
  .

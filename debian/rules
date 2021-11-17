@@ -81,15 +81,15 @@ derivative      := $(shell \
 	elif dpkg-vendor --derives-from Debian; then echo Debian; \
 	else echo Unknown; fi)
 
-# FIXME: add bullseye when uploading to unstable, after bullseye is released
-ifneq (,$(filter $(distrelase), jessie stretch buster precise trusty xenial bionic focal groovy hirsute))
+# FIXME: remove sid when uploading to unstable, after bookworm is released
+#ifneq (,$(filter $(distrelase), jessie stretch buster bullseye bookworm sid precise trusty xenial bionic focal groovy hirsute))
   with_dbmmodule = yes
   bd_dbm = libdb-dev
   dbmliborder = bdb:gdbm
-else
-  bd_dbm = libgdbm-compat-dev
-  dbmliborder = gdbm:bdb
-endif
+#else
+#  bd_dbm = libgdbm-compat-dev
+#  dbmliborder = gdbm:bdb
+#endif
 
 VER=3.10
 SVER=3.10.0

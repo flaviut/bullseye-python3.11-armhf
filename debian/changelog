@@ -1,3 +1,9 @@
+python3.10 (3.10.0-5) unstable; urgency=medium
+
+  * Build again the _dbm extension using libdb-dev.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 17 Nov 2021 07:49:13 +0100
+
 python3.10 (3.10.0-4) unstable; urgency=medium
 
   * Revert the backport for issue #45235 (argparse does not preserve
