@@ -1,3 +1,9 @@
+python3.10 (3.10.0-6) UNRELEASED; urgency=medium
+
+  * Depend on media-types instead of mime-support. Closes: #1000366.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 29 Nov 2021 09:51:50 +0100
+
 python3.10 (3.10.0-5) unstable; urgency=medium
 
   * Build again the _dbm extension using libdb-dev.
