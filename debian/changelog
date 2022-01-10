@@ -1,8 +1,16 @@
-python3.10 (3.10.0-6) UNRELEASED; urgency=medium
+python3.10 (3.10.1-2) unstable; urgency=medium
 
+  * Run the module-install-local test with allow-stderr. Closes: #1001722.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 17 Dec 2021 00:04:04 +0100
+
+python3.10 (3.10.1-1) unstable; urgency=medium
+
+  * Python 3.10.1 release.
   * Depend on media-types instead of mime-support. Closes: #1000366.
+  * Update symbols files.
 
- -- Matthias Klose <doko@debian.org>  Mon, 29 Nov 2021 09:51:50 +0100
+ -- Matthias Klose <doko@debian.org>  Tue, 07 Dec 2021 14:27:28 +0100
 
 python3.10 (3.10.0-5) unstable; urgency=medium
 

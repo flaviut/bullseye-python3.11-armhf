@@ -1197,6 +1197,7 @@
  _PyErr_NoMemory@Base @SVER@
  _PyErr_NormalizeException@Base @SVER@
  _PyErr_Print@Base @SVER@
+ _PyErr_ProgramDecodedTextObject@Base @SVER@
  _PyErr_Restore@Base @SVER@
  _PyErr_SetKeyError@Base @SVER@
  _PyErr_SetNone@Base @SVER@
