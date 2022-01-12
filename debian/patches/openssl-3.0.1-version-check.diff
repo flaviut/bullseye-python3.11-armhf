@@ -16,19 +16,6 @@ Co-authored-by: Christian Heimes <christian@python.org>
  4 files changed, 8 insertions(+), 3 deletions(-)
  create mode 100644 Misc/NEWS.d/next/Tests/2021-12-17-14-46-19.bpo-46114.9iyZ_9.rst
 
-diff --git a/.github/workflows/build.yml b/.github/workflows/build.yml
-index c91fcc6d05fdb..b85cf17df33d8 100644
---- a/.github/workflows/build.yml
-+++ b/.github/workflows/build.yml
-@@ -225,7 +225,7 @@ jobs:
-     strategy:
-       fail-fast: false
-       matrix:
--        openssl_ver: [1.1.1l, 3.0.0]
-+        openssl_ver: [1.1.1l, 3.0.1]
-     env:
-       OPENSSL_VER: ${{ matrix.openssl_ver }}
-       MULTISSL_DIR: ${{ github.workspace }}/multissl
 diff --git a/Lib/test/test_ssl.py b/Lib/test/test_ssl.py
 index a485f7d4c3c0c..873db6403d1a0 100644
 --- a/Lib/test/test_ssl.py
@@ -46,13 +33,6 @@ index a485f7d4c3c0c..873db6403d1a0 100644
          self.assertTrue(
              s.startswith((openssl_ver, libressl_ver)),
              (s, t, hex(n))
-diff --git a/Misc/NEWS.d/next/Tests/2021-12-17-14-46-19.bpo-46114.9iyZ_9.rst b/Misc/NEWS.d/next/Tests/2021-12-17-14-46-19.bpo-46114.9iyZ_9.rst
-new file mode 100644
-index 0000000000000..6878cea032387
---- /dev/null
-+++ b/Misc/NEWS.d/next/Tests/2021-12-17-14-46-19.bpo-46114.9iyZ_9.rst
-@@ -0,0 +1 @@
-+Fix test case for OpenSSL 3.0.1 version. OpenSSL 3.0 uses ``0xMNN00PP0L``.
 diff --git a/Tools/ssl/multissltests.py b/Tools/ssl/multissltests.py
 index ba2663e9a399b..8fe5b5d0c2629 100755
 --- a/Tools/ssl/multissltests.py
