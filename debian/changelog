@@ -1,3 +1,9 @@
+python3.10 (3.10.1-5) unstable; urgency=medium
+
+  * Allow stderr in the module-install-venv autopkg test.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 12 Jan 2022 16:42:55 +0100
+
 python3.10 (3.10.1-4) unstable; urgency=medium
 
   * Also apply the openssl-3 patch.
