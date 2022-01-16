@@ -6,7 +6,7 @@ Forwarded: not-needed
 
 --- a/Lib/ensurepip/__init__.py
 +++ b/Lib/ensurepip/__init__.py
-@@ -8,6 +8,34 @@ import tempfile
+@@ -8,6 +8,34 @@
  from importlib import resources
  
  
@@ -40,8 +40,8 @@ Forwarded: not-needed
 +
  
  __all__ = ["version", "bootstrap"]
- _PACKAGE_NAMES = ('setuptools', 'pip', 'pkg_resources')
-@@ -138,6 +166,11 @@ def _bootstrap(*, root=None, upgrade=Fal
+ _PACKAGE_NAMES = ('setuptools', 'pip')
+@@ -137,6 +165,11 @@
  
      Note that calling this function will alter both sys.path and os.environ.
      """
@@ -55,7 +55,7 @@ Forwarded: not-needed
  
 --- a/Lib/venv/__init__.py
 +++ b/Lib/venv/__init__.py
-@@ -309,7 +309,31 @@ class EnvBuilder:
+@@ -309,7 +309,31 @@
          # intended for the global Python environment
          cmd = [context.env_exec_cmd, '-Im', 'ensurepip', '--upgrade',
                                                           '--default-pip']
