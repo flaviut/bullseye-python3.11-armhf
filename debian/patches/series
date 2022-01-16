@@ -37,4 +37,3 @@ hurd_kfreebsd_thread_native_id.diff
 sphinx3.diff
 destshared-location.diff
 fix-py_compile.diff
-openssl-3.0.1-version-check.diff
