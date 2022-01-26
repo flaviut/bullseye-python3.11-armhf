@@ -1,6 +1,6 @@
 python3.10 (3.10.2-1) unstable; urgency=medium
 
-  * Python 3.10.1 release.
+  * Python 3.10.2 release.
 
   [ Stefano Rivera ]
   * Migrate to individual wheel packages. Drop ensurepip-pkg-resources.diff,
