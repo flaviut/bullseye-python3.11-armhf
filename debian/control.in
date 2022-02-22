@@ -5,7 +5,7 @@ Maintainer: Matthias Klose <doko@debian.org>
 Build-Depends: debhelper (>= 11), @bd_dpkgdev@
   quilt, autoconf,
   lsb-release, sharutils,
-  libeditreadline-dev | libreadline-dev, libncursesw5-dev (>= 5.3), @bd_gcc@
+  libreadline-dev | libeditreadline-dev, libncursesw5-dev (>= 5.3), @bd_gcc@
   zlib1g-dev, libbz2-dev, liblzma-dev,
   libgdbm-dev, @bd_dbm@,
   tk-dev, blt-dev (>= 2.4z), libssl-dev,
