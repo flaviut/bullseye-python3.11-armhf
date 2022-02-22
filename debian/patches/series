@@ -38,3 +38,4 @@ sphinx3.diff
 destshared-location.diff
 fix-py_compile.diff
 issue46811.diff
+reproducible-pyc.diff
