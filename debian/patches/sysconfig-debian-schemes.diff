@@ -1,19 +1,6 @@
-Description: Add debian's sysconfig install schemes
- Add schemes 'deb_system' and 'posix_local', make the latter the default.
- deb_system is used by Debian packaged python modules, it is manually selected
- during the package build.
- posix_local is used by sysadmins to install their own modules in /usr/local,
- it is the default layout for Debian's python.
- When inside a virtualenv, we make posix_prefix the default scheme, instead,
- which is simpler and more standard outside Debian.
-
-Forwarded: not-needed
-
-Index: b/Lib/sysconfig.py
-===================================================================
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
-@@ -31,6 +31,30 @@ _INSTALL_SCHEMES = {
+@@ -36,6 +36,30 @@
          'scripts': '{base}/bin',
          'data': '{base}',
          },
@@ -44,34 +31,38 @@ Index: b/Lib/sysconfig.py
      'posix_home': {
          'stdlib': '{installed_base}/lib/python',
          'platstdlib': '{base}/lib/python',
-@@ -136,7 +160,7 @@ def is_python_build(check_home=False):
+@@ -183,7 +207,7 @@
  _PYTHON_BUILD = is_python_build(True)
  
  if _PYTHON_BUILD:
 -    for scheme in ('posix_prefix', 'posix_home'):
 +    for scheme in ('posix_prefix', 'posix_home', 'posix_local', 'deb_system'):
-         _INSTALL_SCHEMES[scheme]['include'] = '{srcdir}/Include'
-         _INSTALL_SCHEMES[scheme]['platinclude'] = '{projectbase}/.'
- 
-@@ -174,7 +198,16 @@ def _expand_vars(scheme, vars):
- def _get_default_scheme():
-     if os.name == 'posix':
-         # the default scheme for posix is posix_prefix
--        return 'posix_prefix'
-+        if 'real_prefix' in sys.__dict__ or 'VIRTUAL_ENV' in os.environ:
-+            # virtual environments
-+            return 'posix_prefix'
+         # On POSIX-y platforms, Python will:
+         # - Build from .h files in 'headers' (which is only added to the
+         #   scheme when building CPython)
+@@ -237,8 +261,20 @@
+             'home': 'posix_home',
+             'user': 'osx_framework_user',
+         }
++
++    if 'real_prefix' in sys.__dict__ or 'VIRTUAL_ENV' in os.environ:
++        # virtual environments
++        prefix_scheme = 'posix_prefix'
++    else:
++        # default to /usr for package builds, /usr/local otherwise
++        deb_build = os.environ.get('DEB_PYTHON_INSTALL_LAYOUT', 'posix_local')
++        if deb_build in ('deb', 'deb_system'):
++            prefix_scheme = 'deb_system'
 +        else:
-+            # default to /usr for package builds, /usr/local otherwise
-+            deb_build = os.environ.get('DEB_PYTHON_INSTALL_LAYOUT', 'posix_local')
-+            if deb_build in ('deb', 'deb_system'):
-+                return 'deb_system'
-+            else:
-+                return 'posix_local'
-     return os.name
- 
- 
-@@ -472,7 +505,7 @@ def get_config_h_filename():
++            prefix_scheme = 'posix_local'
++
+     return {
+-        'prefix': 'posix_prefix',
++        'prefix': prefix_scheme,
+         'home': 'posix_home',
+         'user': 'posix_user',
+     }
+@@ -538,7 +574,7 @@
          else:
              inc_dir = _sys_home or _PROJECT_BASE
      else:
@@ -80,18 +71,14 @@ Index: b/Lib/sysconfig.py
      return os.path.join(inc_dir, 'pyconfig.h')
  
  
-Index: b/Lib/test/test_sysconfig.py
-===================================================================
 --- a/Lib/test/test_sysconfig.py
 +++ b/Lib/test/test_sysconfig.py
-@@ -227,8 +227,8 @@ class TestSysConfig(unittest.TestCase):
+@@ -263,7 +263,7 @@
          self.assertTrue(os.path.isfile(config_h), config_h)
  
      def test_get_scheme_names(self):
--        wanted = ('nt', 'nt_user', 'osx_framework_user',
--                  'posix_home', 'posix_prefix', 'posix_user')
-+        wanted = ('deb_system', 'nt', 'nt_user', 'osx_framework_user',
-+                  'posix_home', 'posix_local', 'posix_prefix', 'posix_user')
-         self.assertEqual(get_scheme_names(), wanted)
- 
-     @skip_unless_symlink
+-        wanted = ['nt', 'posix_home', 'posix_prefix']
++        wanted = ['deb_system', 'nt', 'posix_home', 'posix_local', 'posix_prefix']
+         if HAS_USER_BASE:
+             wanted.extend(['nt_user', 'osx_framework_user', 'posix_user'])
+         self.assertEqual(get_scheme_names(), tuple(sorted(wanted)))

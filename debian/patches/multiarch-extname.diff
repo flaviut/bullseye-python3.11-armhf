@@ -74,7 +74,7 @@ Forwarded: not-needed
          # enable custom installation, known values: deb
          self.install_layout = None
 +        self.multiarch = None
-         
+ 
          self.compile = None
          self.optimize = None
 @@ -484,6 +485,8 @@ class install(Command):
