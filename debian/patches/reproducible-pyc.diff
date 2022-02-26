@@ -10,11 +10,16 @@ Subject: [PATCH] Serialize frozenset elements deterministically
  3 files changed, 59 insertions(+)
  create mode 100644 Misc/NEWS.d/next/Library/2021-08-23-21-39-59.bpo-37596.ojRcwB.rst
 
-diff --git a/Lib/test/test_marshal.py b/Lib/test/test_marshal.py
-index 7bcf8e8..8252be3 100644
 --- a/Lib/test/test_marshal.py
 +++ b/Lib/test/test_marshal.py
-@@ -318,6 +318,31 @@ class BugsTestCase(unittest.TestCase):
+@@ -1,5 +1,6 @@
+ from test import support
+ from test.support import os_helper
++from test.support.script_helper import assert_python_ok
+ import array
+ import io
+ import marshal
+@@ -318,6 +319,31 @@ class BugsTestCase(unittest.TestCase):
          for i in range(len(data)):
              self.assertRaises(EOFError, marshal.loads, data[0: i])
  
@@ -46,19 +51,9 @@ index 7bcf8e8..8252be3 100644
  LARGE_SIZE = 2**31
  pointer_size = 8 if sys.maxsize > 0xFFFFFFFF else 4
  
-diff --git a/Misc/NEWS.d/next/Library/2021-08-23-21-39-59.bpo-37596.ojRcwB.rst b/Misc/NEWS.d/next/Library/2021-08-23-21-39-59.bpo-37596.ojRcwB.rst
-new file mode 100644
-index 0000000..81fdfeb
---- /dev/null
-+++ b/Misc/NEWS.d/next/Library/2021-08-23-21-39-59.bpo-37596.ojRcwB.rst
-@@ -0,0 +1,2 @@
-+Ensure that :class:`set` and :class:`frozenset` objects are always
-+:mod:`marshalled <marshal>` reproducibly.
-diff --git a/Python/marshal.c b/Python/marshal.c
-index 4125240..6bd4537 100644
 --- a/Python/marshal.c
 +++ b/Python/marshal.c
-@@ -502,9 +502,41 @@ w_complex_object(PyObject *v, char flag, WFILE *p)
+@@ -502,9 +502,41 @@ w_complex_object(PyObject *v, char flag,
              W_TYPE(TYPE_SET, p);
          n = PySet_GET_SIZE(v);
          W_SIZE(n, p);
@@ -100,6 +95,3 @@ index 4125240..6bd4537 100644
      }
      else if (PyCode_Check(v)) {
          PyCodeObject *co = (PyCodeObject *)v;
--- 
-2.33.0
-

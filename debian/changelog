@@ -1,3 +1,9 @@
+python3.10 (3.10.2-5) unstable; urgency=medium
+
+  * Fix the marshal test after applying the fix for #1004558.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 26 Feb 2022 09:21:15 +0100
+
 python3.10 (3.10.2-4) unstable; urgency=medium
 
   * Provide a _distutils_system_mod module to customize distutils behaviour
