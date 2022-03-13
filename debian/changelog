@@ -1,9 +1,10 @@
-python3.10 (3.10.2-6) UNRELEASED; urgency=medium
+python3.10 (3.10.2-6) unstable; urgency=medium
 
   [ Matthias Klose ]
   * Update to the 3.10 branch 2022-03-13.
   * Add the test_multiprocessing_fork test to the failing autopkg tests,
     and run them with a 2h timeout.
+  * Don't run the test_multiprocessing tests in the profile run.
 
   [ Stefano Rivera ]
   * Re-add accidentally dropped /local/ to paths in distutils unix_local
@@ -17,7 +18,7 @@ python3.10 (3.10.2-6) UNRELEASED; urgency=medium
     distutils.command.install. Closes: #1006707, LP: #1962791.
   * Run the test suite with a 1hr timeout per module. Closes: #1000188.
 
- -- Matthias Klose <doko@debian.org>  Sun, 13 Mar 2022 06:33:18 +0100
+ -- Matthias Klose <doko@debian.org>  Sun, 13 Mar 2022 07:20:35 +0100
 
 python3.10 (3.10.2-5) unstable; urgency=medium
 
