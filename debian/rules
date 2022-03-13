@@ -519,7 +519,7 @@ TEST_RESOURCES = all
 ifeq ($(on_buildd),yes)
   TEST_RESOURCES := $(TEST_RESOURCES),-network,-urlfetch
 endif
-TESTOPTS = -j 1 -w -u$(TEST_RESOURCES)
+TESTOPTS = -j 1 -w -u$(TEST_RESOURCES) --timeout=3600
 TEST_EXCLUDES =
 TEST_EXCLUDES += test_ensurepip test_venv
 ifeq ($(on_buildd),yes)

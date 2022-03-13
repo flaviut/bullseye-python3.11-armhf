@@ -68,13 +68,13 @@ Forwarded: not-needed
 +INSTALL_SCHEMES['unix_local'] = {
 +    'stdlib': '{installed_base}/{platlibdir}/python{py_version_short}',
 +    'platstdlib': '{platbase}/{platlibdir}/python{py_version_short}',
-+    'purelib': '{base}/lib/python{py_version_short}/dist-packages',
-+    'platlib': '{platbase}/{platlibdir}/python{py_version_short}/dist-packages',
-+    'include': '{installed_base}/include/python{py_version_short}{abiflags}',
-+    'headers': '{installed_base}/include/python{py_version_short}{abiflags}',
-+    'platinclude': '{installed_platbase}/include/python{py_version_short}{abiflags}',
-+    'scripts': '{base}/bin',
-+    'data': '{base}',
++    'purelib': '{base}/local/lib/python{py_version_short}/dist-packages',
++    'platlib': '{platbase}/local/{platlibdir}/python{py_version_short}/dist-packages',
++    'include': '{installed_base}/local/include/python{py_version_short}{abiflags}',
++    'headers': '{installed_base}/local/include/python{py_version_short}{abiflags}',
++    'platinclude': '{installed_platbase}/local/include/python{py_version_short}{abiflags}',
++    'scripts': '{base}/local/bin',
++    'data': '{base}/local',
 +}
 +INSTALL_SCHEMES['deb_system'] = {
 +    'stdlib': '{installed_base}/{platlibdir}/python{py_version_short}',
@@ -290,7 +290,7 @@ Forwarded: not-needed
              if docloc.startswith(("http://", "https://")):
 --- /dev/null
 +++ b/Lib/_distutils_system_mod.py
-@@ -0,0 +1,136 @@
+@@ -0,0 +1,157 @@
 +"""
 +Apply Debian-specific patches to distutils commands.
 +
@@ -326,29 +326,33 @@ Forwarded: not-needed
 +        self.prefix_option = None
 +        self.install_layout = None
 +
++    def select_scheme(self, name):
++        if name == "posix_prefix":
++            if self.install_layout:
++                if self.install_layout.lower() in ['deb']:
++                    name = "deb_system"
++                elif self.install_layout.lower() in ['unix']:
++                    name = "posix_prefix"
++                else:
++                    raise DistutilsOptionError(
++                        "unknown value for --install-layout")
++            elif ((self.prefix_option and
++                   os.path.normpath(self.prefix) != '/usr/local')
++                  or sys.base_prefix != sys.prefix
++                  or 'PYTHONUSERBASE' in os.environ
++                  or 'VIRTUAL_ENV' in os.environ
++                  or 'real_prefix' in sys.__dict__):
++                name = "posix_prefix"
++            else:
++                if os.path.normpath(self.prefix) == '/usr/local':
++                    self.prefix = self.exec_prefix = '/usr'
++                    self.install_base = self.install_platbase = '/usr'
++                name = "posix_local"
++        super().select_scheme(name)
++
 +    def finalize_unix(self):
 +        self.prefix_option = self.prefix
 +        super().finalize_unix()
-+        if self.install_layout:
-+            if self.install_layout.lower() in ['deb']:
-+                self.select_scheme("deb_system")
-+            elif self.install_layout.lower() in ['unix']:
-+                self.select_scheme("posix_prefix")
-+            else:
-+                raise DistutilsOptionError(
-+                    "unknown value for --install-layout")
-+        elif ((self.prefix_option and
-+               os.path.normpath(self.prefix) != '/usr/local')
-+              or sys.base_prefix != sys.prefix
-+              or 'PYTHONUSERBASE' in os.environ
-+              or 'VIRTUAL_ENV' in os.environ
-+              or 'real_prefix' in sys.__dict__):
-+            self.select_scheme("posix_prefix")
-+        else:
-+            if os.path.normpath(self.prefix) == '/usr/local':
-+                self.prefix = self.exec_prefix = '/usr'
-+                self.install_base = self.install_platbase = '/usr'
-+            self.select_scheme("posix_local")
 +
 +
 +class install_egg_info(orig_install_egg_info.install_egg_info):
@@ -407,21 +411,38 @@ Forwarded: not-needed
 +
 +def _inject_headers(name, scheme):
 +    """
-+    Given a scheme name and the resolved scheme,
-+    if the scheme does not include headers, resolve
-+    the fallback scheme for the name and use headers
-+    from it. pypa/distutils#88
++    Default headers to the include path in sysconfig.
++    See: pypa/distutils#88
 +    """
-+    # Bypass the preferred scheme, which may not
-+    # have defined headers.
-+    fallback = orig_install._load_scheme('posix_prefix')
-+    scheme.setdefault('headers', fallback['headers'])
++    if 'headers' not in scheme:
++        if 'include' in scheme:
++            scheme['headers'] = scheme['include']
++        else:
++            scheme['headers'] = orig_install._load_schemes()['posix_prefix']['headers']
 +    return scheme
++
++
++def load_schemes_wrapper(_load_schemes):
++    """
++    Implement the _inject_headers modification, above, but before
++    _inject_headers() was introduced, upstream. So, slower and messier.
++    """
++    def wrapped_load_schemes():
++        schemes = _load_schemes()
++        for name, scheme in schemes.items():
++            _inject_headers(name, scheme)
++        return schemes
++    return wrapped_load_schemes
 +
 +
 +def apply_customizations():
 +    orig_install.install = install
-+    orig_install._inject_headers = _inject_headers
++    if hasattr(orig_install, '_inject_headers'):
++        # setuptools-bundled distutils >= 60.0.5
++        orig_install._inject_headers = _inject_headers
++    else:
++        # Py 3.10 and older
++        orig_install._load_schemes = load_schemes_wrapper(orig_install._load_schemes)
 +    orig_install_egg_info.install_egg_info = install_egg_info
 +    distutils.sysconfig._posix_lib = _posix_lib
 +
