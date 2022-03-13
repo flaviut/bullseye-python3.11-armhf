@@ -58,3 +58,6 @@ TESTEXCLUSIONS="$TESTEXCLUSIONS test_ttk_guionly"
 
 # FIXME: test_ttk_textonly started failing in 3.9.1 rc1
 TESTEXCLUSIONS="$TESTEXCLUSIONS test_ttk_textonly"
+
+# FIXME: test_multiprocessing_fork times out sometimes. See #1000188
+TESTEXCLUSIONS="$TESTEXCLUSIONS test_multiprocessing_fork"

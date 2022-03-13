@@ -2,6 +2,8 @@ python3.10 (3.10.2-6) UNRELEASED; urgency=medium
 
   [ Matthias Klose ]
   * Update to the 3.10 branch 2022-03-13.
+  * Add the test_multiprocessing_fork test to the failing autopkg tests,
+    and run them with a 2h timeout.
 
   [ Stefano Rivera ]
   * Re-add accidentally dropped /local/ to paths in distutils unix_local

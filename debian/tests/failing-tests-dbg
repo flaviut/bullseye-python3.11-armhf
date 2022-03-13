@@ -33,6 +33,8 @@ TESTEXCLUSIONS=""
 
 . $debian_dir/tests/test-common.sh
 
+TESTOPTS="$TESTOPTS --timeout=7200"
+
 if [ "$su_user" = nobody ]; then
   log=/dev/null
 else

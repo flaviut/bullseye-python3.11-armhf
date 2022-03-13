@@ -31,6 +31,8 @@ debian_dir=$(dirname $(dirname $0))
 TESTPYTHON="python3.10 -W default -bb -E -R -m test"
 TESTEXCLUSIONS=""
 
+TESTOPTS="$TESTOPTS --timeout=7200"
+
 . $debian_dir/tests/test-common.sh
 
 if [ "$su_user" = nobody ]; then
