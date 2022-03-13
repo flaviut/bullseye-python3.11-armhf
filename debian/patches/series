@@ -1,4 +1,4 @@
-#git-updates.diff
+git-updates.diff
 deb-setup.diff
 deb-locations.diff
 distutils-install-layout.diff
@@ -37,5 +37,4 @@ hurd_kfreebsd_thread_native_id.diff
 sphinx3.diff
 destshared-location.diff
 fix-py_compile.diff
-issue46811.diff
 reproducible-pyc.diff
