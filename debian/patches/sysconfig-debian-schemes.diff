@@ -40,15 +40,12 @@
          # On POSIX-y platforms, Python will:
          # - Build from .h files in 'headers' (which is only added to the
          #   scheme when building CPython)
-@@ -237,8 +261,23 @@
+@@ -237,8 +261,20 @@
              'home': 'posix_home',
              'user': 'osx_framework_user',
          }
 +
-+    if (sys.base_prefix != sys.prefix
-+            or 'PYTHONUSERBASE' in os.environ
-+            or 'VIRTUAL_ENV' in os.environ
-+            or 'real_prefix' in sys.__dict__):
++    if sys.base_prefix != sys.prefix or hasattr(sys, "real_prefix"):
 +        # virtual environments
 +        prefix_scheme = 'posix_prefix'
 +    else:
@@ -65,7 +62,7 @@
          'home': 'posix_home',
          'user': 'posix_user',
      }
-@@ -538,7 +577,7 @@
+@@ -538,7 +574,7 @@
          else:
              inc_dir = _sys_home or _PROJECT_BASE
      else:

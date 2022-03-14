@@ -1,3 +1,19 @@
+python3.10 (3.10.2-7) unstable; urgency=medium
+
+  [ Stefano Rivera ]
+  * Use the same is_virtual_environment() proposed in PEP 668 across the site,
+    sysconfig, and distutils modules. Stop checking for PYTHONUSERBASE or
+    VIRTUAL_ENV environment variables.
+  * Correct assertion descriptions in module-install-* autopkgtests.
+  * Extend module-install-* autopkgtests to catch the issues fixed in -6:
+    - Check the directory that the modules are installed to.
+    - Check editable installs.
+    - Check pip-driven PEP-517 installs.
+    - Check that virtualenvs are seeded with the correct layout.
+  * Re-enable module-install-virtualenv.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 14 Mar 2022 06:18:40 +0100
+
 python3.10 (3.10.2-6) unstable; urgency=medium
 
   [ Matthias Klose ]

@@ -14,7 +14,7 @@ Forwarded: not-needed
 
 --- a/Lib/distutils/command/install_egg_info.py
 +++ b/Lib/distutils/command/install_egg_info.py
-@@ -14,18 +14,38 @@ class install_egg_info(Command):
+@@ -14,18 +14,38 @@
      description = "Install package's PKG-INFO metadata as an .egg-info file"
      user_options = [
          ('install-dir=', 'd', "directory to install to"),
@@ -60,7 +60,16 @@ Forwarded: not-needed
  
 --- a/Lib/distutils/command/install.py
 +++ b/Lib/distutils/command/install.py
-@@ -35,6 +35,30 @@ SCHEME_KEYS = ('purelib', 'platlib', 'he
+@@ -10,7 +10,7 @@
+ from distutils import log
+ from distutils.core import Command
+ from distutils.debug import DEBUG
+-from distutils.sysconfig import get_config_vars
++from distutils.sysconfig import get_config_vars, is_virtual_environment
+ from distutils.errors import DistutilsPlatformError
+ from distutils.file_util import write_file
+ from distutils.util import convert_path, subst_vars, change_root
+@@ -35,6 +35,30 @@
  # of this information should switch to using sysconfig directly.
  INSTALL_SCHEMES = {"unix_prefix": {}, "unix_home": {}, "nt": {}}
  
@@ -91,7 +100,7 @@ Forwarded: not-needed
  # Copy from sysconfig._INSTALL_SCHEMES
  for key in SCHEME_KEYS:
      for distutils_scheme_name, sys_scheme_name in (
-@@ -148,6 +172,9 @@ class install(Command):
+@@ -148,6 +172,9 @@
  
          ('record=', None,
           "filename in which to record list of installed files"),
@@ -101,7 +110,7 @@ Forwarded: not-needed
          ]
  
      boolean_options = ['compile', 'force', 'skip-build']
-@@ -168,6 +195,7 @@ class install(Command):
+@@ -168,6 +195,7 @@
          self.exec_prefix = None
          self.home = None
          self.user = 0
@@ -109,7 +118,7 @@ Forwarded: not-needed
  
          # These select only the installation base; it's up to the user to
          # specify the installation scheme (currently, that means supplying
-@@ -190,6 +218,9 @@ class install(Command):
+@@ -190,6 +218,9 @@
              self.install_userbase = USER_BASE
              self.install_usersite = USER_SITE
  
@@ -119,7 +128,7 @@ Forwarded: not-needed
          self.compile = None
          self.optimize = None
  
-@@ -436,6 +467,7 @@ class install(Command):
+@@ -436,6 +467,7 @@
              self.install_base = self.install_platbase = self.home
              self.select_scheme("unix_home")
          else:
@@ -127,7 +136,7 @@ Forwarded: not-needed
              if self.prefix is None:
                  if self.exec_prefix is not None:
                      raise DistutilsOptionError(
-@@ -450,7 +482,26 @@ class install(Command):
+@@ -450,7 +482,23 @@
  
              self.install_base = self.prefix
              self.install_platbase = self.exec_prefix
@@ -142,10 +151,7 @@ Forwarded: not-needed
 +                        "unknown value for --install-layout")
 +            elif ((self.prefix_option and
 +                   os.path.normpath(self.prefix) != '/usr/local')
-+                  or sys.base_prefix != sys.prefix
-+                  or 'PYTHONUSERBASE' in os.environ
-+                  or 'VIRTUAL_ENV' in os.environ
-+                  or 'real_prefix' in sys.__dict__):
++                  or is_virtual_environment()):
 +                self.select_scheme("unix_prefix")
 +            else:
 +                if os.path.normpath(self.prefix) == '/usr/local':
@@ -157,7 +163,18 @@ Forwarded: not-needed
          """Finalizes options for non-posix platforms"""
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
-@@ -320,6 +320,7 @@ def get_python_lib(plat_specific=0, stan
+@@ -266,6 +266,10 @@
+         compiler.shared_lib_extension = shlib_suffix
+ 
+ 
++def is_virtual_environment():
++    return sys.base_prefix != sys.prefix or hasattr(sys, "real_prefix")
++
++
+ def get_python_inc(plat_specific=0, prefix=None):
+     """Return the directory containing installed Python header files.
+ 
+@@ -320,6 +324,7 @@
      If 'prefix' is supplied, use it instead of sys.base_prefix or
      sys.base_exec_prefix -- i.e., ignore 'plat_specific'.
      """
@@ -165,15 +182,11 @@ Forwarded: not-needed
      if prefix is None:
          if standard_lib:
              prefix = plat_specific and BASE_EXEC_PREFIX or BASE_PREFIX
-@@ -338,6 +339,12 @@ def get_python_lib(plat_specific=0, stan
+@@ -338,6 +343,8 @@
                                   "python" + get_python_version())
          if standard_lib:
              return libpython
-+        elif (is_default_prefix and
-+              'PYTHONUSERBASE' not in os.environ and
-+              'VIRTUAL_ENV' not in os.environ and
-+              'real_prefix' not in sys.__dict__ and
-+              sys.prefix == sys.base_prefix):
++        elif is_default_prefix and not is_virtual_environment():
 +            return os.path.join(prefix, "lib", "python3", "dist-packages")
          else:
              return os.path.join(libpython, "site-packages")
@@ -200,11 +213,20 @@ Forwarded: not-needed
  If a file named "pyvenv.cfg" exists one directory above sys.executable,
  sys.prefix and sys.exec_prefix are set to that directory and
  it is also checked for site-packages (sys.base_prefix and
-@@ -366,10 +372,21 @@ def getsitepackages(prefixes=None):
+@@ -356,6 +362,8 @@
+     if prefixes is None:
+         prefixes = PREFIXES
+ 
++    is_virtual_environment = sys.base_prefix != sys.prefix or hasattr(sys, "real_prefix")
++
+     for prefix in prefixes:
+         if not prefix or prefix in seen:
+             continue
+@@ -366,10 +374,21 @@
              libdirs.append("lib")
  
          if os.sep == '/':
-+            if 'VIRTUAL_ENV' in os.environ or sys.base_prefix != sys.prefix:
++            if is_virtual_environment:
 +                sitepackages.append(os.path.join(prefix, "lib",
 +                                                 "python%d.%d" % sys.version_info[:2],
 +                                                 "site-packages"))
@@ -225,7 +247,7 @@ Forwarded: not-needed
              sitepackages.append(prefix)
 --- a/Lib/test/test_site.py
 +++ b/Lib/test/test_site.py
-@@ -284,16 +284,16 @@ class HelperFunctionsTests(unittest.Test
+@@ -284,16 +284,16 @@
          if os.sep == '/':
              # OS X, Linux, FreeBSD, etc
              if sys.platlibdir != "lib":
@@ -249,7 +271,7 @@ Forwarded: not-needed
              # other platforms
 --- a/Lib/distutils/tests/test_bdist_dumb.py
 +++ b/Lib/distutils/tests/test_bdist_dumb.py
-@@ -85,7 +85,7 @@ class BuildDumbTestCase(support.TempdirM
+@@ -85,7 +85,7 @@
              fp.close()
  
          contents = sorted(filter(None, map(os.path.basename, contents)))
@@ -260,7 +282,7 @@ Forwarded: not-needed
          self.assertEqual(contents, sorted(wanted))
 --- a/Lib/distutils/tests/test_install.py
 +++ b/Lib/distutils/tests/test_install.py
-@@ -205,7 +205,7 @@ class InstallTestCase(support.TempdirMan
+@@ -205,7 +205,7 @@
          found = [os.path.basename(line) for line in content.splitlines()]
          expected = ['hello.py', 'hello.%s.pyc' % sys.implementation.cache_tag,
                      'sayhi',
@@ -269,7 +291,7 @@ Forwarded: not-needed
          self.assertEqual(found, expected)
  
      def test_record_extensions(self):
-@@ -238,7 +238,7 @@ class InstallTestCase(support.TempdirMan
+@@ -238,7 +238,7 @@
  
          found = [os.path.basename(line) for line in content.splitlines()]
          expected = [_make_ext_name('xx'),
@@ -280,7 +302,7 @@ Forwarded: not-needed
      def test_debug_mode(self):
 --- a/Lib/pydoc.py
 +++ b/Lib/pydoc.py
-@@ -505,6 +505,7 @@ class Doc:
+@@ -505,6 +505,7 @@
                                   'marshal', 'posix', 'signal', 'sys',
                                   '_thread', 'zipimport') or
               (file.startswith(basedir) and
@@ -290,7 +312,7 @@ Forwarded: not-needed
              if docloc.startswith(("http://", "https://")):
 --- /dev/null
 +++ b/Lib/_distutils_system_mod.py
-@@ -0,0 +1,157 @@
+@@ -0,0 +1,154 @@
 +"""
 +Apply Debian-specific patches to distutils commands.
 +
@@ -338,10 +360,7 @@ Forwarded: not-needed
 +                        "unknown value for --install-layout")
 +            elif ((self.prefix_option and
 +                   os.path.normpath(self.prefix) != '/usr/local')
-+                  or sys.base_prefix != sys.prefix
-+                  or 'PYTHONUSERBASE' in os.environ
-+                  or 'VIRTUAL_ENV' in os.environ
-+                  or 'real_prefix' in sys.__dict__):
++                  or is_virtual_environment()):
 +                name = "posix_prefix"
 +            else:
 +                if os.path.normpath(self.prefix) == '/usr/local':
@@ -395,15 +414,15 @@ Forwarded: not-needed
 +        return basename
 +
 +
++def is_virtual_environment():
++    return sys.base_prefix != sys.prefix or hasattr(sys, "real_prefix")
++
++
 +def _posix_lib(standard_lib, libpython, early_prefix, prefix):
 +    is_default_prefix = not early_prefix or os.path.normpath(early_prefix) in ('/usr', '/usr/local')
 +    if standard_lib:
 +        return libpython
-+    elif (is_default_prefix and
-+              'PYTHONUSERBASE' not in os.environ and
-+              'VIRTUAL_ENV' not in os.environ and
-+              'real_prefix' not in sys.__dict__ and
-+              sys.prefix == sys.base_prefix):
++    elif is_default_prefix and not is_virtual_environment():
 +            return os.path.join(prefix, "lib", "python3", "dist-packages")
 +    else:
 +        return os.path.join(libpython, "site-packages")

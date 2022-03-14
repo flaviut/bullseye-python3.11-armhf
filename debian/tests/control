@@ -56,16 +56,29 @@ Depends: build-essential,
 Restrictions: needs-root, allow-stderr
 
 Tests: module-install-local
-Depends: build-essential, python3.10-dev, python3-setuptools, shunit2
+Depends: build-essential,
+  python3.10-dev,
+  python3-pip,
+  python3-setuptools,
+  shunit2,
 Restrictions: needs-root, allow-stderr
 
 Tests: module-install-user
-Depends: build-essential, python3.10-dev, python3-setuptools, shunit2
+Depends: build-essential,
+  python3.10-dev,
+  python3-pip,
+  python3-setuptools,
+  shunit2
 Restrictions: allow-stderr
 
 Tests: module-install-venv
-Depends: build-essential, python3.10-dev, python3.10-venv, shunit2
+Depends: build-essential,
+  python3.10-dev,
+  python3.10-venv,
+  python3-wheel-whl,
+  shunit2
 Restrictions: allow-stderr
 
-#Tests: module-install-virtualenv
-#Depends: build-essential, python3.10-dev, shunit2, virtualenv
+Tests: module-install-virtualenv
+Depends: build-essential, python3.10-dev, shunit2, virtualenv
+Restrictions: allow-stderr
