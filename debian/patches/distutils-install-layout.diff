@@ -79,9 +79,9 @@ Forwarded: not-needed
 +    'platstdlib': '{platbase}/{platlibdir}/python{py_version_short}',
 +    'purelib': '{base}/local/lib/python{py_version_short}/dist-packages',
 +    'platlib': '{platbase}/local/{platlibdir}/python{py_version_short}/dist-packages',
-+    'include': '{installed_base}/local/include/python{py_version_short}{abiflags}',
-+    'headers': '{installed_base}/local/include/python{py_version_short}{abiflags}',
-+    'platinclude': '{installed_platbase}/local/include/python{py_version_short}{abiflags}',
++    'include': '{installed_base}/include/python{py_version_short}{abiflags}',
++    'headers': '{base}/local/include/python{py_version_short}{abiflags}',
++    'platinclude': '{installed_platbase}/include/python{py_version_short}{abiflags}',
 +    'scripts': '{base}/local/bin',
 +    'data': '{base}/local',
 +}
@@ -434,7 +434,7 @@ Forwarded: not-needed
 +    See: pypa/distutils#88
 +    """
 +    if 'headers' not in scheme:
-+        if 'include' in scheme:
++        if 'include' in scheme and name != 'posix_local':
 +            scheme['headers'] = scheme['include']
 +        else:
 +            scheme['headers'] = orig_install._load_schemes()['posix_prefix']['headers']

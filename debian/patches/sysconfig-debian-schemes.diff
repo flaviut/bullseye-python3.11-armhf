@@ -22,9 +22,9 @@
 +        'purelib': '{base}/local/lib/python{py_version_short}/dist-packages',
 +        'platlib': '{platbase}/local/lib/python{py_version_short}/dist-packages',
 +        'include':
-+            '{installed_base}/local/include/python{py_version_short}{abiflags}',
++            '{installed_base}/include/python{py_version_short}{abiflags}',
 +        'platinclude':
-+            '{installed_platbase}/local/include/python{py_version_short}{abiflags}',
++            '{installed_platbase}/include/python{py_version_short}{abiflags}',
 +        'scripts': '{base}/local/bin',
 +        'data': '{base}/local',
 +        },
