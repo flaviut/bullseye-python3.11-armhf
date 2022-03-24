@@ -3,9 +3,6 @@
 unexport LANG LC_ALL LC_CTYPE LC_COLLATE LC_TIME LC_NUMERIC LC_MESSAGES
 unexport CFLAGS CXXFLAGS LDFLAGS CPPFLAGS
 
-export DEB_BUILD_MAINT_OPTIONS=hardening=-pie
-dpkg_buildflags = DEB_BUILD_MAINT_OPTIONS=$(DEB_BUILD_MAINT_OPTIONS) dpkg-buildflags
-
 export SHELL = /bin/bash
 
 # Uncomment this to turn on verbose mode.
@@ -80,6 +77,15 @@ derivative      := $(shell \
 	if dpkg-vendor --derives-from Ubuntu; then echo Ubuntu; \
 	elif dpkg-vendor --derives-from Debian; then echo Debian; \
 	else echo Unknown; fi)
+
+dpkg_buildflags = DEB_BUILD_MAINT_OPTIONS=hardening=-pie dpkg-buildflags
+dpkg_pieflags = DEB_BUILD_MAINT_OPTIONS=hardening=-pie dpkg-buildflags
+ifeq ($(derivative),Ubuntu)
+  ifeq (,$(filter $(distrelease),trusty xenial bionic focal impish))
+    with_nopie := yes
+    dpkg_pieflags = dpkg-buildflags
+  endif
+endif
 
 # FIXME: remove sid when uploading to unstable, after bookworm is released
 #ifneq (,$(filter $(distrelase), jessie stretch buster bullseye bookworm sid precise trusty xenial bionic focal groovy hirsute))
@@ -176,6 +182,12 @@ DPKG_LDFLAGS = $(shell $(dpkg_buildflags) --get LDFLAGS)
 OPT_CFLAGS   := $(filter-out -O%,$(DPKG_CFLAGS)) # default is -O3
 DEBUG_CFLAGS := $(patsubst -O%,-Og,$(DPKG_CFLAGS))
 
+DPKG_PIE_CPPFLAGS= $(shell $(dpkg_pieflags) --get CPPFLAGS)
+DPKG_PIE_CFLAGS  := $(shell $(dpkg_pieflags) --get CFLAGS)
+DPKG_PIE_CFLAGS  := $(subst -fstack-protector-strong,-fstack-protector,$(DPKG_PIE_CFLAGS))
+DPKG_PIE_LDFLAGS = $(shell $(dpkg_pieflags) --get LDFLAGS)
+OPT_PIE_CFLAGS   := $(filter-out -O%,$(DPKG_PIE_CFLAGS)) # default is -O3
+
 ifeq ($(DEB_HOST_ARCH),ia64)
     DPKG_CPPFLAGS += -DWITH_PYMALLOC_RADIX_TREE=0
 endif
@@ -251,6 +263,7 @@ endif
 make_build_target = $(if $(filter yes, $(with_pgo)),profile-opt)
 
 buildd_static	:= $(CURDIR)/build-static
+buildd_nopie	:= $(CURDIR)/build-nopie
 buildd_shared	:= $(CURDIR)/build-shared
 buildd_debug	:= $(CURDIR)/build-debug
 buildd_shdebug	:= $(CURDIR)/build-shdebug
@@ -262,6 +275,7 @@ scriptdir	=  usr/lib/python$(VER)
 
 # package names and directories
 p_base	:= $(PVER)
+p_npie	:= $(PVER)-nopie
 p_min	:= $(PVER)-minimal
 p_lib	:= lib$(PVER)
 p_tk	:= $(PVER)-tk
@@ -282,6 +296,7 @@ p_ltst	:= lib$(PVER)-testsuite
 
 d_base	:= debian/$(p_base)
 d_min	:= debian/$(p_min)
+d_npie	:= debian/$(p_npie)
 d_lib	:= debian/$(p_lib)
 d_tk	:= debian/$(p_tk)
 d_dev	:= debian/$(p_dev)
@@ -302,7 +317,9 @@ d_ltst	:= debian/$(p_ltst)
 build-arch: stamps/stamp-build
 build-indep: stamps/stamp-build-doc
 build: build-arch
-stamps/stamp-build: stamps/stamp-build-static stamps/stamp-mincheck \
+stamps/stamp-build: stamps/stamp-build-static \
+    $(if $(filter yes, $(with_nopie)),stamps/stamp-build-nopie) \
+    stamps/stamp-mincheck \
     stamps/stamp-build-shared stamps/stamp-build-debug \
     stamps/stamp-build-shared-debug \
     stamps/stamp-check stamps/stamp-pybench
@@ -339,7 +356,7 @@ stamps/stamp-build-static: stamps/stamp-configure-static
 	dh_testdir
 	$(MAKE) $(NJOBS) -C $(buildd_static) \
 		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" \
-		CONFIGURE_LDFLAGS="$(DPKG_LDFLAGS) $(LTO_CFLAGS)" \
+		CONFIGURE_LDFLAGS="$(DPKG_PIE_LDFLAGS) $(LTO_CFLAGS)" \
 		PROFILE_TASK='$(PROFILE_TASK)' $(make_build_target)
 
 ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
@@ -352,6 +369,24 @@ ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 endif
 
 	touch stamps/stamp-build-static
+
+stamps/stamp-build-nopie: stamps/stamp-configure-nopie
+	dh_testdir
+	$(MAKE) $(NJOBS) -C $(buildd_nopie) \
+		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" \
+		CONFIGURE_LDFLAGS="$(DPKG_LDFLAGS) $(LTO_CFLAGS)" \
+		PROFILE_TASK='$(PROFILE_TASK)' $(make_build_target)
+
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	: # check that things are correctly built
+  ifneq (,$(filter $(DEB_HOST_ARCH_OS), linux))
+	cd $(buildd_nopie) && ./python -c 'from _multiprocessing import SemLock'
+  endif
+	cd $(buildd_nopie) && ./python -c 'import _decimal'
+	cd $(buildd_nopie) && ./python -c 'import math, cmath'
+endif
+
+	touch stamps/stamp-build-nopie
 
 run-profile-task:
 	$(MAKE) -C $(buildd_static) \
@@ -440,13 +475,26 @@ stamps/stamp-configure-static: stamps/stamp-patch
 	rm -rf $(buildd_static)
 	mkdir -p $(buildd_static)
 	cd $(buildd_static) && \
+	  AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(OPT_PIE_CFLAGS)" \
+	  CPPFLAGS="$(DPKG_PIE_CPPFLAGS)" LDFLAGS="$(DPKG_PIE_LDFLAGS) $(LTO_CFLAGS)" \
+	    $(config_site) \
+	    ../configure \
+		$(common_configure_args)
+
+	$(call __post_configure,$(buildd_static))
+	touch $@
+
+stamps/stamp-configure-nopie: stamps/stamp-patch
+	rm -rf $(buildd_nopie)
+	mkdir -p $(buildd_nopie)
+	cd $(buildd_nopie) && \
 	  AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(OPT_CFLAGS)" \
 	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS) $(LTO_CFLAGS)" \
 	    $(config_site) \
 	    ../configure \
 		$(common_configure_args)
 
-	$(call __post_configure,$(buildd_static))
+	$(call __post_configure,$(buildd_nopie))
 	touch $@
 
 stamps/stamp-configure-debug: stamps/stamp-patch
@@ -1358,6 +1406,12 @@ ifeq ($(with_udeb),yes)
 	cp -p debian/sitecustomize.py $(d_udeb)/etc/$(PVER)/
 	dh_link -p$(p_udeb) /etc/$(PVER)/sitecustomize.py \
 		/$(scriptdir)/sitecustomize.py
+endif
+
+ifeq ($(with_nopie),yes)
+	dh_installdirs -p$(p_npie) \
+		usr/bin
+	cp -p $(buildd_nopie)/python $(d_npie)/usr/bin/$(PVER)
 endif
 
 	for i in debian/*.overrides; do \

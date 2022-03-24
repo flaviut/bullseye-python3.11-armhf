@@ -63,6 +63,7 @@ debian/python3.10-doc
 debian/python3.10-examples
 debian/python3.10-full
 debian/python3.10-minimal
+debian/python3.10-nopie
 debian/python3.10
 debian/test_results
 debian/tmp-dbg
@@ -121,6 +122,8 @@ debian/python3.10-minimal.postinst
 debian/python3.10-minimal.postrm
 debian/python3.10-minimal.preinst
 debian/python3.10-minimal.prerm
+debian/python3.10-nopie.preinst
+debian/python3.10-nopie.postrm
 debian/python3.10.desktop
 debian/python3.10.overrides
 debian/python3.10.postinst

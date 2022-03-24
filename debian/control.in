@@ -91,6 +91,17 @@ Description: Minimal subset of the Python language (version @VER@)
  contained in this package.
 XB-Cnf-Visible-Pkgname: @PVER@
 
+#Package: @PVER@-nopie
+#Architecture: any
+#Multi-Arch: allowed
+#Priority: @MINPRIO@
+#Depends: @PVER@-minimal (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+#Description: Python interpreter linked without PIE (version @VER@)
+# This package contains the interpreter not built as position independent
+# executable. This interpreter is diverting the @PVER@ executable, and making
+# the interpreter built with PIE available as @PVER@-pie.
+#XB-Cnf-Visible-Pkgname: @PVER@
+
 Package: lib@PVER@-minimal
 Architecture: any
 Multi-Arch: same
