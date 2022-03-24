@@ -833,7 +833,7 @@ clean: control-file
 
 	$(MAKE) -C Doc clean
 	sed 's/^@/#/' Makefile.pre.in | $(MAKE) -f - srcdir=. distclean
-	rm -rf $(buildd_static) $(buildd_shared) $(buildd_debug) $(buildd_shdebug)
+	rm -rf $(buildd_static) $(buildd_shared) $(buildd_debug) $(buildd_shdebug) $(buildd_nopie)
 	find -name '*.py[co]' | xargs -r rm -f
 	rm -f Lib/lib2to3/*.pickle
 	rm -f Lib/dist-packages
