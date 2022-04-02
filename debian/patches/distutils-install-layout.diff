@@ -302,7 +302,7 @@ Forwarded: not-needed
      def test_debug_mode(self):
 --- a/Lib/pydoc.py
 +++ b/Lib/pydoc.py
-@@ -505,6 +505,7 @@
+@@ -509,6 +509,7 @@
                                   'marshal', 'posix', 'signal', 'sys',
                                   '_thread', 'zipimport') or
               (file.startswith(basedir) and
@@ -312,7 +312,7 @@ Forwarded: not-needed
              if docloc.startswith(("http://", "https://")):
 --- /dev/null
 +++ b/Lib/_distutils_system_mod.py
-@@ -0,0 +1,154 @@
+@@ -0,0 +1,180 @@
 +"""
 +Apply Debian-specific patches to distutils commands.
 +
@@ -325,6 +325,7 @@ Forwarded: not-needed
 +
 +import os
 +import sys
++import sysconfig
 +
 +import distutils.sysconfig
 +import distutils.command.install as orig_install
@@ -423,21 +424,30 @@ Forwarded: not-needed
 +    if standard_lib:
 +        return libpython
 +    elif is_default_prefix and not is_virtual_environment():
-+            return os.path.join(prefix, "lib", "python3", "dist-packages")
++        return os.path.join(prefix, "lib", "python3", "dist-packages")
 +    else:
 +        return os.path.join(libpython, "site-packages")
 +
 +
 +def _inject_headers(name, scheme):
 +    """
-+    Default headers to the include path in sysconfig.
-+    See: pypa/distutils#88
++    Given a scheme name and the resolved scheme,
++    if the scheme does not include headers, resolve
++    the fallback scheme for the name and use headers
++    from it. pypa/distutils#88
++
++    headers: module headers install location (posix_local is /local/ prefixed)
++    include: cpython headers (Python.h)
++    See also: bpo-44445
 +    """
 +    if 'headers' not in scheme:
-+        if 'include' in scheme and name != 'posix_local':
-+            scheme['headers'] = scheme['include']
++        if name == 'posix_prefix':
++            headers = scheme['include']
 +        else:
-+            scheme['headers'] = orig_install._load_schemes()['posix_prefix']['headers']
++            headers = orig_install.INSTALL_SCHEMES['posix_prefix']['headers']
++        if name == 'posix_local' and '/local/' not in headers:
++            headers = headers.replace('/include/', '/local/include/')
++        scheme['headers'] = headers
 +    return scheme
 +
 +
@@ -454,16 +464,32 @@ Forwarded: not-needed
 +    return wrapped_load_schemes
 +
 +
++def add_debian_schemes(schemes):
++    """
++    Ensure that the custom schemes we refer to above are present in schemes.
++    """
++    for name in ('posix_prefix', 'posix_local', 'deb_system'):
++        if name not in schemes:
++            scheme = sysconfig.get_paths(name, expand=False)
++            schemes[name] = _inject_headers(name, scheme)
++
++
 +def apply_customizations():
 +    orig_install.install = install
++    orig_install_egg_info.install_egg_info = install_egg_info
++    distutils.sysconfig._posix_lib = _posix_lib
++
 +    if hasattr(orig_install, '_inject_headers'):
 +        # setuptools-bundled distutils >= 60.0.5
 +        orig_install._inject_headers = _inject_headers
-+    else:
-+        # Py 3.10 and older
++    elif hasattr(orig_install, '_load_schemes'):
++        # setuptools-bundled distutils >= 59.2.0
 +        orig_install._load_schemes = load_schemes_wrapper(orig_install._load_schemes)
-+    orig_install_egg_info.install_egg_info = install_egg_info
-+    distutils.sysconfig._posix_lib = _posix_lib
++    else:
++        # older version with only statically defined schemes
++        # this includes the version bundled with Python 3.10 that has our
++        # schemes already included
++        add_debian_schemes(orig_install.INSTALL_SCHEMES)
 +
 +
 +apply_customizations()

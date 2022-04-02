@@ -74,4 +74,15 @@ testFibPyPipEditable() {
 	assertEquals 'Correct result' 8 "$stdout"
 }
 
+testFibPyDistutilsLocal() {
+	cd "$AUTOPKGTEST_TMP/packages/fibpy"
+	SETUPTOOLS_USE_DISTUTILS=local $VP setup.py install
+	assertTrue 'Install fibpy in a virtualenv' $?
+	assertTrue 'fibpy was installed to virtualenv' "[ -e $site_packages/fibpy-*.egg ]"
+	cd "$AUTOPKGTEST_TMP"
+	stdout=$($VP -m fibpy 5)
+	assertTrue 'Execute fibpy from a virtualenv' $?
+	assertEquals 'Correct result' 8 "$stdout"
+}
+
 . shunit2
