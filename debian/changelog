@@ -1,4 +1,4 @@
-python3.10 (3.10.4-3) UNRELEASED; urgency=medium
+python3.10 (3.10.4-3) unstable; urgency=medium
 
   * Build a python3.10-nopie package, diverting the python3.10
     executable.
