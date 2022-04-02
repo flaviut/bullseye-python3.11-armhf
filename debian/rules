@@ -80,11 +80,9 @@ derivative      := $(shell \
 
 dpkg_buildflags = DEB_BUILD_MAINT_OPTIONS=hardening=-pie dpkg-buildflags
 dpkg_pieflags = DEB_BUILD_MAINT_OPTIONS=hardening=-pie dpkg-buildflags
-ifeq ($(derivative),Ubuntu)
-  ifeq (,$(filter $(distrelease),trusty xenial bionic focal impish))
-    with_nopie := yes
-    dpkg_pieflags = dpkg-buildflags
-  endif
+ifeq (,$(filter $(distrelease),stretch buster bullseye trusty xenial bionic focal impish))
+  with_nopie := yes
+  dpkg_pieflags = dpkg-buildflags
 endif
 
 # FIXME: remove sid when uploading to unstable, after bookworm is released

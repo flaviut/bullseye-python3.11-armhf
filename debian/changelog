@@ -1,5 +1,9 @@
 python3.10 (3.10.4-3) UNRELEASED; urgency=medium
 
+  * Build a python3.10-nopie package, diverting the python3.10
+    executable.
+  * Build the python3.10 interpreter with PIE enabled. Closes: ##919134.
+    LP: #1452115.
   * Fix build on ia64 (Adrian Glaubitz). Closes: #1008576.
 
  -- Matthias Klose <doko@debian.org>  Sat, 02 Apr 2022 11:04:19 +0200
