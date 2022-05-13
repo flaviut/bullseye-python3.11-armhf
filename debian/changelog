@@ -1,3 +1,10 @@
+python3.10 (3.10.4-4) unstable; urgency=medium
+
+  * Source-only upload.
+  * Backport gh-78214: marshal: Stabilize FLAG_REF usage. Closes: #1010368.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 13 May 2022 14:08:11 +0200
+
 python3.10 (3.10.4-3) unstable; urgency=medium
 
   * Build a python3.10-nopie package, diverting the python3.10
