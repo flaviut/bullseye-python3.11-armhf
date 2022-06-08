@@ -6,9 +6,9 @@ Forwarded: not-needed
 
 --- a/Lib/ensurepip/__init__.py
 +++ b/Lib/ensurepip/__init__.py
-@@ -8,6 +8,34 @@
+@@ -7,6 +7,34 @@ import sysconfig
+ import tempfile
  from importlib import resources
- 
  
 +def _ensurepip_is_disabled_in_debian_for_system():
 +    # Detect if ensurepip is being executed inside of a python-virtualenv
@@ -41,7 +41,7 @@ Forwarded: not-needed
  
  __all__ = ["version", "bootstrap"]
  _PACKAGE_NAMES = ('setuptools', 'pip')
-@@ -137,6 +165,11 @@
+@@ -136,6 +164,11 @@ def _bootstrap(*, root=None, upgrade=Fal
  
      Note that calling this function will alter both sys.path and os.environ.
      """
@@ -55,7 +55,7 @@ Forwarded: not-needed
  
 --- a/Lib/venv/__init__.py
 +++ b/Lib/venv/__init__.py
-@@ -309,7 +309,31 @@
+@@ -340,7 +340,31 @@ class EnvBuilder:
          # intended for the global Python environment
          cmd = [context.env_exec_cmd, '-Im', 'ensurepip', '--upgrade',
                                                           '--default-pip']

@@ -19,7 +19,7 @@ Origin: upstream, https://github.com/python/cpython/commit/423e77d6de497931585d1
  
 --- a/Doc/Makefile
 +++ b/Doc/Makefile
-@@ -11,7 +11,7 @@ BLURB        = PATH=$(VENVDIR)/bin:$$PAT
+@@ -12,7 +12,7 @@ BLURB        = PATH=$(VENVDIR)/bin:$$PAT
  PAPER        =
  SOURCES      =
  DISTVERSION  = $(shell $(PYTHON) tools/extensions/patchlevel.py)

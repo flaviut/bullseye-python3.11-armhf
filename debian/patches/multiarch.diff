@@ -7,7 +7,7 @@ Forwarded: no
 
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
-@@ -623,6 +623,12 @@ def get_config_vars(*args):
+@@ -709,6 +709,12 @@ def get_config_vars(*args):
              # the init-function.
              _CONFIG_VARS['userbase'] = _getuserbase()
  
@@ -22,7 +22,7 @@ Forwarded: no
          if os.name == 'posix':
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
-@@ -303,6 +303,9 @@ def get_python_inc(plat_specific=0, pref
+@@ -307,6 +307,9 @@ def get_python_inc(plat_specific=0, pref
                  incdir = os.path.join(get_config_var('srcdir'), 'Include')
                  return os.path.normpath(incdir)
          python_dir = 'python' + get_python_version() + build_flags
@@ -34,7 +34,7 @@ Forwarded: no
          if python_build:
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -824,6 +824,7 @@ Modules/signalmodule.o: $(srcdir)/Module
+@@ -1273,6 +1273,7 @@ Modules/signalmodule.o: $(srcdir)/Module
  
  Python/dynload_shlib.o: $(srcdir)/Python/dynload_shlib.c Makefile
  	$(CC) -c $(PY_CORE_CFLAGS) \

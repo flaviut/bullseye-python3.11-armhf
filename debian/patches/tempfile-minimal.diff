@@ -154,7 +154,7 @@ Forwarded: not-needed
  import errno as _errno
  from random import Random as _Random
  import sys as _sys
-@@ -825,7 +964,7 @@ class TemporaryDirectory:
+@@ -864,7 +1003,7 @@ class TemporaryDirectory:
                  if not ignore_errors:
                      raise
  
