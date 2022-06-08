@@ -121,7 +121,7 @@ excluded_imports = {
     'os': set(('nt', 'ntpath', 'os2', 'os2emxpath', 'mac', 'macpath',
                'riscos', 'riscospath', 'riscosenviron')),
     'optparse': set(('gettext',)),
-    'pathlib': set(('urllib',)), # Windows only
+    'pathlib': set(('ntpath', 'urllib',)), # Windows only
     'pickle': set(('argparse', 'doctest', 'pprint')),
     'platform': set(('ctypes', 'plistlib', 'tempfile')),
     'reprlib': set(('_dummy_thread',)),
@@ -131,6 +131,7 @@ excluded_imports = {
     'subprocess': set(('dummy_threading',)),
     'sysconfig': set(('pprint','_osx_support', '_aix_support')),
     'tempfile': set(('_dummy_thread', 'shutil')),
+    'tokenize': set(('_tokenize',)),
     'functools': set(('typing',)),
     'platform': set(('distutils','plistlib')),
     'zipfile': set(('bz2','lzma')),

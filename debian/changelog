@@ -2,6 +2,9 @@ python3.11 (3.11.0~b3-1) UNRELEASED; urgency=medium
 
   * Python 3.11.0 beta 3 snapshot.
   * Refresh patches.
+  * Update symbols files.
+  * Adjust the minimal set (re now a package), make the ntpath import
+    conditional.
 
  -- Matthias Klose <doko@debian.org>  Wed, 08 Jun 2022 12:09:22 +0200
 

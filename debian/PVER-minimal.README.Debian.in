@@ -122,7 +122,7 @@ are:
   py_compile		module
   quopri		module
   random		module
-  re			module
+  re			package
   reprlib		module
   runpy			module
   select		extension
