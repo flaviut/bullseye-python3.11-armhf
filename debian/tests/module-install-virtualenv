@@ -3,9 +3,9 @@
 cp -a debian/tests/packages "$AUTOPKGTEST_TMP"
 HOME="$AUTOPKGTEST_TMP/home"
 mkdir -p "$HOME"
-virtualenv -p python3.10 "$AUTOPKGTEST_TMP/ve"
+virtualenv -p python3.11 "$AUTOPKGTEST_TMP/ve"
 
-site_packages="$AUTOPKGTEST_TMP/ve/lib/python3.10/site-packages"
+site_packages="$AUTOPKGTEST_TMP/ve/lib/python3.11/site-packages"
 VP="$AUTOPKGTEST_TMP/ve/bin/python"
 
 tearDown() {

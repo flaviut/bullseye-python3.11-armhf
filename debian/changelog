@@ -5,6 +5,7 @@ python3.11 (3.11.0~b3-1) UNRELEASED; urgency=medium
   * Update symbols files.
   * Adjust the minimal set (re now a package), make the ntpath import
     conditional.
+  * Update autopkg tests for 3.11.
 
  -- Matthias Klose <doko@debian.org>  Wed, 08 Jun 2022 12:09:22 +0200
 
