@@ -1,6 +1,7 @@
 python3.11 (3.11.0~b3-3) UNRELEASED; urgency=medium
 
   * Fix more references to 3.11 in the autopkg tests.
+  * Update local-doc-references patch for 3.11.
 
  -- Matthias Klose <doko@debian.org>  Fri, 10 Jun 2022 08:37:51 +0200
 
