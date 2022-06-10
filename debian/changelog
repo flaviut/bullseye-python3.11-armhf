@@ -1,3 +1,9 @@
+python3.11 (3.11.0~b3-3) UNRELEASED; urgency=medium
+
+  * Fix more references to 3.11 in the autopkg tests.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 10 Jun 2022 08:37:51 +0200
+
 python3.11 (3.11.0~b3-2) unstable; urgency=medium
 
   * Update symbols files for i386.
