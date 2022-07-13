@@ -1,10 +1,11 @@
-python3.11 (3.11.0~b3-3) UNRELEASED; urgency=medium
+python3.11 (3.11.0~b4-1) UNRELEASED; urgency=medium
 
+  * Python 3.11.0 beta 4 snapshot.
   * Fix more references to 3.11 in the autopkg tests.
   * Update local-doc-references patch for 3.11.
   * Remove i386 specific symbols files.
 
- -- Matthias Klose <doko@debian.org>  Fri, 10 Jun 2022 08:37:51 +0200
+ -- Matthias Klose <doko@debian.org>  Wed, 13 Jul 2022 11:00:16 +0200
 
 python3.11 (3.11.0~b3-2) unstable; urgency=medium
 
