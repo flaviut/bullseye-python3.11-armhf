@@ -1254,6 +1254,8 @@
  _PyImport_FrozenBootstrap@Base @SVER@
  _PyImport_FrozenStdlib@Base @SVER@
  _PyImport_FrozenTest@Base @SVER@
+ _PyImport_GetModuleAttr@Base @SVER@
+ _PyImport_GetModuleAttrString@Base @SVER@
  _PyImport_GetModuleId@Base @SVER@
  _PyImport_IsInitialized@Base @SVER@
  _PyImport_ReleaseLock@Base @SVER@

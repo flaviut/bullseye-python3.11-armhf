@@ -96,7 +96,7 @@ endif
 #endif
 
 VER=3.11
-SVER=3.11.0~b3
+SVER=3.11.0~b4
 NVER=3.12
 PVER=python$(VER)
 EXT_VER=$(subst .,,$(VER))
