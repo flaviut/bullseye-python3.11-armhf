@@ -1,3 +1,9 @@
+python3.11 (3.11.0~b4-2) unstable; urgency=medium
+
+  * Work around https://github.com/pypa/pip/issues/11183.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 20 Jul 2022 12:00:00 +0200
+
 python3.11 (3.11.0~b4-1) unstable; urgency=medium
 
   * Python 3.11.0 beta 4 snapshot.

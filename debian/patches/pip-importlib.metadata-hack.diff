@@ -1,0 +1,12 @@
+--- a/Lib/importlib/metadata/__init__.py
++++ b/Lib/importlib/metadata/__init__.py
+@@ -26,6 +26,9 @@ from importlib.abc import MetaPathFinder
+ from itertools import starmap
+ from typing import List, Mapping, Optional, Union
+ 
++# see https://github.com/pypa/pip/issues/11183
++_PIP_USE_IMPORTLIB_METADATA = False
++
+ 
+ __all__ = [
+     'Distribution',
