@@ -343,6 +343,9 @@ PROFILE_EXCLUDES += \
 PROFILE_EXCLUDES += \
 	test_multiprocessing_fork test_multiprocessing_forkserver test_multiprocessing_spawn
 
+# relying on external dependencies
+PROFILE_EXCLUDES += test_cppext
+
 # TODO: update profiled-build.diff to support --next
 #       --next=20
 PROFILE_TASK = ../Lib/test/regrtest.py \

@@ -9,6 +9,7 @@ Depends: build-essential,
   python3-tk (>= 3.9.7),
   idle-python3.11,
   systemtap-sdt-dev,
+  python3.11-venv,
 # need to turn off apport
 Restrictions: needs-root, allow-stderr
 
@@ -24,6 +25,7 @@ Depends: build-essential,
   python3-tk-dbg (>= 3.9.7),
   idle-python3.11,
   systemtap-sdt-dev,
+  python3.11-venv,
 # need to turn off apport
 Restrictions: needs-root, allow-stderr
 
