@@ -78,7 +78,7 @@
  
      def test_get_scheme_names(self):
 -        wanted = ['nt', 'posix_home', 'posix_prefix', 'posix_venv', 'nt_venv', 'venv']
-+        wanted = ['deb_system', 'nt', 'posix_home', 'posix_prefix', 'posix_venv', 'nt_venv', 'venv']
++        wanted = ['deb_system', 'posix_local', 'nt', 'posix_home', 'posix_prefix', 'posix_venv', 'nt_venv', 'venv']
          if HAS_USER_BASE:
              wanted.extend(['nt_user', 'osx_framework_user', 'posix_user'])
          self.assertEqual(get_scheme_names(), tuple(sorted(wanted)))
