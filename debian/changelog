@@ -1,10 +1,10 @@
-python3.11 (3.11.0~b4-3) UNRELEASED; urgency=medium
+python3.11 (3.11.0~rc1-1) unstable; urgency=medium
 
   * Add python3.11-venv as a dependency for the testsuite* autopkg tests.
   * Don't run the cppext test during the build.
   * Fix two site and sysconfig tests.
 
- -- Matthias Klose <doko@debian.org>  Sun, 24 Jul 2022 16:12:13 +0200
+ -- Matthias Klose <doko@debian.org>  Wed, 10 Aug 2022 13:16:05 +0200
 
 python3.11 (3.11.0~b4-2) unstable; urgency=medium
 
