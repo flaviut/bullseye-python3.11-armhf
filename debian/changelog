@@ -1,5 +1,12 @@
+python3.11 (3.11.0~rc2-1) unstable; urgency=medium
+
+  * Python 3.11.0 release candidate 2.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 12 Sep 2022 18:20:24 +0200
+
 python3.11 (3.11.0~rc1-1) unstable; urgency=medium
 
+  * Python 3.11.0 release candidate 1.
   * Add python3.11-venv as a dependency for the testsuite* autopkg tests.
   * Don't run the cppext test during the build.
   * Fix two site and sysconfig tests.
