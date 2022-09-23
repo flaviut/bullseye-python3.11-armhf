@@ -68,7 +68,7 @@ testFibPyPipEditable() {
 	$VP -m pip install --no-index -f /usr/share/python-wheels/ wheel
 	$VP -m pip install --no-build-isolation -v -e "$AUTOPKGTEST_TMP/packages/fibpy"
 	assertTrue 'Install editable fibpy via pip in a virtualenv' $?
-	assertTrue 'fibpy was linked to virtualenv' "[ -e $site_packages/fibpy.egg-link ]"
+	assertTrue 'fibpy was linked to virtualenv' "[ -e $site_packages/__editable__.fibpy-42.0.0.pth ]"
 	stdout=$($VP -m fibpy 5)
 	assertTrue 'Execute fibpy from virtualenv' $?
 	assertEquals 'Correct result' 8 "$stdout"
