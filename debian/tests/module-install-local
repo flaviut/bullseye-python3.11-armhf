@@ -58,7 +58,7 @@ testFibPyPipEditable() {
 	cd "$AUTOPKGTEST_TMP"
 	python3.11 -m pip install --no-build-isolation -v -e "$AUTOPKGTEST_TMP/packages/fibpy"
 	assertTrue 'Install editable fibpy via pip in /usr/local' $?
-	assertTrue 'fibpy was linked to /usr/local' "[ -e $dist_packages/fibpy.egg-link ]"
+	assertTrue 'fibpy was linked to /usr/local' "[ -e $dist_packages/__editable__.fibpy-42.0.0.pth ]"
 	stdout=$(python3.11 -m fibpy 5)
 	assertTrue 'Execute fibpy from /usr/local' $?
 	assertEquals 'Correct result' 8 "$stdout"
