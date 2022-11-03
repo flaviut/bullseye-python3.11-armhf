@@ -5,6 +5,7 @@ python3.11 (3.11.0-2) unstable; urgency=medium
   * Add support for systemd-binfmt. Closes: #1013973.
   * libpython3.11-dev: Install Python.asdl and python.gram. Closes: #1022951.
   * Configure the python3-dbg interpreter --with-valgrind. Closes: #1006315.
+  * Bump standards version.
 
  -- Matthias Klose <doko@debian.org>  Thu, 03 Nov 2022 10:30:18 +0100
 
