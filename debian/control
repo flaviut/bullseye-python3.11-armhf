@@ -16,7 +16,8 @@ Build-Depends: debhelper (>= 11), dpkg-dev (>= 1.17.11),
   libgpm2 [linux-any],
   media-types | mime-support, netbase, bzip2, time, python3:any, python3.11:any <cross>,
   net-tools, xvfb <!nocheck>, xauth <!nocheck>,
-  systemtap-sdt-dev
+  systemtap-sdt-dev,
+  valgrind-if-available,
 Build-Depends-Indep: python3-sphinx, python3-docs-theme, texinfo
 Standards-Version: 4.6.0
 Vcs-Browser: https://salsa.debian.org/cpython-team/python3
