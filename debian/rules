@@ -1070,6 +1070,10 @@ endif
 	cp -p $(buildd_shared)/libpython$(VER)-pic.a \
 		$(d_ldev)/usr/lib/python$(VER)/config-$(VER)-$(DEB_HOST_MULTIARCH)/
 
+	mkdir -p $(d_ldev)/usr/src/$(PVER)/{Grammar,Parser}
+	cp -p Grammar/python.gram $(d_ldev)/usr/src/$(PVER)/Grammar/.
+	cp -p Parser/Python.asdl $(d_ldev)/usr/src/$(PVER)/Parser/.
+
 # FIXME
 #	: # symlinks for the "old" include directory name
 #	ln -sf python$(VER)m $(d_ldev)/usr/include/python$(VER)
