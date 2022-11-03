@@ -41,7 +41,7 @@ Forwarded: not-needed
  
  __all__ = ["version", "bootstrap"]
  _PACKAGE_NAMES = ('setuptools', 'pip')
-@@ -136,6 +164,11 @@ def _bootstrap(*, root=None, upgrade=Fal
+@@ -146,6 +174,11 @@ def _bootstrap(*, root=None, upgrade=Fal
  
      Note that calling this function will alter both sys.path and os.environ.
      """
@@ -55,19 +55,15 @@ Forwarded: not-needed
  
 --- a/Lib/venv/__init__.py
 +++ b/Lib/venv/__init__.py
-@@ -340,7 +340,31 @@ class EnvBuilder:
-         # intended for the global Python environment
-         cmd = [context.env_exec_cmd, '-Im', 'ensurepip', '--upgrade',
-                                                          '--default-pip']
--        subprocess.check_output(cmd, stderr=subprocess.STDOUT)
-+        # Debian 2015-09-18 barry@debian.org: <python>-venv is a separate
-+        # binary package which might not be installed.  In that case, the
-+        # following command will produce an unhelpful error.  Let's make it
-+        # more user friendly.
+@@ -355,8 +355,26 @@ class EnvBuilder:
+ 
+     def _setup_pip(self, context):
+         """Installs or upgrades pip in a virtual environment"""
+-        self._call_new_python(context, '-m', 'ensurepip', '--upgrade',
+-                              '--default-pip', stderr=subprocess.STDOUT)
 +        try:
-+            subprocess.check_output(
-+                cmd, stderr=subprocess.STDOUT,
-+                universal_newlines=True)
++            self._call_new_python(context, '-m', 'ensurepip', '--upgrade',
++                                  '--default-pip', stderr=subprocess.STDOUT)
 +        except subprocess.CalledProcessError:
 +            stdlib = sysconfig.get_path('stdlib')
 +            if not os.path.exists(f'{stdlib}/ensurepip/__main__.py'):

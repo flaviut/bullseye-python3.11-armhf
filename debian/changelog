@@ -1,3 +1,9 @@
+python3.11 (3.11.0-2) unstable; urgency=medium
+
+  * Update to the 3.11 branch 2022-11-03.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 03 Nov 2022 10:30:18 +0100
+
 python3.11 (3.11.0-1) unstable; urgency=medium
 
   * Python 3.11.0 release.
