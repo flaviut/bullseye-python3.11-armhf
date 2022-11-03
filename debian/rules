@@ -1516,15 +1516,14 @@ endif
 		| xargs -n 1 $(DEB_HOST_GNU_TYPE)-objcopy -p --remove-section=.gnu.lto_.*
 	dh_strip -a -N$(p_dbg) -N$(p_ldbg) -Xdebug -Xdbg --dbg-package=$(p_dbg)
 	mkdir -p $(d_dbg)/usr/share/gdb/auto-load/usr/bin
-	cp Tools/gdb/libpython.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)m-gdb.py
-	ln -sf $(PVER)m-gdb.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)-gdb.py
-	ln -sf $(PVER)m-gdb.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)dm-gdb.py
-	ln -sf $(PVER)m-gdb.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)-dbg-gdb.py
+	cp Tools/gdb/libpython.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)-gdb.py
+	ln -sf $(PVER)-gdb.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)d-gdb.py
+	ln -sf $(PVER)-gdb.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)-gdb-gdb.py
 	mkdir -p $(d_dbg)/usr/share/gdb/auto-load/usr/lib/$(DEB_HOST_MULTIARCH)
-	ln -sf ../../bin/$(PVER)m-gdb.py \
-		$(d_dbg)/usr/share/gdb/auto-load/usr/lib/$(DEB_HOST_MULTIARCH)/lib$(PVER)m.so.1.0-gdb.py
-	ln -sf ../../bin/$(PVER)m-gdb.py \
-		$(d_dbg)/usr/share/gdb/auto-load/usr/lib/$(DEB_HOST_MULTIARCH)/lib$(PVER)dm.so.1.0-gdb.py
+	ln -sf ../../bin/$(PVER)-gdb.py \
+		$(d_dbg)/usr/share/gdb/auto-load/usr/lib/$(DEB_HOST_MULTIARCH)/lib$(PVER).so.1.0-gdb.py
+	ln -sf ../../bin/$(PVER)-gdb.py \
+		$(d_dbg)/usr/share/gdb/auto-load/usr/lib/$(DEB_HOST_MULTIARCH)/lib$(PVER)d.so.1.0-gdb.py
 	dh_link -a
 	dh_compress -a -X.py
 	dh_fixperms -a
