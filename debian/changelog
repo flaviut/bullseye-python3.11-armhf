@@ -1,9 +1,17 @@
-python3.11 (3.11.0~rc2-2) UNRELEASED; urgency=medium
+python3.11 (3.11.0-1) unstable; urgency=medium
 
+  * Python 3.11.0 release.
+  * Update symbols files.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 24 Oct 2022 23:26:25 +0200
+
+python3.11 (3.11.0~rc2-2) unstable; urgency=medium
+
+  [ Stefano Rivera ]
   * autopkgtests: Support python3-setuptools >= 64, which does PEP-660
     editable installs.
 
- -- Stefano Rivera <stefanor@debian.org>  Fri, 23 Sep 2022 17:19:54 +0200
+ -- Matthias Klose <doko@debian.org>  Sat, 01 Oct 2022 06:34:05 +0200
 
 python3.11 (3.11.0~rc2-1) unstable; urgency=medium
 

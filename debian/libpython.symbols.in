@@ -74,7 +74,10 @@
  PyClassMethod_Type@Base @SVER@
  PyCode_Addr2Line@Base @SVER@
  PyCode_Addr2Location@Base @SVER@
+ PyCode_GetCellvars@Base @SVER@
  PyCode_GetCode@Base @SVER@
+ PyCode_GetFreevars@Base @SVER@
+ PyCode_GetVarnames@Base @SVER@
  PyCode_New@Base @SVER@
  PyCode_NewEmpty@Base @SVER@
  PyCode_NewWithPosOnlyArgs@Base @SVER@
