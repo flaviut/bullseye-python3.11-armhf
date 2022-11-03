@@ -1238,11 +1238,15 @@ endif
 
 	: # generate binfmt file
 	mkdir -p $(d_min)/usr/share/binfmts
+	mkdir -p $(d_min)/usr/lib/binfmt.d
 ifeq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
 	$(buildd_static)/python debian/mkbinfmt.py $(PVER) \
 		> $(d_min)/usr/share/binfmts/$(PVER)
+	$(buildd_static)/python debian/mkbinfmtconf.py $(PVER) \
+		> $(d_min)/usr/lib/binfmt.d/$(PVER).conf
 else
 	$(PVER) debian/mkbinfmt.py $(PVER) > $(d_min)/usr/share/binfmts/$(PVER)
+	$(PVER) debian/mkbinfmtconf.py $(PVER) > $(d_min)/usr/lib/binfmt.d/$(PVER).conf
 endif
 
 	: # desktop entry
