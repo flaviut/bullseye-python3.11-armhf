@@ -95,6 +95,10 @@ endif
 #  dbmliborder = gdbm:bdb
 #endif
 
+ifneq (,$(filter valgrind, $(shell dpkg-query --show -f '$${Depends}\n' valgrind-if-available)))
+  valgrind_configure_args = --with-valgrind
+endif
+
 VER=3.11
 SVER=3.11.0
 NVER=3.12
@@ -507,8 +511,8 @@ stamps/stamp-configure-debug: stamps/stamp-patch
 	    $(config_site) \
 	    ../configure \
 		$(common_configure_args) \
-		--with-pydebug \
-		--with-valgrind
+		$(valgrind_configure_args) \
+		--with-pydebug
 
 	$(call __post_configure,$(buildd_debug))
 	touch $@
@@ -523,8 +527,8 @@ stamps/stamp-configure-shared-debug: stamps/stamp-patch
 	    ../configure \
 		$(common_configure_args) \
 		--enable-shared \
-		--with-pydebug \
-		--with-valgrind
+		$(valgrind_configure_args) \
+		--with-pydebug
 
 	$(call __post_configure,$(buildd_shdebug))
 	touch $@
