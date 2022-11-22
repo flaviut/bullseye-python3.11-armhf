@@ -17,7 +17,6 @@ Build-Depends: debhelper (>= 11), @bd_dpkgdev@
   media-types | mime-support, netbase, bzip2, time, python3@bd_qual@, @PVER@@bd_qual@ <cross>,
   net-tools, xvfb <!nocheck>, xauth <!nocheck>,
   systemtap-sdt-dev,
-  valgrind-if-available,
 Build-Depends-Indep: python3-sphinx, python3-docs-theme, texinfo
 Standards-Version: 4.6.1
 Vcs-Browser: https://salsa.debian.org/cpython-team/python3
