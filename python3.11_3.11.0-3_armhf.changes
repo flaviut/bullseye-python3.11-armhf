@@ -1,0 +1,85 @@
+Format: 1.8
+Date: Fri, 04 Nov 2022 10:23:33 +0100
+Source: python3.11
+Binary: idle-python3.11 libpython3.11 libpython3.11-dbg libpython3.11-dev libpython3.11-minimal libpython3.11-stdlib libpython3.11-testsuite python3.11 python3.11-dbg python3.11-dev python3.11-doc python3.11-examples python3.11-full python3.11-minimal python3.11-nopie python3.11-venv
+Architecture: all armhf
+Version: 3.11.0-3
+Distribution: unstable
+Urgency: medium
+Maintainer: Matthias Klose <doko@debian.org>
+Changed-By: Matthias Klose <doko@debian.org>
+Description:
+ idle-python3.11 - IDE for Python (v3.11) using Tkinter
+ libpython3.11 - Shared Python runtime library (version 3.11)
+ libpython3.11-dbg - Debug Build of the Python Interpreter (version 3.11)
+ libpython3.11-dev - Header files and a static library for Python (v3.11)
+ libpython3.11-minimal - Minimal subset of the Python language (version 3.11)
+ libpython3.11-stdlib - Interactive high-level object-oriented language (standard library
+ libpython3.11-testsuite - Testsuite for the Python standard library (v3.11)
+ python3.11 - Interactive high-level object-oriented language (version 3.11)
+ python3.11-dbg - Debug Build of the Python Interpreter (version 3.11)
+ python3.11-dev - Header files and a static library for Python (v3.11)
+ python3.11-doc - Documentation for the high-level object-oriented language Python
+ python3.11-examples - Examples for the Python language (v3.11)
+ python3.11-full - Python Interpreter with complete class library (version 3.11)
+ python3.11-minimal - Minimal subset of the Python language (version 3.11)
+ python3.11-nopie - Python interpreter linked without PIE (version 3.11)
+ python3.11-venv - Interactive high-level object-oriented language (pyvenv binary, v
+Changes:
+ python3.11 (3.11.0-3) unstable; urgency=medium
+ .
+   * Fix valgrind detection.
+Checksums-Sha1:
+ 2de0b78b24eb1634274dcda31e0510049bd61ef7 399384 idle-python3.11_3.11.0-3_all.deb
+ 558f5e675eb3003e6ebb03c226f8b6e72901bb78 19056928 libpython3.11-dbg_3.11.0-3_armhf.deb
+ 15c007e2e92927025e38fa9cc6bd4925a72fe946 3683688 libpython3.11-dev_3.11.0-3_armhf.deb
+ 13ce0e1afc701147f30a332f1a98d4e0231ea0e6 840316 libpython3.11-minimal_3.11.0-3_armhf.deb
+ bac99d6a79cf02190ef04811720bae84c0bc4924 1661656 libpython3.11-stdlib_3.11.0-3_armhf.deb
+ ddb8107282be4420694fc5bd0275a2e64d1a8298 4412912 libpython3.11-testsuite_3.11.0-3_all.deb
+ 97e03d8e7263cf3cb85c14b31845d65d86b16348 1707816 libpython3.11_3.11.0-3_armhf.deb
+ 1c647f2917d12085b536628e7e570a2c7b0c39b7 27351348 python3.11-dbg_3.11.0-3_armhf.deb
+ d036d5c0b4d23621f97b06452fc082b3ac128cbd 628260 python3.11-dev_3.11.0-3_armhf.deb
+ 4633ce0202cc526446ed06642df47322c3d53439 12102276 python3.11-doc_3.11.0-3_all.deb
+ 664439a6cb205618605922d56c6c1149f541856f 840324 python3.11-examples_3.11.0-3_all.deb
+ 5007ce27f8f5a236bbb7cb3f9256e62a32f161fe 1284 python3.11-full_3.11.0-3_armhf.deb
+ dc32e8aa3032bd7c1e5fa76b270d0fb2b22f0f6d 2037892 python3.11-minimal_3.11.0-3_armhf.deb
+ baf80facf1d7b05f116325cb97a3091b362ab223 62604 python3.11-nopie_3.11.0-3_armhf.deb
+ 5fa2b657f3386fba73619f22966483346bd804e4 5876 python3.11-venv_3.11.0-3_armhf.deb
+ 0387c6248ca8386f595c4faa5baa903199e40b9a 14561 python3.11_3.11.0-3_armhf.buildinfo
+ 7b23f8354185c2c7f5926688bcb8827e4ab6d93d 603240 python3.11_3.11.0-3_armhf.deb
+Checksums-Sha256:
+ 366381c70df1f05e7f3baaad4e3a6d7cd1eaf595d7328f9a1ddd23e0dc2dd1d3 399384 idle-python3.11_3.11.0-3_all.deb
+ 05b67180f3b515827b2a2484b59f121406d9b6aa5ae3eee0547c4b8fd98a1f2c 19056928 libpython3.11-dbg_3.11.0-3_armhf.deb
+ d89ebfe9dc416a5395676b5dae6a3cd6ccbe7a262cc01c3dbd3b9e4b1f73146f 3683688 libpython3.11-dev_3.11.0-3_armhf.deb
+ 1afced785d29a86b87045099964c280c5c82edd2981ea7523e4898d38dca6d67 840316 libpython3.11-minimal_3.11.0-3_armhf.deb
+ e5fa45c0a3318aa6dba2ace1d9562ce6d0b3a9a5aabaa6b49d33a88573678f47 1661656 libpython3.11-stdlib_3.11.0-3_armhf.deb
+ d0cf20215469c6881e6f4169ced2b97469aa7b8caccb4026d69800e00f28d9aa 4412912 libpython3.11-testsuite_3.11.0-3_all.deb
+ da7e0d5d7d7f0394f59de834c747d07d36af07f861d517fd09ec31c926633cb0 1707816 libpython3.11_3.11.0-3_armhf.deb
+ 75e9c9388be0cefb571749a3868154d705fd5d96644640ef21d96f4f38b54452 27351348 python3.11-dbg_3.11.0-3_armhf.deb
+ 91214d3be8d6fa633f2402063c8105ba917c1d1a43d2b0afd1ba659cd0e72f87 628260 python3.11-dev_3.11.0-3_armhf.deb
+ d3545a6f1bff079994dc0001795d9554fb8db9734268d79ca62a4e32e1f69dbe 12102276 python3.11-doc_3.11.0-3_all.deb
+ 64b725617ce5cef0f49f831a17552486e84e28e81a0ad59caec02ab3b48da953 840324 python3.11-examples_3.11.0-3_all.deb
+ b512b0efee8d99780d6d702b42e416db8dd5779e9201708dd944e7c2fe32b881 1284 python3.11-full_3.11.0-3_armhf.deb
+ 8aa07cce3bf65b4bf3b84bb6889dd5e3848d37dbecbdabf3e609768b4534e814 2037892 python3.11-minimal_3.11.0-3_armhf.deb
+ 66b93fca8beeece426e4f98ae03a81c25267222b03e9ac9f5e48b5d7f57426a1 62604 python3.11-nopie_3.11.0-3_armhf.deb
+ 499d86b35a916115a61151bf6e832a2553786fe98a67734a9fe9f126be438735 5876 python3.11-venv_3.11.0-3_armhf.deb
+ a053fa5e45325708d60994f6a2e7a8fae8459f755314ada381cca749a3fc5565 14561 python3.11_3.11.0-3_armhf.buildinfo
+ 5dac74d007fb90acf0df4a17b7f0fb8bf15f6ed69b03cfb998e949f99a17fe07 603240 python3.11_3.11.0-3_armhf.deb
+Files:
+ cce6df62752868f4565e350f1e8269e1 399384 python optional idle-python3.11_3.11.0-3_all.deb
+ 83abacab64aed17444e8d2bcea46d313 19056928 debug optional libpython3.11-dbg_3.11.0-3_armhf.deb
+ 7a054ab2615b503ffa8368fffdf55815 3683688 libdevel optional libpython3.11-dev_3.11.0-3_armhf.deb
+ a37231073c5bd1c8ab7d382a50dd4627 840316 python optional libpython3.11-minimal_3.11.0-3_armhf.deb
+ a78072fa57908df4e2d4bb964a2c446d 1661656 python optional libpython3.11-stdlib_3.11.0-3_armhf.deb
+ b3799d1c29137d2b6e3d4f36f2ba52b0 4412912 libdevel optional libpython3.11-testsuite_3.11.0-3_all.deb
+ aa1bf781cce4823ab455ad96561d15fe 1707816 libs optional libpython3.11_3.11.0-3_armhf.deb
+ d8d5bd6b3bb8d47ff8e94b345e6299bf 27351348 debug optional python3.11-dbg_3.11.0-3_armhf.deb
+ 7b590dfe59046b617b7e740f05aeb362 628260 python optional python3.11-dev_3.11.0-3_armhf.deb
+ 25327da9a5c8b8621af24a1693cd4c38 12102276 doc optional python3.11-doc_3.11.0-3_all.deb
+ a51ae66be5650fbb450eae56bc831210 840324 python optional python3.11-examples_3.11.0-3_all.deb
+ 2ea23dae0f31252b4d989ceba1bae546 1284 python optional python3.11-full_3.11.0-3_armhf.deb
+ fbd08dbf94ddad236b7c481c4d223982 2037892 python optional python3.11-minimal_3.11.0-3_armhf.deb
+ feb042e886bafbc0a3c33bef4cc7f160 62604 python optional python3.11-nopie_3.11.0-3_armhf.deb
+ 0f43c2fcc2ba3b38b6be7ac2379ecd3f 5876 python optional python3.11-venv_3.11.0-3_armhf.deb
+ 8a773a35672c49f04c19efff86dedf0c 14561 python optional python3.11_3.11.0-3_armhf.buildinfo
+ df1dafe1d76547f715efe1e2bcf81405 603240 python optional python3.11_3.11.0-3_armhf.deb
